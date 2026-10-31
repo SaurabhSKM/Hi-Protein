@@ -1,0 +1,22 @@
+{
+  "_meta": {
+    "description": "On-farm feed replacement value of a downgraded pulse harvest, for the mixed crop-livestock persona. Valuing a downgraded lot at the feed SPOT price understates it: a farm that feeds its own pulses replaces both purchased protein meal and purchased cereal, and avoids the haulage and trader margin on both.",
+    "method": "1 t of pulse substitutes a_soymeal tonnes of soybean meal plus a_cereal tonnes of feed wheat, on a combined crude-protein and metabolisable-energy equivalence basis.",
+    "source": "Substitution ratios consistent with published French monogastric and ruminant ration formulation guidance (Terres Univia / Idele feed value tables).",
+    "caution": "Real substitution is capped by anti-nutritional factors: raw pulses are limited to roughly 15-25 percent of a monogastric ration depending on species, and whole soybean needs heat treatment."
+  },
+  "reference_prices_eur_t": {
+    "soybean_meal_48": {"mean": 425.0, "sd": 70.0, "min": 300.0, "max": 680.0},
+    "feed_wheat": {"mean": 205.0, "sd": 38.0, "min": 140.0, "max": 340.0}
+  },
+  "avoided_logistics_eur_t": 16.0,
+  "substitution": {
+    "field_pea":    {"a_soymeal": 0.35, "a_cereal": 0.65, "max_ration_share_pct": 25.0},
+    "winter_pea":   {"a_soymeal": 0.34, "a_cereal": 0.66, "max_ration_share_pct": 25.0},
+    "fava_bean":    {"a_soymeal": 0.45, "a_cereal": 0.55, "max_ration_share_pct": 20.0},
+    "green_lentil": {"a_soymeal": 0.40, "a_cereal": 0.60, "max_ration_share_pct": 15.0},
+    "chickpea":     {"a_soymeal": 0.33, "a_cereal": 0.67, "max_ration_share_pct": 15.0},
+    "soybean":      {"a_soymeal": 0.75, "a_cereal": 0.25, "max_ration_share_pct": 15.0,
+                     "note": "Requires toasting or extrusion to deactivate trypsin inhibitors; the cost of that treatment is not netted off here."}
+  }
+}

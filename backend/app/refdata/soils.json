@@ -1,0 +1,36 @@
+{
+  "_meta": {
+    "description": "Soil archetypes with plant-available water capacity (reserve utile, mm) used as the drought-buffer feature and as a hydromorphy/pH screen.",
+    "source": "Typical French arable soil archetypes; RU values consistent with INRAE / Terres Inovia soil guidance."
+  },
+  "deep_loam": {
+    "label_fr": "Limon profond", "label_en": "Deep loam",
+    "reserve_utile_mm": 160.0, "ph": 6.9, "hydromorphy": "low", "stoniness_pct": 3.0,
+    "rooting_depth_cm": 110.0
+  },
+  "clay_loam": {
+    "label_fr": "Argilo-limoneux", "label_en": "Clay loam",
+    "reserve_utile_mm": 145.0, "ph": 7.3, "hydromorphy": "medium", "stoniness_pct": 5.0,
+    "rooting_depth_cm": 95.0
+  },
+  "deep_clay": {
+    "label_fr": "Argile profonde", "label_en": "Deep clay",
+    "reserve_utile_mm": 130.0, "ph": 7.6, "hydromorphy": "high", "stoniness_pct": 2.0,
+    "rooting_depth_cm": 85.0
+  },
+  "shallow_limestone": {
+    "label_fr": "Sol superficiel calcaire (groie / rendzine)", "label_en": "Shallow limestone",
+    "reserve_utile_mm": 75.0, "ph": 8.1, "hydromorphy": "very_low", "stoniness_pct": 25.0,
+    "rooting_depth_cm": 45.0
+  },
+  "sandy": {
+    "label_fr": "Sableux", "label_en": "Sandy",
+    "reserve_utile_mm": 70.0, "ph": 6.2, "hydromorphy": "very_low", "stoniness_pct": 4.0,
+    "rooting_depth_cm": 90.0
+  },
+  "boulbene": {
+    "label_fr": "Boulbene (limon battant acide)", "label_en": "Acid silt (boulbene)",
+    "reserve_utile_mm": 105.0, "ph": 5.9, "hydromorphy": "high", "stoniness_pct": 3.0,
+    "rooting_depth_cm": 70.0
+  }
+}

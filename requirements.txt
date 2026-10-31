@@ -1,0 +1,12 @@
+# Backend and ML. Versions are the ones this project was built and tested against.
+fastapi==0.162.0
+uvicorn[standard]==0.54.0
+pydantic==2.14.2
+numpy==2.4.6
+pandas==3.1.0
+scikit-learn==1.9.1
+xgboost==3.2.0
+joblib==1.6.0
+scipy==1.17.1
+requests==2.34.2
+openpyxl==3.1.5

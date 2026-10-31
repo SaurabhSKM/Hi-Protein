@@ -1,0 +1,567 @@
+{
+  "_meta": {
+    "description": "Crop agronomic + economic reference table. Prices are French farm-gate (prix rendu organisme stockeur) in EUR/tonne at standard moisture. Costs are operational charges (seed, fertiliser, crop protection, drying, harvest-specific) in EUR/ha, excluding land, labour and machinery depreciation, consistent with RICA 'charges operationnelles'.",
+    "price_basis": "2022-2025 observed farm-gate ranges, FranceAgriMer / Terres Univia market notes and cooperative price grids. Encoded as lognormal-ish mean/sd for Monte Carlo.",
+    "cost_basis": "RICA France operational charge baselines, adjusted to 2024 input prices.",
+    "caution": "Unit amounts and prices must be re-validated against the current campaign before any real advisory use."
+  },
+  "soft_wheat": {
+    "label_fr": "Ble tendre d'hiver",
+    "label_en": "Soft winter wheat",
+    "family": "cereal",
+    "is_legume": false,
+    "rpg_codes": [
+      "BTH",
+      "BTP"
+    ],
+    "yield_t_ha_ref": 7.2,
+    "price_eur_t": {
+      "mean": 205.0,
+      "sd": 38.0,
+      "min": 140.0,
+      "max": 340.0
+    },
+    "food_grade_premium_eur_t": 0.0,
+    "op_cost_eur_ha": {
+      "mean": 600.0,
+      "sd": 45.0
+    },
+    "n_fertiliser_kg_ha": 180.0,
+    "return_interval_years": 2,
+    "eco_scheme_family": "cereal"
+  },
+  "durum_wheat": {
+    "label_fr": "Ble dur",
+    "label_en": "Durum wheat",
+    "family": "cereal",
+    "is_legume": false,
+    "rpg_codes": [
+      "BDH",
+      "BDP"
+    ],
+    "yield_t_ha_ref": 5.4,
+    "price_eur_t": {
+      "mean": 285.0,
+      "sd": 55.0,
+      "min": 190.0,
+      "max": 480.0
+    },
+    "food_grade_premium_eur_t": 0.0,
+    "op_cost_eur_ha": {
+      "mean": 600.0,
+      "sd": 45.0
+    },
+    "n_fertiliser_kg_ha": 170.0,
+    "return_interval_years": 3,
+    "eco_scheme_family": "cereal"
+  },
+  "spring_barley": {
+    "label_fr": "Orge de printemps",
+    "label_en": "Spring barley",
+    "family": "cereal",
+    "is_legume": false,
+    "rpg_codes": [
+      "ORP"
+    ],
+    "yield_t_ha_ref": 6.0,
+    "price_eur_t": {
+      "mean": 218.0,
+      "sd": 40.0,
+      "min": 150.0,
+      "max": 360.0
+    },
+    "food_grade_premium_eur_t": 0.0,
+    "op_cost_eur_ha": {
+      "mean": 455.0,
+      "sd": 38.0
+    },
+    "n_fertiliser_kg_ha": 120.0,
+    "return_interval_years": 2,
+    "eco_scheme_family": "cereal"
+  },
+  "winter_barley": {
+    "label_fr": "Orge d'hiver",
+    "label_en": "Winter barley",
+    "family": "cereal",
+    "is_legume": false,
+    "rpg_codes": [
+      "ORH"
+    ],
+    "yield_t_ha_ref": 6.8,
+    "price_eur_t": {
+      "mean": 198.0,
+      "sd": 36.0,
+      "min": 140.0,
+      "max": 320.0
+    },
+    "food_grade_premium_eur_t": 0.0,
+    "op_cost_eur_ha": {
+      "mean": 495.0,
+      "sd": 40.0
+    },
+    "n_fertiliser_kg_ha": 150.0,
+    "return_interval_years": 2,
+    "eco_scheme_family": "cereal"
+  },
+  "rapeseed": {
+    "label_fr": "Colza d'hiver",
+    "label_en": "Winter rapeseed",
+    "family": "oilseed",
+    "is_legume": false,
+    "rpg_codes": [
+      "CZH",
+      "CZP"
+    ],
+    "yield_t_ha_ref": 3.3,
+    "price_eur_t": {
+      "mean": 470.0,
+      "sd": 85.0,
+      "min": 330.0,
+      "max": 780.0
+    },
+    "food_grade_premium_eur_t": 0.0,
+    "op_cost_eur_ha": {
+      "mean": 560.0,
+      "sd": 50.0
+    },
+    "n_fertiliser_kg_ha": 170.0,
+    "return_interval_years": 3,
+    "eco_scheme_family": "oilseed"
+  },
+  "grain_maize": {
+    "label_fr": "Mais grain",
+    "label_en": "Grain maize",
+    "family": "cereal",
+    "is_legume": false,
+    "rpg_codes": [
+      "MIS"
+    ],
+    "yield_t_ha_ref": 9.0,
+    "price_eur_t": {
+      "mean": 210.0,
+      "sd": 40.0,
+      "min": 145.0,
+      "max": 350.0
+    },
+    "food_grade_premium_eur_t": 0.0,
+    "op_cost_eur_ha": {
+      "mean": 680.0,
+      "sd": 60.0
+    },
+    "n_fertiliser_kg_ha": 180.0,
+    "return_interval_years": 1,
+    "eco_scheme_family": "cereal"
+  },
+  "sunflower": {
+    "label_fr": "Tournesol",
+    "label_en": "Sunflower",
+    "family": "oilseed",
+    "is_legume": false,
+    "rpg_codes": [
+      "TRN"
+    ],
+    "yield_t_ha_ref": 2.4,
+    "price_eur_t": {
+      "mean": 450.0,
+      "sd": 80.0,
+      "min": 320.0,
+      "max": 720.0
+    },
+    "food_grade_premium_eur_t": 0.0,
+    "op_cost_eur_ha": {
+      "mean": 390.0,
+      "sd": 40.0
+    },
+    "n_fertiliser_kg_ha": 60.0,
+    "return_interval_years": 3,
+    "eco_scheme_family": "oilseed"
+  },
+  "field_pea": {
+    "label_fr": "Pois proteagineux de printemps",
+    "label_en": "Spring field pea",
+    "family": "pulse",
+    "is_legume": true,
+    "rpg_codes": [
+      "PPR",
+      "PHI"
+    ],
+    "yield_t_ha_ref": 3.6,
+    "price_eur_t": {
+      "mean": 330.0,
+      "sd": 45.0,
+      "min": 240.0,
+      "max": 470.0
+    },
+    "feed_price_eur_t": {
+      "mean": 252.0,
+      "sd": 30.0,
+      "min": 195.0,
+      "max": 340.0
+    },
+    "op_cost_eur_ha": {
+      "mean": 415.0,
+      "sd": 40.0
+    },
+    "n_fertiliser_kg_ha": 0.0,
+    "return_interval_years": 6,
+    "disease_group": "aphanomyces",
+    "n_fixation_kg_per_t_grain": 24.0,
+    "residue_n_credit_kg_ha": {
+      "min": 15.0,
+      "typical": 30.0,
+      "max": 45.0
+    },
+    "protein_pct_dm": 23.0,
+    "human_grade_base_prob": 0.62,
+    "soil_ph_min": 6.0,
+    "soil_ph_max": 8.5,
+    "hydromorphy_tolerance": "low",
+    "heat_sensitivity": "high",
+    "drought_sensitivity": "high",
+    "eco_scheme_family": "legume",
+    "pac_coupled_scheme": "legumineuses_a_graines"
+  },
+  "winter_pea": {
+    "label_fr": "Pois d'hiver",
+    "label_en": "Winter pea",
+    "family": "pulse",
+    "is_legume": true,
+    "rpg_codes": [
+      "PHI"
+    ],
+    "yield_t_ha_ref": 4.0,
+    "price_eur_t": {
+      "mean": 325.0,
+      "sd": 45.0,
+      "min": 240.0,
+      "max": 470.0
+    },
+    "feed_price_eur_t": {
+      "mean": 252.0,
+      "sd": 30.0,
+      "min": 195.0,
+      "max": 340.0
+    },
+    "op_cost_eur_ha": {
+      "mean": 430.0,
+      "sd": 40.0
+    },
+    "n_fertiliser_kg_ha": 0.0,
+    "return_interval_years": 6,
+    "disease_group": "aphanomyces",
+    "n_fixation_kg_per_t_grain": 24.0,
+    "residue_n_credit_kg_ha": {
+      "min": 18.0,
+      "typical": 33.0,
+      "max": 48.0
+    },
+    "protein_pct_dm": 22.0,
+    "human_grade_base_prob": 0.58,
+    "soil_ph_min": 6.0,
+    "soil_ph_max": 8.5,
+    "hydromorphy_tolerance": "low",
+    "heat_sensitivity": "medium",
+    "drought_sensitivity": "medium",
+    "eco_scheme_family": "legume",
+    "pac_coupled_scheme": "legumineuses_a_graines"
+  },
+  "fava_bean": {
+    "label_fr": "Feverole",
+    "label_en": "Fava / broad bean",
+    "family": "pulse",
+    "is_legume": true,
+    "rpg_codes": [
+      "FVL",
+      "FFO"
+    ],
+    "yield_t_ha_ref": 3.4,
+    "price_eur_t": {
+      "mean": 352.0,
+      "sd": 55.0,
+      "min": 255.0,
+      "max": 520.0
+    },
+    "feed_price_eur_t": {
+      "mean": 262.0,
+      "sd": 32.0,
+      "min": 200.0,
+      "max": 350.0
+    },
+    "op_cost_eur_ha": {
+      "mean": 395.0,
+      "sd": 40.0
+    },
+    "n_fertiliser_kg_ha": 0.0,
+    "return_interval_years": 4,
+    "disease_group": "fava",
+    "n_fixation_kg_per_t_grain": 28.0,
+    "residue_n_credit_kg_ha": {
+      "min": 20.0,
+      "typical": 38.0,
+      "max": 55.0
+    },
+    "protein_pct_dm": 28.0,
+    "human_grade_base_prob": 0.55,
+    "soil_ph_min": 6.2,
+    "soil_ph_max": 8.5,
+    "hydromorphy_tolerance": "medium",
+    "heat_sensitivity": "high",
+    "drought_sensitivity": "high",
+    "bruchid_risk": "high",
+    "eco_scheme_family": "legume",
+    "pac_coupled_scheme": "legumineuses_a_graines"
+  },
+  "green_lentil": {
+    "label_fr": "Lentille verte",
+    "label_en": "Green lentil",
+    "family": "pulse",
+    "is_legume": true,
+    "rpg_codes": [
+      "LEC"
+    ],
+    "yield_t_ha_ref": 1.45,
+    "price_eur_t": {
+      "mean": 840.0,
+      "sd": 160.0,
+      "min": 520.0,
+      "max": 1300.0
+    },
+    "feed_price_eur_t": {
+      "mean": 275.0,
+      "sd": 40.0,
+      "min": 200.0,
+      "max": 390.0
+    },
+    "op_cost_eur_ha": {
+      "mean": 475.0,
+      "sd": 55.0
+    },
+    "n_fertiliser_kg_ha": 0.0,
+    "return_interval_years": 5,
+    "disease_group": "aphanomyces",
+    "n_fixation_kg_per_t_grain": 30.0,
+    "residue_n_credit_kg_ha": {
+      "min": 8.0,
+      "typical": 18.0,
+      "max": 30.0
+    },
+    "protein_pct_dm": 26.0,
+    "human_grade_base_prob": 0.68,
+    "soil_ph_min": 6.2,
+    "soil_ph_max": 8.5,
+    "hydromorphy_tolerance": "low",
+    "heat_sensitivity": "medium",
+    "drought_sensitivity": "low",
+    "bruchid_risk": "high",
+    "eco_scheme_family": "legume",
+    "pac_coupled_scheme": "legumineuses_a_graines"
+  },
+  "chickpea": {
+    "label_fr": "Pois chiche",
+    "label_en": "Chickpea",
+    "family": "pulse",
+    "is_legume": true,
+    "rpg_codes": [
+      "PCH"
+    ],
+    "yield_t_ha_ref": 1.7,
+    "price_eur_t": {
+      "mean": 720.0,
+      "sd": 130.0,
+      "min": 470.0,
+      "max": 1100.0
+    },
+    "feed_price_eur_t": {
+      "mean": 295.0,
+      "sd": 42.0,
+      "min": 215.0,
+      "max": 400.0
+    },
+    "op_cost_eur_ha": {
+      "mean": 440.0,
+      "sd": 50.0
+    },
+    "n_fertiliser_kg_ha": 0.0,
+    "return_interval_years": 5,
+    "disease_group": "ascochyta",
+    "n_fixation_kg_per_t_grain": 28.0,
+    "residue_n_credit_kg_ha": {
+      "min": 8.0,
+      "typical": 18.0,
+      "max": 28.0
+    },
+    "protein_pct_dm": 22.0,
+    "human_grade_base_prob": 0.66,
+    "soil_ph_min": 6.0,
+    "soil_ph_max": 8.6,
+    "hydromorphy_tolerance": "low",
+    "heat_sensitivity": "low",
+    "drought_sensitivity": "very_low",
+    "eco_scheme_family": "legume",
+    "pac_coupled_scheme": "legumineuses_a_graines"
+  },
+  "soybean": {
+    "label_fr": "Soja",
+    "label_en": "Soybean",
+    "family": "pulse",
+    "is_legume": true,
+    "rpg_codes": [
+      "SOJ"
+    ],
+    "yield_t_ha_ref": 2.6,
+    "price_eur_t": {
+      "mean": 540.0,
+      "sd": 90.0,
+      "min": 380.0,
+      "max": 820.0
+    },
+    "feed_price_eur_t": {
+      "mean": 420.0,
+      "sd": 65.0,
+      "min": 310.0,
+      "max": 650.0
+    },
+    "op_cost_eur_ha": {
+      "mean": 480.0,
+      "sd": 55.0
+    },
+    "n_fertiliser_kg_ha": 0.0,
+    "return_interval_years": 3,
+    "disease_group": "sclerotinia",
+    "n_fixation_kg_per_t_grain": 32.0,
+    "residue_n_credit_kg_ha": {
+      "min": 5.0,
+      "typical": 15.0,
+      "max": 25.0
+    },
+    "protein_pct_dm": 38.0,
+    "human_grade_base_prob": 0.7,
+    "soil_ph_min": 6.0,
+    "soil_ph_max": 8.0,
+    "hydromorphy_tolerance": "low",
+    "heat_sensitivity": "medium",
+    "drought_sensitivity": "high",
+    "needs_irrigation": true,
+    "eco_scheme_family": "legume",
+    "pac_coupled_scheme": "soja"
+  },
+  "alfalfa": {
+    "label_fr": "Luzerne",
+    "label_en": "Alfalfa",
+    "family": "forage_legume",
+    "is_legume": true,
+    "rpg_codes": [
+      "LUZ"
+    ],
+    "yield_t_ha_ref": 11.0,
+    "price_eur_t": {
+      "mean": 165.0,
+      "sd": 28.0,
+      "min": 110.0,
+      "max": 260.0
+    },
+    "feed_price_eur_t": {
+      "mean": 150.0,
+      "sd": 25.0,
+      "min": 100.0,
+      "max": 240.0
+    },
+    "op_cost_eur_ha": {
+      "mean": 330.0,
+      "sd": 45.0
+    },
+    "n_fertiliser_kg_ha": 0.0,
+    "return_interval_years": 4,
+    "disease_group": "none",
+    "n_fixation_kg_per_t_grain": 0.0,
+    "residue_n_credit_kg_ha": {
+      "min": 30.0,
+      "typical": 60.0,
+      "max": 100.0
+    },
+    "protein_pct_dm": 18.0,
+    "human_grade_base_prob": 0.0,
+    "soil_ph_min": 6.5,
+    "soil_ph_max": 8.5,
+    "hydromorphy_tolerance": "low",
+    "heat_sensitivity": "low",
+    "drought_sensitivity": "low",
+    "eco_scheme_family": "forage_legume",
+    "pac_coupled_scheme": "legumineuses_fourrageres"
+  },
+  "fallow": {
+    "label_fr": "Jachere / terre non exploitee",
+    "label_en": "Fallow / idle land",
+    "family": "fallow",
+    "is_legume": false,
+    "rpg_codes": [
+      "JAC",
+      "JNO",
+      "SNE",
+      "J5M",
+      "J6S"
+    ],
+    "yield_t_ha_ref": 0.0,
+    "price_eur_t": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "food_grade_premium_eur_t": 0.0,
+    "op_cost_eur_ha": {
+      "mean": 72.0,
+      "sd": 22.0
+    },
+    "n_fertiliser_kg_ha": 0.0,
+    "return_interval_years": 1,
+    "eco_scheme_family": "fallow",
+    "counts_toward_bcae8": true,
+    "notes": "Declared fallow or temporarily unexploited arable land. Roughly a third of parcels in a live RPG 2023 Beauce sample fall in this class, which makes it the cheapest land to convert: a pulse planted here displaces no crop margin. The catch is BCAE 8 - fallow counts toward the non-productive area requirement and a grain legume does not, so the area has to be found elsewhere on the farm."
+  },
+  "other_legume": {
+    "label_fr": "Autre legumineuse a graines (genre non precise)",
+    "label_en": "Other grain legume, genus unspecified",
+    "family": "legume_unspecified",
+    "is_legume": true,
+    "rpg_codes": [
+      "PAG",
+      "MPC"
+    ],
+    "yield_t_ha_ref": 2.6,
+    "price_eur_t": {
+      "mean": 320.0,
+      "sd": 55.0,
+      "min": 220.0,
+      "max": 500.0
+    },
+    "feed_price_eur_t": {
+      "mean": 255.0,
+      "sd": 32.0,
+      "min": 195.0,
+      "max": 350.0
+    },
+    "op_cost_eur_ha": {
+      "mean": 410.0,
+      "sd": 45.0
+    },
+    "n_fertiliser_kg_ha": 0.0,
+    "return_interval_years": 4,
+    "disease_group": "aphanomyces",
+    "residue_n_credit_kg_ha": {
+      "min": 12.0,
+      "typical": 25.0,
+      "max": 40.0
+    },
+    "protein_pct_dm": 24.0,
+    "human_grade_base_prob": 0.55,
+    "soil_ph_min": 6.0,
+    "soil_ph_max": 8.5,
+    "hydromorphy_tolerance": "low",
+    "heat_sensitivity": "medium",
+    "drought_sensitivity": "medium",
+    "eco_scheme_family": "legume",
+    "pac_coupled_scheme": "legumineuses_a_graines",
+    "notes": "RPG codes PAG and MPC declare a grain legume without naming the genus, so no yield or price can be predicted for it. It exists here only so that a past declaration still counts toward the Aphanomyces return interval. Treated as a host of that group, which is the cautious reading: a disease with no chemical control and decade-long inoculum persistence should not be cleared on the strength of a missing label. Its family keeps it out of the candidate list."
+  }
+}

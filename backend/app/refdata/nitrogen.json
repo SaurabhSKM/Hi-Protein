@@ -1,0 +1,54 @@
+{
+  "_meta": {
+    "description": "Physics-informed guardrails for the legume nitrogen carry-over credit, replacing a flat 30-50 kg/ha assumption. Bounds are derived from the structure of the INRAE STICS soil-crop model and the AzoFert nitrogen advice method: the credit scales with legume biomass actually produced, is capped by mineralisation potential, and is reduced by over-winter leaching risk on light soils under wet autumns.",
+    "source": "Structure and parameter ranges consistent with INRAE STICS / AzoFert published formulations and Terres Inovia nitrogen carry-over references.",
+    "caution": "These are lookup bounds for a hackathon prototype, NOT a calibrated STICS run. A production system should call STICS or AzoFert directly."
+  },
+  "n_fertiliser_price_eur_per_kg_n": {"mean": 1.25, "sd": 0.30, "min": 0.70, "max": 2.60},
+  "credit_model": {
+    "description": "N_credit = residue_n_base * yield_ratio_damped * soil_mineralisation_factor * (1 - leaching_loss_fraction)",
+    "yield_ratio_damping_exponent": 0.6,
+    "absolute_bounds_kg_ha": {"min": 0.0, "max": 70.0},
+    "note": "The damping exponent below 1 reflects that residue N does not scale linearly with grain yield; a double-yield crop does not leave double the available N."
+  },
+  "soil_mineralisation_factor": {
+    "deep_loam": 1.00,
+    "clay_loam": 0.95,
+    "deep_clay": 0.85,
+    "shallow_limestone": 0.75,
+    "sandy": 0.90,
+    "boulbene": 0.80,
+    "note": "Cool, heavy or shallow soils mineralise residue N more slowly, so less of it is available to the following wheat in its uptake window."
+  },
+  "leaching_loss_fraction": {
+    "description": "Fraction of residue N lost over winter, as a function of autumn-winter drainage and soil water capacity. Light soils under a wet autumn lose the most.",
+    "base": 0.15,
+    "per_100mm_autumn_rain_above_200mm": 0.10,
+    "reserve_utile_reference_mm": 140.0,
+    "max": 0.60,
+    "cover_crop_mitigation": 0.40,
+    "cover_crop_note": "A well-established cover crop (CIPAN) after the legume retains a large share of the residue N and is already mandatory in zones vulnerables."
+  },
+  "following_wheat_yield_response": {
+    "description": "Yield gain of the following winter wheat after a grain legume versus after a cereal. Published French trial means cluster nearer +0.4 t/ha than the +0.8 t/ha sometimes quoted, and the gain SHRINKS when the legume yielded poorly or the site is drought-limited.",
+    "mean_t_ha": 0.45,
+    "sd_t_ha": 0.18,
+    "min_t_ha": 0.0,
+    "max_t_ha": 0.9,
+    "by_legume": {
+      "field_pea": 0.50,
+      "winter_pea": 0.52,
+      "fava_bean": 0.55,
+      "green_lentil": 0.28,
+      "chickpea": 0.30,
+      "soybean": 0.35,
+      "alfalfa": 0.80
+    },
+    "note": "Only part of this gain is nitrogen; the rest is the break-crop effect on take-all (piétin-échaudage) and grass weeds. Lentil and chickpea leave little biomass, hence the smaller gain."
+  },
+  "wheat_n_dose_reduction": {
+    "description": "Mandatory deduction applied to the following wheat's nitrogen dose in the fertiliser plan, capped so the model never predicts an agronomically absurd saving.",
+    "max_fraction_of_wheat_dose": 0.35,
+    "note": "Even the best legume precedent cannot replace more than about a third of a winter wheat nitrogen budget without yield or protein penalty."
+  }
+}

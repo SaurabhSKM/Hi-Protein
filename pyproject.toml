@@ -1,0 +1,21 @@
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+# Named explicitly rather than relying on defaults, so adding a directory to the repo
+# does not silently put it in or out of scope.
+include = ["backend/**/*.py", "ml/**/*.py", "tests/**/*.py", "scripts/**/*.py"]
+exclude = [".venv", "frontend", "data", "ml/artifacts"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "SIM"]
+ignore = [
+  "E501",    # long lines are allowed in reference tables and explanatory comments
+  "B008",    # FastAPI Depends/Query in defaults is the framework's idiom
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E402"]  # conftest puts backend/ on sys.path before the app imports
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]

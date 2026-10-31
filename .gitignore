@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Downloaded open data and derived artifacts. Reproduced by `make data`.
+data/raw/
+data/cache/
+data/processed/
+
+# Trained model. Reproduced by `make train`.
+ml/artifacts/*.joblib
+
+# Local environment
+.env
+.env.local

@@ -1,0 +1,64 @@
+{
+  "_meta": {
+    "description": "Irrigation decomposition. Agreste publishes a single departmental yield per crop that MIXES irrigated and rain-fed area. Applying that mixed mean to a rain-fed parcel overstates its yield, and the error is largest exactly where it matters: soybean, whose French area is majority irrigated. Without this correction the engine recommends rain-fed soy in Beauce, which almost no farmer actually grows there.",
+    "method": "observed_mean = s * y_rainfed * (1 + uplift) + (1 - s) * y_rainfed, so y_rainfed = observed_mean / (1 + s * uplift), where s is the irrigated share of that crop's national area.",
+    "source": "Irrigated shares and irrigation yield responses consistent with Agreste irrigation surveys and Terres Inovia / Terres Univia irrigation trial references.",
+    "caution": "Shares are national averages applied uniformly. A department-by-crop irrigation share would be better and exists in the Agreste irrigation survey, which is not in the bulk series-longues file."
+  },
+  "crops": {
+    "soybean": {
+      "irrigated_share_of_area": 0.60,
+      "irrigation_yield_uplift": 0.50,
+      "note": "French soy is majority irrigated. Rain-fed soy north of the Loire is genuinely marginal and the engine should say so."
+    },
+    "chickpea": {
+      "irrigated_share_of_area": 0.08,
+      "irrigation_yield_uplift": 0.20,
+      "note": "Chickpea is grown precisely because it does not need water; irrigation adds little."
+    },
+    "field_pea": {
+      "irrigated_share_of_area": 0.15,
+      "irrigation_yield_uplift": 0.30,
+      "note": "Irrigation at flowering protects pod set in a dry June."
+    },
+    "winter_pea": {
+      "irrigated_share_of_area": 0.10,
+      "irrigation_yield_uplift": 0.22
+    },
+    "fava_bean": {
+      "irrigated_share_of_area": 0.12,
+      "irrigation_yield_uplift": 0.32,
+      "note": "Fava bean is shallow rooted and responds strongly to water at flowering."
+    },
+    "green_lentil": {
+      "irrigated_share_of_area": 0.03,
+      "irrigation_yield_uplift": 0.12,
+      "note": "Lentil is almost never irrigated and over-watering causes lodging and staining."
+    },
+    "grain_maize": {
+      "irrigated_share_of_area": 0.40,
+      "irrigation_yield_uplift": 0.55
+    },
+    "soft_wheat": {
+      "irrigated_share_of_area": 0.05,
+      "irrigation_yield_uplift": 0.12
+    },
+    "durum_wheat": {
+      "irrigated_share_of_area": 0.12,
+      "irrigation_yield_uplift": 0.18
+    },
+    "spring_barley": {
+      "irrigated_share_of_area": 0.06,
+      "irrigation_yield_uplift": 0.14
+    },
+    "sunflower": {
+      "irrigated_share_of_area": 0.10,
+      "irrigation_yield_uplift": 0.25
+    },
+    "rapeseed": {
+      "irrigated_share_of_area": 0.02,
+      "irrigation_yield_uplift": 0.08
+    }
+  },
+  "default": {"irrigated_share_of_area": 0.05, "irrigation_yield_uplift": 0.15}
+}

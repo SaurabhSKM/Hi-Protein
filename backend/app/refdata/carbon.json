@@ -1,0 +1,41 @@
+{
+  "_meta": {
+    "description": "Carbon and land-use reference values. Live values are fetched from the ADEME Agribalyse API at runtime; these are the cached fallbacks and the structural factors the API does not provide.",
+    "source": "ADEME Agribalyse v3.x impact values (kg CO2e per kg product, climate change indicator) plus published soy land-use-change figures.",
+    "functional_unit_note": "Comparing per kg of PRODUCT flatters pulses against soy meal, which is far more protein-dense. The engine therefore reports both per kg product AND per kg of crude protein, which is the honest basis for a feed substitution claim."
+  },
+  "fallback_kg_co2e_per_kg_product": {
+    "field_pea": 0.63,
+    "winter_pea": 0.63,
+    "fava_bean": 0.58,
+    "green_lentil": 0.86,
+    "chickpea": 0.92,
+    "soybean_france": 0.78,
+    "soybean_meal_brazil_imported": 3.05,
+    "soybean_meal_brazil_no_luc": 0.72,
+    "soft_wheat": 0.44,
+    "spring_barley": 0.41,
+    "rapeseed": 0.95,
+    "synthetic_n_fertiliser_kg_co2e_per_kg_n": 5.8
+  },
+  "protein_content_pct_as_fed": {
+    "field_pea": 22.0,
+    "winter_pea": 21.5,
+    "fava_bean": 26.5,
+    "green_lentil": 24.5,
+    "chickpea": 20.5,
+    "soybean_france": 35.0,
+    "soybean_meal_brazil_imported": 46.0,
+    "soft_wheat": 11.5
+  },
+  "land_use_change": {
+    "description": "Imported South American soy meal carries a land-use-change burden that dominates its footprint. Excluding it, as some corporate inventories do, erases most of the advantage of substituting with a French pulse. The engine reports both.",
+    "soy_meal_brazil_luc_share_of_footprint": 0.76,
+    "note": "Agribalyse and the EU PEF method include amortised LUC; the GHG Protocol Land Sector guidance treats it separately. Which convention the buyer uses changes the answer materially."
+  },
+  "transport": {
+    "soy_meal_brazil_to_france_kg_co2e_per_t_km": 0.012,
+    "soy_meal_brazil_to_france_distance_km": 9800,
+    "domestic_truck_kg_co2e_per_t_km": 0.095
+  }
+}

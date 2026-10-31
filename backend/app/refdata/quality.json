@@ -1,0 +1,65 @@
+{
+  "_meta": {
+    "description": "Human-food grading hazard model for the P_human term. This is a STRUCTURED EXPERT MODEL, not a trained classifier, and the API labels it as such. No French open dataset records per-lot grading outcomes, so there is no label to train on; inventing one would make a fabricated number look like a measurement.",
+    "form": "P_human = base(crop) * PRODUCT(1 - penalty_i), clipped, where each penalty is a documented agronomic mechanism driven by a real weather feature.",
+    "calibration": "base(crop) values are set so that the resulting long-run human-grade share matches the share of French production that published market balances route to human food rather than feed.",
+    "replace_with": "Per-lot grading records from a cooperative silo would turn this into a genuinely trained classifier. That is the single highest-value dataset a partner could contribute."
+  },
+  "penalties": {
+    "harvest_staining": {
+      "driver": "harvest_rain_mm",
+      "mechanism": "July rain on mature pods causes fungal staining and seed discolouration, the dominant reason lots are refused for retail packing.",
+      "threshold_mm": 55.0,
+      "per_10mm_above": 0.055,
+      "max": 0.55,
+      "crop_sensitivity": {"green_lentil": 1.4, "chickpea": 1.2, "fava_bean": 1.0, "field_pea": 0.8, "winter_pea": 0.8, "soybean": 0.6}
+    },
+    "bruchid_damage": {
+      "driver": "may_days_above_20c",
+      "mechanism": "Bruchus beetles begin laying eggs on young pods once daily maxima pass about 20 C. Larval exit holes above the 2 percent tolerance downgrade the lot.",
+      "threshold_days": 12.0,
+      "per_day_above": 0.020,
+      "max": 0.35,
+      "crop_sensitivity": {"fava_bean": 1.5, "green_lentil": 1.2, "chickpea": 0.3, "field_pea": 0.5, "winter_pea": 0.5, "soybean": 0.1}
+    },
+    "drought_splitting": {
+      "driver": "drought_stress_index",
+      "mechanism": "A dry grain-fill followed by rewetting at harvest splits seed coats and shrivels grain, pushing calibre below food specification.",
+      "threshold_index": 0.9,
+      "per_unit_above": 0.22,
+      "max": 0.30,
+      "crop_sensitivity": {"green_lentil": 1.2, "field_pea": 1.1, "winter_pea": 1.1, "fava_bean": 1.0, "chickpea": 0.5, "soybean": 0.9}
+    },
+    "heat_abortion_smallseed": {
+      "driver": "jun_heat_days_30c",
+      "mechanism": "Heat during flowering aborts flowers and leaves a high share of small, light seed that fails calibre screening even when total yield looks acceptable.",
+      "threshold_days": 7.0,
+      "per_day_above": 0.018,
+      "max": 0.25,
+      "crop_sensitivity": {"field_pea": 1.3, "winter_pea": 1.2, "fava_bean": 1.3, "green_lentil": 0.8, "chickpea": 0.4, "soybean": 0.7}
+    },
+    "no_optical_sorting_access": {
+      "driver": "infrastructure",
+      "mechanism": "Without optical sorting within haulage range, a lot cannot be cleaned to retail insect-damage and discolouration tolerances, so a marginal lot goes to feed instead of being sorted into a passing fraction.",
+      "flat_penalty": 0.12,
+      "applies_to": ["green_lentil", "chickpea", "fava_bean"]
+    }
+  },
+  "bounds": {"min_prob": 0.02, "max_prob": 0.97},
+  "fraction_distribution": {
+    "description": "A harvest is not simply pass or fail. Part of a lot can be sorted into a passing fraction while the rest goes to feed, so the engine samples a human-grade FRACTION rather than flipping a single coin. Treating it as one coin flip per harvest overstates the spread of farm income; treating it as a fixed expectation understates the downside.",
+    "form": "Beta(a, b) with mean = P_human and concentration kappa, plus an independent catastrophic-downgrade event.",
+    "kappa": 6.0,
+    "catastrophic_downgrade": {
+      "description": "Whole-lot rejection: mycotoxin, a failed residue test, or staining so severe no sorting recovers it. Independent of the graded fraction.",
+      "base_prob": 0.025,
+      "per_10mm_harvest_rain_above_threshold": 0.012,
+      "threshold_mm": 70.0,
+      "max_prob": 0.20
+    }
+  },
+  "protein_response": {
+    "description": "Protein concentration moves inversely with yield (the dilution effect), which is why a drought year can fail a calibre specification while passing a protein specification.",
+    "pct_per_unit_yield_ratio": -4.5
+  }
+}

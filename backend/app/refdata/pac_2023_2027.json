@@ -1,0 +1,61 @@
+{
+  "_meta": {
+    "description": "PAC 2023-2027 French national strategic plan (PSN) support relevant to pulses. Coupled aid unit amounts are set ANNUALLY by the Ministry once the declared area is known; the values here are planned/observed unit amounts and must be treated as provisional.",
+    "source": "Ministere de l'Agriculture / PSN France 2023-2027, aides couplees aux proteines vegetales; TelePAC campaign notices.",
+    "unit_amount_is_provisional": true,
+    "last_reviewed": "2026-10-31"
+  },
+  "coupled_aid": {
+    "legumineuses_a_graines": {
+      "label_fr": "Aide aux legumineuses a graines",
+      "eur_ha": 122.0,
+      "eur_ha_range": [104.0, 130.0],
+      "eligible_crops": ["field_pea", "winter_pea", "fava_bean", "green_lentil", "chickpea"],
+      "notes": "Grain legumes harvested dry. Requires compliance with minimum seeding density and declared as main crop."
+    },
+    "soja": {
+      "label_fr": "Aide au soja",
+      "eur_ha": 55.0,
+      "eur_ha_range": [45.0, 70.0],
+      "eligible_crops": ["soybean"],
+      "notes": "Soy has its own, lower unit amount than other grain legumes."
+    },
+    "legumineuses_fourrageres": {
+      "label_fr": "Aide aux legumineuses fourrageres",
+      "eur_ha": 124.0,
+      "eur_ha_range": [124.0, 148.0],
+      "eligible_crops": ["alfalfa", "fava_bean", "field_pea"],
+      "requires_livestock": true,
+      "min_livestock_ugb": 5.0,
+      "eur_ha_with_livestock_contract": 148.0,
+      "notes": "Higher unit amount (up to 148 EUR/ha) applies to farms holding at least 5 UGB of herbivores or under contract with a livestock farmer. The crop must be harvested as forage, not as dry grain - a farm cannot claim this AND the grain legume aid on the same hectares."
+    }
+  },
+  "eco_scheme": {
+    "label_fr": "Ecoregime - voie des pratiques (diversification des cultures)",
+    "levels": {
+      "base": {"eur_ha": 45.0, "points_required": 4},
+      "superieur": {"eur_ha": 60.0, "points_required": 5},
+      "specifique_bio": {"eur_ha": 92.0, "points_required": null}
+    },
+    "diversification_points": {
+      "description": "Points awarded on the share of the main crop and the presence of a legume in the arable rotation. Inserting a grain legume typically moves a wheat-barley-rapeseed farm from 4 to 5 points, i.e. from the base to the superieur tier.",
+      "legume_share_bonus_threshold_pct": 10.0,
+      "uplift_eur_ha_if_crosses_threshold": 15.0
+    },
+    "notes": "The eco-scheme is paid on ALL eligible hectares of the farm, not only the legume hectares. The model therefore attributes only the marginal uplift to the rotation change, and only when the legume insertion is what crosses the points threshold."
+  },
+  "bcae": {
+    "bcae7_rotation": {
+      "label_fr": "BCAE 7 - rotation des cultures",
+      "notes": "Requires crop rotation or diversification on arable land. A legume counts as a distinct crop and helps satisfy BCAE 7."
+    },
+    "bcae8_non_productive": {
+      "label_fr": "BCAE 8 - surfaces non productives",
+      "notes": "Grain legumes do NOT count as non-productive areas; they do not substitute for the 4% BCAE 8 requirement."
+    }
+  },
+  "nitrates_directive": {
+    "notes": "In zones vulnerables, the nitrogen balance sheet (plan previsionnel de fumure) must deduct the legume residue credit from the following crop's nitrogen dose. The model applies this deduction as a mandatory, not optional, saving."
+  }
+}

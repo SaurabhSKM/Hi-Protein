@@ -1,0 +1,246 @@
+{
+  "model_version": "yield-cqr-xgb-2.3.0",
+  "target": "yield_ratio = observed yield / department-crop baseline (baseline fitted on fit block only)",
+  "splits": {
+    "fit": [
+      2010,
+      2016
+    ],
+    "calibrate": [
+      2017,
+      2021
+    ],
+    "test": [
+      2022,
+      2024
+    ],
+    "rationale": "Forward time split. Random K-fold leaks because one growing season appears in both folds across spatially correlated departments."
+  },
+  "n_fit": 1422,
+  "n_calib": 1248,
+  "n_test": 765,
+  "raw_quantile_metrics": {
+    "q15": {
+      "pinball_loss": 0.07415,
+      "pinball_loss_climatology": 0.06739,
+      "skill_vs_climatology_pct": -10.03,
+      "empirical_coverage_below": 0.481,
+      "target_coverage_below": 0.15
+    },
+    "q50": {
+      "pinball_loss": 0.0875,
+      "pinball_loss_climatology": 0.09316,
+      "skill_vs_climatology_pct": 6.07,
+      "empirical_coverage_below": 0.7176,
+      "target_coverage_below": 0.5
+    },
+    "q85": {
+      "pinball_loss": 0.05327,
+      "pinball_loss_climatology": 0.05253,
+      "skill_vs_climatology_pct": -1.42,
+      "empirical_coverage_below": 0.8654,
+      "target_coverage_below": 0.85
+    }
+  },
+  "deployed_conformalised_metrics": {
+    "q15": {
+      "pinball_loss": 0.04183,
+      "pinball_loss_climatology": 0.06739,
+      "skill_vs_climatology_pct": 37.93,
+      "empirical_coverage_below": 0.1399,
+      "target_coverage_below": 0.15
+    },
+    "q50": {
+      "pinball_loss": 0.07978,
+      "pinball_loss_climatology": 0.09316,
+      "skill_vs_climatology_pct": 14.35,
+      "empirical_coverage_below": 0.6,
+      "target_coverage_below": 0.5
+    },
+    "q85": {
+      "pinball_loss": 0.05473,
+      "pinball_loss_climatology": 0.05253,
+      "skill_vs_climatology_pct": -4.19,
+      "empirical_coverage_below": 0.868,
+      "target_coverage_below": 0.85
+    }
+  },
+  "skill_summary": "The deployed median has modest but real skill over a climatological constant. The deployed tails are close to climatology: conformal calibration buys HONEST coverage, not sharpness. On a three-year block that is materially drier and hotter than the fit period, a correctly wide interval is worth more to a planting decision than a narrow one that is wrong 60 percent of the time.",
+  "conformal_offsets": {
+    "__global__": {
+      "width_lo": 0.20514,
+      "width_hi": 0.01069,
+      "median_bias": -0.05997,
+      "n": 1248
+    },
+    "chickpea": {
+      "width_lo": 0.38185,
+      "width_hi": 0.01819,
+      "median_bias": -0.12164,
+      "n": 87,
+      "median_bias_raw": -0.17126,
+      "shrinkage_weight": 0.554
+    },
+    "fava_bean": {
+      "width_lo": 0.22117,
+      "width_hi": -0.09272,
+      "median_bias": -0.12377,
+      "n": 166,
+      "median_bias_raw": -0.15067,
+      "shrinkage_weight": 0.703
+    },
+    "field_pea": {
+      "width_lo": 0.21572,
+      "width_hi": 0.03695,
+      "median_bias": -0.07448,
+      "n": 145,
+      "median_bias_raw": -0.08148,
+      "shrinkage_weight": 0.674
+    },
+    "green_lentil": {
+      "width_lo": 0.54109,
+      "width_hi": -0.05878,
+      "median_bias": -0.25382,
+      "n": 151,
+      "median_bias_raw": -0.34368,
+      "shrinkage_weight": 0.683
+    },
+    "rapeseed": {
+      "width_lo": 0.10323,
+      "width_hi": 0.01701,
+      "median_bias": -0.06227,
+      "n": 193,
+      "median_bias_raw": -0.0631,
+      "shrinkage_weight": 0.734
+    },
+    "soft_wheat": {
+      "width_lo": 0.04918,
+      "width_hi": 0.01715,
+      "median_bias": -0.0157,
+      "n": 199,
+      "median_bias_raw": -0.00012,
+      "shrinkage_weight": 0.74
+    },
+    "soybean": {
+      "width_lo": 0.14904,
+      "width_hi": 0.03332,
+      "median_bias": -0.0312,
+      "n": 165,
+      "median_bias_raw": -0.019,
+      "shrinkage_weight": 0.702
+    },
+    "spring_barley": {
+      "width_lo": 0.06778,
+      "width_hi": 0.08678,
+      "median_bias": 6e-05,
+      "n": 142,
+      "median_bias_raw": 0.02965,
+      "shrinkage_weight": 0.67
+    }
+  },
+  "calibration_effect": {
+    "interval_coverage_raw": 0.3843,
+    "interval_coverage_conformal": 0.7281,
+    "interval_coverage_target": 0.7,
+    "mean_width_raw_ratio": 0.1943,
+    "mean_width_conformal_ratio": 0.3986,
+    "median_bias_raw": -0.0864,
+    "median_bias_conformal": -0.04,
+    "interpretation": "Raw quantile regression over-predicted the 2022-2024 block: those seasons sit below what 2010-2018 weather-yield relationships imply. Conformal calibration widens the interval and shifts the median so the stated confidence is honest."
+  },
+  "per_crop_test_performance": [
+    {
+      "crop": "chickpea",
+      "n": 56,
+      "mae_t_ha": 0.466,
+      "mean_obs_t_ha": 1.695,
+      "coverage": 0.625,
+      "mae_pct": 27.489
+    },
+    {
+      "crop": "fava_bean",
+      "n": 99,
+      "mae_t_ha": 0.36,
+      "mean_obs_t_ha": 2.396,
+      "coverage": 0.798,
+      "mae_pct": 15.016
+    },
+    {
+      "crop": "field_pea",
+      "n": 87,
+      "mae_t_ha": 0.699,
+      "mean_obs_t_ha": 2.89,
+      "coverage": 0.701,
+      "mae_pct": 24.179
+    },
+    {
+      "crop": "green_lentil",
+      "n": 91,
+      "mae_t_ha": 0.459,
+      "mean_obs_t_ha": 1.367,
+      "coverage": 0.648,
+      "mae_pct": 33.566
+    },
+    {
+      "crop": "rapeseed",
+      "n": 117,
+      "mae_t_ha": 0.302,
+      "mean_obs_t_ha": 3.127,
+      "coverage": 0.761,
+      "mae_pct": 9.653
+    },
+    {
+      "crop": "soft_wheat",
+      "n": 118,
+      "mae_t_ha": 0.543,
+      "mean_obs_t_ha": 6.301,
+      "coverage": 0.72,
+      "mae_pct": 8.623
+    },
+    {
+      "crop": "soybean",
+      "n": 105,
+      "mae_t_ha": 0.435,
+      "mean_obs_t_ha": 2.332,
+      "coverage": 0.705,
+      "mae_pct": 18.661
+    },
+    {
+      "crop": "spring_barley",
+      "n": 92,
+      "mae_t_ha": 0.585,
+      "mean_obs_t_ha": 5.035,
+      "coverage": 0.815,
+      "mae_pct": 11.627
+    }
+  ],
+  "feature_importance_top15": {
+    "soil_deep_loam": 0.07779,
+    "flowering_water_balance_mm": 0.04898,
+    "may_days_above_20c": 0.03618,
+    "spring_tmean_c": 0.03305,
+    "crop_rapeseed": 0.03194,
+    "summer_rain_mm": 0.03179,
+    "crop_soft_wheat": 0.03064,
+    "flowering_rain_mm": 0.02921,
+    "crop_green_lentil": 0.02796,
+    "late_harvest_rain_mm": 0.02795,
+    "crop_spring_barley": 0.02737,
+    "crop_soybean": 0.02681,
+    "crop_fava_bean": 0.02673,
+    "crop_chickpea": 0.0266,
+    "harvest_rain_mm": 0.02633
+  },
+  "parcel_variance_inflation": 1.292,
+  "data_sources": {
+    "labels": "Agreste SAA series longues 2010-2025 (departmental, sheet COP), filtered to year <= 2024",
+    "features": "Meteo-France donnees climatologiques de base mensuelles, per department, lowland stations only (<700 m)"
+  },
+  "known_limitations": [
+    "Labels are DEPARTMENT MEAN yields; parcel variance is larger, so parcel intervals are widened by the inflation factor above before being shown.",
+    "Agreste rounds minor-pulse departmental yields coarsely, which caps achievable accuracy for lentil and chickpea.",
+    "Features are a department median across lowland stations, not the parcel's own weather.",
+    "No variety, sowing date, irrigation or crop-protection data exists in the open sources, so management effects remain in the residual.",
+    "Conformal coverage is guaranteed under exchangeability. A warming climate breaks that assumption, so the calibration block must be re-fitted every season."
+  ]
+}

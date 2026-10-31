@@ -1,0 +1,48 @@
+{
+  "_meta": {
+    "description": "Pilot departments with their NUTS2 region, dominant soil archetype, arable area and current pulse share. Pulse share and arable area are order-of-magnitude planning figures for the macro heatmap, not official SAA values.",
+    "national_target": {"current_pulse_share_pct": 4.0, "target_pulse_share_pct": 8.0, "target_year": 2030}
+  },
+  "28": {
+    "name": "Eure-et-Loir", "region_code": "FRB0", "region_name": "Centre-Val de Loire",
+    "centroid": [1.49, 48.44], "dominant_soil": "deep_loam",
+    "arable_ha": 440000, "pulse_ha": 14500, "weather_station_dept": "28",
+    "irrigation_share_pct": 12.0,
+    "notes": "Beauce. High-potential deep loam, intensive wheat-barley-rapeseed rotations, low current pulse share."
+  },
+  "21": {
+    "name": "Cote-d'Or", "region_code": "FRC1", "region_name": "Bourgogne-Franche-Comte",
+    "centroid": [4.80, 47.40], "dominant_soil": "shallow_limestone",
+    "arable_ha": 290000, "pulse_ha": 16800, "weather_station_dept": "21",
+    "irrigation_share_pct": 3.0,
+    "notes": "Plateaux calcaires. Shallow stony soils, strong existing lentil and mustard tradition, summer drought limited."
+  },
+  "32": {
+    "name": "Gers", "region_code": "FRJ2", "region_name": "Occitanie",
+    "centroid": [0.58, 43.70], "dominant_soil": "clay_loam",
+    "arable_ha": 310000, "pulse_ha": 11200, "weather_station_dept": "32",
+    "irrigation_share_pct": 9.0,
+    "notes": "Coteaux de Gascogne. Clay-loam hillsides, durum wheat and sunflower base, strong fit for chickpea and soy under irrigation."
+  },
+  "45": {
+    "name": "Loiret", "region_code": "FRB0", "region_name": "Centre-Val de Loire",
+    "centroid": [2.30, 47.95], "dominant_soil": "clay_loam",
+    "arable_ha": 360000, "pulse_ha": 9800, "weather_station_dept": "45",
+    "irrigation_share_pct": 18.0,
+    "notes": "Mixed Beauce and Sologne margins."
+  },
+  "51": {
+    "name": "Marne", "region_code": "FRF2", "region_name": "Grand Est",
+    "centroid": [4.20, 48.95], "dominant_soil": "shallow_limestone",
+    "arable_ha": 420000, "pulse_ha": 19500, "weather_station_dept": "51",
+    "irrigation_share_pct": 4.0,
+    "notes": "Champagne cretacee. Established protein pea area."
+  },
+  "86": {
+    "name": "Vienne", "region_code": "FRI1", "region_name": "Nouvelle-Aquitaine",
+    "centroid": [0.45, 46.60], "dominant_soil": "shallow_limestone",
+    "arable_ha": 280000, "pulse_ha": 13100, "weather_station_dept": "86",
+    "irrigation_share_pct": 11.0,
+    "notes": "Groies. Drought-prone shallow soils favouring chickpea and lentil over pea."
+  }
+}

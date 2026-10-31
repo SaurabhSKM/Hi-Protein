@@ -1,0 +1,237 @@
+{
+  "_meta": {
+    "description": "Deterministic agronomic rule matrix. Return intervals are minimum years between two host crops of the same soil-borne disease group, not merely the same species - this is the correction that matters agronomically, because Aphanomyces euteiches carries over between pea, lentil and vetch.",
+    "source": "Terres Inovia technical guidance on crop return intervals and soil-borne disease management (Cap Proteines / Cap Proteines+ references).",
+    "disclaimer": "Rules are a screening aid. A soil Aphanomyces test (test en pot / indice de risque) remains the only reliable way to clear a plot for pea."
+  },
+  "disease_groups": {
+    "aphanomyces": {
+      "pathogen": "Aphanomyces euteiches",
+      "label_fr": "Pourriture racinaire du pois",
+      "host_crops": [
+        "field_pea",
+        "winter_pea",
+        "green_lentil",
+        "alfalfa",
+        "other_legume"
+      ],
+      "min_return_interval_years": 6,
+      "severity": "high",
+      "note": "No effective chemical control. Inoculum persists over a decade. Interval applies across ALL host species, so lentil after pea is as risky as pea after pea.",
+      "partial_hosts": [
+        "fava_bean"
+      ],
+      "partial_host_interval_years": 3
+    },
+    "fava": {
+      "pathogen": "Didymella fabae / Botrytis fabae",
+      "label_fr": "Anthracnose et botrytis de la feverole",
+      "host_crops": [
+        "fava_bean"
+      ],
+      "min_return_interval_years": 4,
+      "severity": "medium"
+    },
+    "ascochyta": {
+      "pathogen": "Ascochyta rabiei",
+      "label_fr": "Anthracnose du pois chiche",
+      "host_crops": [
+        "chickpea"
+      ],
+      "min_return_interval_years": 5,
+      "severity": "high"
+    },
+    "sclerotinia": {
+      "pathogen": "Sclerotinia sclerotiorum",
+      "label_fr": "Sclerotiniose",
+      "host_crops": [
+        "soybean",
+        "rapeseed",
+        "sunflower"
+      ],
+      "min_return_interval_years": 4,
+      "severity": "medium",
+      "note": "Shared with rapeseed and sunflower, so soy after rapeseed carries real risk."
+    }
+  },
+  "preceding_crop_suitability": {
+    "_scale": "1.0 = ideal preceding crop, 0.0 = to be avoided. Applied as a multiplier on expected pulse yield.",
+    "field_pea": {
+      "soft_wheat": 1.0,
+      "winter_barley": 0.98,
+      "spring_barley": 0.96,
+      "durum_wheat": 1.0,
+      "grain_maize": 0.92,
+      "rapeseed": 0.9,
+      "sunflower": 0.92,
+      "alfalfa": 0.7,
+      "field_pea": 0.45,
+      "fava_bean": 0.8,
+      "green_lentil": 0.55,
+      "fallow": 1.02,
+      "other_legume": 0.62
+    },
+    "winter_pea": {
+      "soft_wheat": 1.0,
+      "winter_barley": 0.98,
+      "spring_barley": 0.96,
+      "durum_wheat": 1.0,
+      "grain_maize": 0.9,
+      "rapeseed": 0.9,
+      "sunflower": 0.92,
+      "alfalfa": 0.7,
+      "field_pea": 0.45,
+      "fava_bean": 0.8,
+      "green_lentil": 0.55,
+      "fallow": 1.02,
+      "other_legume": 0.62
+    },
+    "fava_bean": {
+      "soft_wheat": 1.0,
+      "winter_barley": 0.98,
+      "spring_barley": 0.97,
+      "durum_wheat": 1.0,
+      "grain_maize": 0.94,
+      "rapeseed": 0.92,
+      "sunflower": 0.94,
+      "alfalfa": 0.82,
+      "field_pea": 0.85,
+      "fava_bean": 0.55,
+      "green_lentil": 0.88,
+      "fallow": 1.02,
+      "other_legume": 0.62
+    },
+    "green_lentil": {
+      "soft_wheat": 1.0,
+      "winter_barley": 0.99,
+      "spring_barley": 0.98,
+      "durum_wheat": 1.0,
+      "grain_maize": 0.9,
+      "rapeseed": 0.88,
+      "sunflower": 0.93,
+      "alfalfa": 0.72,
+      "field_pea": 0.6,
+      "fava_bean": 0.9,
+      "green_lentil": 0.5,
+      "fallow": 1.02,
+      "other_legume": 0.62
+    },
+    "chickpea": {
+      "soft_wheat": 1.0,
+      "winter_barley": 0.99,
+      "spring_barley": 0.98,
+      "durum_wheat": 1.0,
+      "grain_maize": 0.92,
+      "rapeseed": 0.9,
+      "sunflower": 0.95,
+      "alfalfa": 0.8,
+      "field_pea": 0.92,
+      "fava_bean": 0.92,
+      "green_lentil": 0.85,
+      "fallow": 1.02,
+      "other_legume": 0.62
+    },
+    "soybean": {
+      "soft_wheat": 1.0,
+      "winter_barley": 0.99,
+      "spring_barley": 0.98,
+      "durum_wheat": 1.0,
+      "grain_maize": 0.95,
+      "rapeseed": 0.85,
+      "sunflower": 0.86,
+      "alfalfa": 0.85,
+      "field_pea": 0.92,
+      "fava_bean": 0.92,
+      "green_lentil": 0.9,
+      "fallow": 1.02,
+      "other_legume": 0.62
+    }
+  },
+  "sowing_windows": {
+    "field_pea": {
+      "start": "02-20",
+      "end": "03-25",
+      "note_fr": "Semer tot des que le sol est portant; un semis tardif expose la floraison au stress thermique de juin."
+    },
+    "winter_pea": {
+      "start": "10-25",
+      "end": "11-20",
+      "note_fr": "Semis d'automne; exige un sol sain, non hydromorphe."
+    },
+    "fava_bean": {
+      "start": "02-15",
+      "end": "03-20",
+      "note_fr": "Feverole de printemps. Variantes d'hiver semees fin octobre a mi-novembre."
+    },
+    "green_lentil": {
+      "start": "03-01",
+      "end": "03-25",
+      "note_fr": "Semis peu profond (2-3 cm) sur sol bien ressuye; eviter les sols hydromorphes."
+    },
+    "chickpea": {
+      "start": "02-25",
+      "end": "03-30",
+      "note_fr": "Exige un sol filtrant et rechauffe; tres sensible a l'exces d'eau en levee."
+    },
+    "soybean": {
+      "start": "04-20",
+      "end": "05-20",
+      "note_fr": "Semis apres rechauffement du sol (>12 C); irrigation souvent necessaire en annee seche."
+    }
+  },
+  "bruchid": {
+    "description": "Bruchus rufimanus (feverole) and Bruchus signaticornis / lentil bruchid lay eggs on young pods once spring temperatures pass a threshold. Damaged seed above the human-food tolerance downgrades the lot to feed.",
+    "egg_laying_temp_threshold_c": 20.0,
+    "susceptible_crops": [
+      "fava_bean",
+      "green_lentil"
+    ],
+    "human_food_damage_tolerance_pct": 2.0,
+    "prob_penalty_per_threshold_day": 0.018,
+    "max_prob_penalty": 0.35
+  },
+  "quality_specs": {
+    "green_lentil": {
+      "min_protein_pct": 22.0,
+      "max_insect_damage_pct": 2.0,
+      "max_split_pct": 3.0,
+      "max_staining_pct": 5.0,
+      "max_moisture_pct": 14.0
+    },
+    "field_pea": {
+      "min_protein_pct": 21.0,
+      "max_insect_damage_pct": 3.0,
+      "max_split_pct": 8.0,
+      "max_staining_pct": 8.0,
+      "max_moisture_pct": 14.5
+    },
+    "winter_pea": {
+      "min_protein_pct": 21.0,
+      "max_insect_damage_pct": 3.0,
+      "max_split_pct": 8.0,
+      "max_staining_pct": 8.0,
+      "max_moisture_pct": 14.5
+    },
+    "fava_bean": {
+      "min_protein_pct": 26.0,
+      "max_insect_damage_pct": 2.0,
+      "max_split_pct": 5.0,
+      "max_staining_pct": 6.0,
+      "max_moisture_pct": 14.0
+    },
+    "chickpea": {
+      "min_protein_pct": 20.0,
+      "max_insect_damage_pct": 2.0,
+      "max_split_pct": 4.0,
+      "max_staining_pct": 5.0,
+      "max_moisture_pct": 14.0
+    },
+    "soybean": {
+      "min_protein_pct": 36.0,
+      "max_insect_damage_pct": 3.0,
+      "max_split_pct": 8.0,
+      "max_staining_pct": 8.0,
+      "max_moisture_pct": 14.0
+    }
+  }
+}

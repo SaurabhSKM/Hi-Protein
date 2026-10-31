@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+:root { color-scheme: light; }
+body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+.leaflet-container { height: 100%; width: 100%; background: #eef2f5; }

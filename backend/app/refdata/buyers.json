@@ -1,0 +1,126 @@
+{
+  "_meta": {
+    "description": "Offtake demand book. Company names are real French pulse processors and cooperatives, but every price, volume and premium below is ILLUSTRATIVE DEMO DATA generated for this prototype. None of it represents a real commercial offer.",
+    "is_demo_data": true,
+    "price_basis": "Plausible 2024-2025 forward contract structures: a human-food price with a guaranteed feed-grade floor, plus optional premiums.",
+    "schema_note": "Prices are keyed PER CROP. A single price per buyer was wrong: a packer that takes both lentil and pea cannot pay one price for both, and a flat field would quote pea at lentil prices."
+  },
+  "buyers": [
+    {
+      "buyer_id": "BUY-ROQ-01", "buyer_name": "Roquette Freres",
+      "type": "protein_isolate_industrial", "site": "Vecquemont (80)",
+      "location": [2.52, 49.88], "region_focus": ["FRB0", "FRF2", "FRE1", "FRD1"],
+      "needs_scope3": true,
+      "premiums": {"low_carbon_eur_t": 12.0, "contract_3yr_eur_t": 8.0},
+      "crops": {
+        "field_pea":  {"price_eur_t": 372.0, "floor_eur_t": 255.0, "target_tons": 4200,
+                       "min_protein_pct": 21.0, "max_insect_damage_pct": 3.0},
+        "winter_pea": {"price_eur_t": 366.0, "floor_eur_t": 255.0, "target_tons": 1500,
+                       "min_protein_pct": 21.0, "max_insect_damage_pct": 3.0}
+      },
+      "floor_guaranteed": true,
+      "notes": "Pea protein isolate. Accepts a wide protein band but penalises insect damage; pays a low-carbon premium on documented practices."
+    },
+    {
+      "buyer_id": "BUY-SAB-01", "buyer_name": "Sabarot Wassner",
+      "type": "pulse_packer_retail", "site": "Chaspuzac (43)",
+      "location": [3.77, 45.07], "region_focus": ["FRC1", "FRK1", "FRB0", "FRI1"],
+      "needs_scope3": false,
+      "premiums": {"optical_sorted_eur_t": 35.0, "origin_france_eur_t": 25.0},
+      "crops": {
+        "green_lentil": {"price_eur_t": 905.0, "floor_eur_t": 280.0, "target_tons": 900,
+                         "min_protein_pct": 22.0, "max_insect_damage_pct": 2.0},
+        "chickpea":     {"price_eur_t": 760.0, "floor_eur_t": 300.0, "target_tons": 450,
+                         "min_protein_pct": 20.0, "max_insect_damage_pct": 2.0}
+      },
+      "floor_guaranteed": true,
+      "notes": "Retail-pack green lentil. Strictest insect-damage tolerance in the book; requires optical sorting access."
+    },
+    {
+      "buyer_id": "BUY-BON-01", "buyer_name": "Bonduelle",
+      "type": "canning_foodservice", "site": "Renescure (59)",
+      "location": [2.43, 50.72], "region_focus": ["FRB0", "FRE1", "FRF2", "FRD1"],
+      "needs_scope3": true,
+      "premiums": {"low_carbon_eur_t": 18.0, "hve_certified_eur_t": 15.0},
+      "crops": {
+        "green_lentil": {"price_eur_t": 820.0, "floor_eur_t": 272.0, "target_tons": 700,
+                         "min_protein_pct": 21.0, "max_insect_damage_pct": 2.0},
+        "field_pea":    {"price_eur_t": 395.0, "floor_eur_t": 262.0, "target_tons": 1500,
+                         "min_protein_pct": 21.0, "max_insect_damage_pct": 3.0},
+        "chickpea":     {"price_eur_t": 735.0, "floor_eur_t": 295.0, "target_tons": 600,
+                         "min_protein_pct": 20.0, "max_insect_damage_pct": 2.0}
+      },
+      "floor_guaranteed": true,
+      "notes": "Needs documented Scope 3 figures for its own reporting; pays the largest low-carbon premium."
+    },
+    {
+      "buyer_id": "BUY-AXE-01", "buyer_name": "Axereal",
+      "type": "cooperative_aggregator", "site": "Olivet (45)",
+      "location": [1.90, 47.86], "region_focus": ["FRB0", "FRC1", "FRF2"],
+      "needs_scope3": false,
+      "premiums": {"contract_3yr_eur_t": 10.0},
+      "crops": {
+        "field_pea":    {"price_eur_t": 346.0, "floor_eur_t": 258.0, "target_tons": 6500,
+                         "min_protein_pct": 20.0, "max_insect_damage_pct": 4.0},
+        "fava_bean":    {"price_eur_t": 358.0, "floor_eur_t": 265.0, "target_tons": 3000,
+                         "min_protein_pct": 26.0, "max_insect_damage_pct": 4.0},
+        "green_lentil": {"price_eur_t": 690.0, "floor_eur_t": 268.0, "target_tons": 400,
+                         "min_protein_pct": 21.0, "max_insect_damage_pct": 4.0}
+      },
+      "floor_guaranteed": true,
+      "notes": "Local cooperative. Lowest price but shortest haul, on-farm collection and the loosest quality grid, so the realistic downside is small."
+    },
+    {
+      "buyer_id": "BUY-VPA-01", "buyer_name": "Vivien Paille / Dreyfus",
+      "type": "pulse_packer_retail", "site": "Vitry-le-Francois (51)",
+      "location": [4.58, 48.72], "region_focus": ["FRF2", "FRC1", "FRB0"],
+      "needs_scope3": false,
+      "premiums": {"optical_sorted_eur_t": 30.0},
+      "crops": {
+        "green_lentil": {"price_eur_t": 870.0, "floor_eur_t": 276.0, "target_tons": 1100,
+                         "min_protein_pct": 22.0, "max_insect_damage_pct": 2.0},
+        "field_pea":    {"price_eur_t": 352.0, "floor_eur_t": 260.0, "target_tons": 900,
+                         "min_protein_pct": 21.0, "max_insect_damage_pct": 3.0}
+      },
+      "floor_guaranteed": true,
+      "notes": "Retail lentil brand with a smaller pea line."
+    },
+    {
+      "buyer_id": "BUY-EUR-01", "buyer_name": "Euralis / Terres du Sud",
+      "type": "cooperative_aggregator", "site": "Lescar (64)",
+      "location": [-0.42, 43.33], "region_focus": ["FRJ2", "FRI1", "FRJ1"],
+      "needs_scope3": true,
+      "premiums": {"non_gmo_eur_t": 40.0, "origin_france_eur_t": 20.0},
+      "crops": {
+        "soybean":   {"price_eur_t": 566.0, "floor_eur_t": 425.0, "target_tons": 3000,
+                      "min_protein_pct": 36.0, "max_insect_damage_pct": 4.0},
+        "chickpea":  {"price_eur_t": 700.0, "floor_eur_t": 300.0, "target_tons": 900,
+                      "min_protein_pct": 20.0, "max_insect_damage_pct": 3.0},
+        "fava_bean": {"price_eur_t": 366.0, "floor_eur_t": 268.0, "target_tons": 1200,
+                      "min_protein_pct": 26.0, "max_insect_damage_pct": 4.0}
+      },
+      "floor_guaranteed": true,
+      "notes": "Non-GMO French soy for food and local feed substitution in the south-west."
+    },
+    {
+      "buyer_id": "BUY-FEED-01", "buyer_name": "Feed market (floor reference)",
+      "type": "feed_market_floor", "site": "Reference spot", "location": null,
+      "region_focus": null, "needs_scope3": false, "premiums": {},
+      "crops": {},
+      "wants_any_pulse": true,
+      "floor_guaranteed": false, "is_floor_reference": true,
+      "notes": "Not a contract. Represents selling the whole harvest into the feed market, which is the true no-contract fallback and the benchmark every offer above has to beat."
+    }
+  ],
+  "optical_sorting_units": [
+    {"name": "Station de tri optique - Beauce", "dept": "28", "location": [1.55, 48.30], "capacity_t_yr": 12000},
+    {"name": "Station de tri optique - Bourgogne", "dept": "21", "location": [5.02, 47.32], "capacity_t_yr": 7000},
+    {"name": "Station de tri optique - Champagne", "dept": "51", "location": [4.36, 48.96], "capacity_t_yr": 15000},
+    {"name": "Station de tri optique - Sud-Ouest", "dept": "47", "location": [0.62, 44.20], "capacity_t_yr": 9000}
+  ],
+  "infrastructure_gaps": {
+    "description": "Departments with pulse area but no optical sorting unit within 80 km cannot reliably hit retail insect-damage and discolouration tolerances, which caps the achievable human-grade share. This is the concrete, fundable infrastructure gap the regional dashboard surfaces.",
+    "max_distance_km": 80.0,
+    "human_grade_prob_penalty_if_no_access": 0.12
+  }
+}
