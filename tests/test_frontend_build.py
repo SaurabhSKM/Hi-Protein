@@ -34,11 +34,22 @@ def _dist_file(pattern: str) -> Path:
     return matches[-1]
 
 
-def test_index_html_loads_nothing_from_the_network():
-    """Offline mode is a hard requirement, so the page may not need a CDN to render."""
+def _dist_index() -> str:
+    """The built index.html, or skip.
+
+    Every test in this module asserts on a build artefact, so every one of them has to
+    skip when there is no build rather than fail. CI's Python job deliberately has no
+    frontend build - the assertions here run in the job that does one - and a test that
+    forgot this guard failed there while its three siblings skipped.
+    """
     if not (DIST / "index.html").exists():
         pytest.skip("frontend/dist not built; run `make build`")
-    html = (DIST / "index.html").read_text(encoding="utf-8")
+    return (DIST / "index.html").read_text(encoding="utf-8")
+
+
+def test_index_html_loads_nothing_from_the_network():
+    """Offline mode is a hard requirement, so the page may not need a CDN to render."""
+    html = _dist_index()
     external = re.findall(r'(?:href|src)="(https?://[^"]+)"', html)
     assert not external, f"index.html pulls from the network: {external}"
 
@@ -78,7 +89,7 @@ def test_bundled_css_has_no_unresolved_relative_image_urls():
 
 def test_viewport_and_mobile_meta_survive_the_build():
     """The app is expected to be usable on a phone; these are the minimum."""
-    html = (DIST / "index.html").read_text(encoding="utf-8")
+    html = _dist_index()
     assert 'name="viewport"' in html
     assert "width=device-width" in html
     assert "theme-color" in html
