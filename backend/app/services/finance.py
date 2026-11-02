@@ -24,7 +24,7 @@ import numpy as np
 import pandas as pd
 
 from ..config import crop, load_ref, pac
-from . import ml, nitrogen, prices, quality
+from . import logistics, ml, nitrogen, prices, quality
 from .agronomy import suitability_multiplier
 
 # How much of the legume break-crop yield response the following crop can capture.
@@ -100,6 +100,8 @@ def simulate(
     preceding_crop: str | None = None,
     contract: dict | None = None,
     has_optical_sorting_access: bool = True,
+    sorter_road_km: float | None = None,
+    fallback_feed_floor_eur_t: float | None = None,
     year3_override: str | None = None,
 ) -> dict:
     """Run the paired three-year simulation. Returns per-hectare arrays and summaries."""
@@ -171,11 +173,24 @@ def simulate(
         on_farm = prices.feed_substitution_value(rng, pulse, n)
         price_feed = np.maximum(price_feed, on_farm)
 
+    if fallback_feed_floor_eur_t:
+        # A signed contract with a neighbouring livestock holding does the same job for
+        # a farm with no animals of its own, which is most farms with a lot of cereal
+        # land. It is a FLOOR, not a replacement: if the open feed market happens to pay
+        # better in a given draw, the farmer sells there instead.
+        price_feed = np.maximum(price_feed, float(fallback_feed_floor_eur_t))
+
     aid, aid_scheme, aid_provisional = _pac_coupled_aid(pulse, has_livestock)
     eco = _eco_scheme_uplift(baseline_rotation, pulse)
     pulse_cost = prices.cost_draw(rng, pulse, n)
     pulse_revenue = py * (frac * price_human + (1.0 - frac) * price_feed)
-    m2_pulse = pulse_revenue - pulse_cost + aid + eco
+    # Incremental haulage to the nearest optical sorter, charged on food tonnes only.
+    # This is what makes distance to infrastructure a financial quantity instead of a
+    # label, and therefore what lets a parcel be agronomically ideal and still lose
+    # money. The baseline cereal arm hauls to its local silo inside the collection
+    # radius already priced into its RICA cost, so nothing is charged there.
+    haul = logistics.haulage_cost_eur_ha(py, frac, sorter_road_km)
+    m2_pulse = pulse_revenue - pulse_cost - haul + aid + eco
 
     # ---------------- year 3: carry-over effects ---------------------------
     base_y3 = _crop_margin(rng, y3_crop, dept, soil, s3, z3, irrigated=irrigated)
@@ -217,6 +232,9 @@ def simulate(
         "quality_info": qinfo,
         "pulse_revenue": pulse_revenue,
         "pulse_cost": pulse_cost,
+        "haulage_eur": haul,
+        "sorter_road_km": sorter_road_km,
+        "haulage_eur_per_t_food": logistics.food_haulage_eur_per_tonne(sorter_road_km),
         "price_human": price_human,
         "price_feed": price_feed,
         "pac_aid": aid,
@@ -227,6 +245,11 @@ def simulate(
         "n_saving_eur": n_saving_eur,
         "wheat_boost_t": boost_t,
         "wheat_boost_eur": boost_eur,
+        # Needed to reprice the break-crop response under alternative pre-crop
+        # assumptions without re-simulating; see `precrop_literature_sensitivity`.
+        "year3_price": base_y3["price"],
+        "year3_capture": capture,
+        "n_price": n_price,
         "suitability": suit,
         "suitability_preceding": suit_prec,
         "irrigation_factor": irr_factor,
@@ -262,18 +285,110 @@ def breakeven_human_fraction(sim: dict) -> float | None:
     make food grade before this is worth doing?
     """
     py, ph, pf = sim["pulse_yield"], sim["price_human"], sim["price_feed"]
-    other = (
-        sim["pulse_y2_margin"] - sim["pulse_revenue"]
-    )  # aid + eco - cost, independent of grading
+    # aid + eco - cost: the part of the year-2 margin that does not move with grading.
+    # Haulage is added back because it DOES move with grading (it is charged per food
+    # tonne), so it belongs in the spread below, not in the fixed term. Leaving it in
+    # here would understate the break-even fraction on a distant parcel, which is
+    # precisely the case where the answer matters.
+    other = sim["pulse_y2_margin"] - sim["pulse_revenue"] + sim["haulage_eur"]
     shortfall = np.median(
         sim["baseline_y2_margin"] - other - (sim["pulse_y3_margin"] - sim["baseline_y3_margin"])
     )
-    spread = np.median(py * (ph - pf))
+    haul_per_t = float(sim["haulage_eur_per_t_food"])
+    spread = np.median(py * (ph - pf - haul_per_t))
     base_feed = np.median(py * pf)
     if spread <= 1e-6:
         return None
     f = (shortfall - base_feed) / spread
     return float(np.clip(f, 0.0, 1.0)) if np.isfinite(f) else None
+
+
+# Published European pre-crop benefit ranges, from the one systematic review of the
+# question: Preissel, Reckling, Schlaefke and Zander (2015), "Magnitude and farm-
+# economic value of grain legume pre-crop benefits in Europe: A review", Field Crops
+# Research 175:64-79, doi:10.1016/j.fcr.2015.01.012 (29 European experiments on
+# following-cereal yield, 19 gross-margin studies).
+#
+# Two different nitrogen figures in that review answer two different questions, and
+# only one of them applies here. 60 kg N/ha is the average reduction compatible with
+# "maintenance of acceptable yields"; 23-31 kg N/ha is the reduction compatible with
+# "maximising yield potential". This engine assumes a farmer who wants the following
+# wheat's full yield, so 23-31 is the applicable band.
+PREISSEL_2015 = {
+    "doi": "10.1016/j.fcr.2015.01.012",
+    "n_reduction_kg_ha_yield_maximising": (23.0, 31.0),
+    "n_reduction_kg_ha_acceptable_yields": 60.0,
+    "following_cereal_yield_gain_t_ha": (0.5, 1.6),
+}
+
+
+def precrop_literature_sensitivity(sim: dict) -> dict:
+    """How much the verdict depends on sitting at the conservative edge of the review.
+
+    The engine's realised nitrogen credit (roughly 5-17 kg N/ha) is BELOW Preissel et
+    al.'s yield-maximising band of 23-31, and its following-crop yield response (0.28
+    to 0.55 t/ha by legume) sits at or below the bottom of their measured 0.5-1.6 t/ha
+    range. That conservatism is defensible - it means no positive result here is
+    manufactured by generous pre-crop crediting - but it is not free, because the same
+    conservatism pushes marginal cases negative.
+
+    Rather than retune the parameters towards a nicer answer, this reprices the two
+    pre-crop terms on the draws already taken and reports what the delta WOULD be at
+    the published European bounds. Any gap is a statement about the literature's
+    spread, not a correction to apply.
+    """
+    base_delta = float(np.median(sim["delta"]))
+    n_now = float(np.median(sim["n_saved_kg"]))
+    n_price = float(np.median(sim["n_price"]))
+    y3_price = float(np.median(sim["year3_price"]))
+    capture = float(sim["year3_capture"])
+
+    # `wheat_boost_t` is already POST-capture, so it must be grossed back up before
+    # being compared against a review figure measured on a following cereal. Comparing
+    # the post-capture value directly would double-apply the capture factor and roughly
+    # triple the apparent sensitivity.
+    boost_now_post = float(np.median(sim["wheat_boost_t"]))
+    boost_now_cereal_equiv = boost_now_post / capture if capture > 0 else 0.0
+
+    def repriced(n_kg: float, boost_t_cereal: float) -> float:
+        d_n = (n_kg - n_now) * n_price
+        # The review range is a following-CEREAL gain; the capture factor converts it
+        # to whatever actually follows in year 3 (1.0 for a cereal, 0.45 for an oilseed).
+        d_boost = (boost_t_cereal - boost_now_cereal_equiv) * capture * y3_price
+        return base_delta + d_n + d_boost
+
+    lo_n, hi_n = PREISSEL_2015["n_reduction_kg_ha_yield_maximising"]
+    lo_y, hi_y = PREISSEL_2015["following_cereal_yield_gain_t_ha"]
+    mid_n, mid_y = (lo_n + hi_n) / 2.0, (lo_y + hi_y) / 2.0
+
+    scenarios = {
+        "engine_as_built": round(base_delta, 1),
+        "review_lower_bound": round(repriced(lo_n, lo_y), 1),
+        "review_midpoint": round(repriced(mid_n, mid_y), 1),
+        "review_upper_bound": round(repriced(hi_n, hi_y), 1),
+    }
+    return {
+        "source": PREISSEL_2015["doi"],
+        "engine_n_credit_kg_ha": round(n_now, 1),
+        "review_n_band_kg_ha": [lo_n, hi_n],
+        "engine_following_crop_gain_t_ha_cereal_equivalent": round(boost_now_cereal_equiv, 3),
+        "engine_following_crop_gain_t_ha_as_applied": round(boost_now_post, 3),
+        "year3_capture_factor": round(capture, 3),
+        "review_following_crop_band_t_ha": [lo_y, hi_y],
+        "engine_sits_below_review_on_both": bool(
+            n_now < lo_n and boost_now_cereal_equiv < lo_y
+        ),
+        "median_delta_eur_ha": scenarios,
+        "verdict_changes_at_review_midpoint": bool(
+            (base_delta <= 0.0) != (scenarios["review_midpoint"] <= 0.0)
+        ),
+        "interpretation": (
+            "The engine credits pre-crop benefits below the published European range. "
+            "That protects every positive result from the charge of optimistic "
+            "assumptions, and it means marginal negative results should be read as "
+            "the conservative end of a real spread, not as a settled verdict."
+        ),
+    }
 
 
 def cumulative_fan(sim: dict) -> list[dict]:

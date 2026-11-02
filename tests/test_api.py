@@ -249,3 +249,56 @@ def test_ml_provenance_mentions_the_rotation_pressure_feature(client):
     """The trained model's own description must say it uses rotation history."""
     d = client.post(f"{BASE}/simulate-rotation", json=_body()).json()
     assert "legume" in d["ml_predictions_year2"]["provenance"]["source"].lower()
+
+
+# --------------------------------------------------------------------------- #
+# Parcel lookup latency: the 504 risk on the first screen
+# --------------------------------------------------------------------------- #
+def test_parcel_campaigns_are_fetched_concurrently_not_serially():
+    """The farmer tab fires this on page load, so its worst case is a gateway timeout.
+
+    Nine RPG campaigns at a six-second per-request timeout is 54 seconds serially.
+    The workshop's nginx gives up at 60, so a cold cache on poor wifi produced a 504
+    on the first screen a jury sees — with nothing in the app to indicate why.
+    Concurrent, the worst case is one timeout plus overhead.
+    """
+    import time
+
+    from app.clients import ign_rpg
+
+    assert hasattr(ign_rpg, "_fetch_years_concurrently")
+    assert ign_rpg.PARCEL_BUDGET_S < 60, "the budget must sit inside the gateway timeout"
+    # And comfortably inside it, with room for the simulation that follows.
+    assert ign_rpg.PARCEL_BUDGET_S <= 20
+
+    serial_worst_case = len(ign_rpg.AVAILABLE_YEARS) * 6.0
+    assert serial_worst_case > 50, "sanity: this is the problem being avoided"
+    assert serial_worst_case / 2 > ign_rpg.PARCEL_BUDGET_S
+
+    # The warm path must not pay for concurrency: cached campaigns resolve without
+    # a thread pool at all.
+    t0 = time.perf_counter()
+    r = ign_rpg.parcel_history(1.37, 48.387)
+    warm = time.perf_counter() - t0
+    if r["mode"] == "cached":
+        assert warm < 1.0, f"warm cache took {warm:.2f}s"
+        assert r["found"], "the Beauce demo preset must resolve from cache"
+
+
+def test_parcel_lookup_degrades_instead_of_raising(monkeypatch):
+    """An unreachable upstream must yield an empty history, never an exception.
+
+    The engine can still answer with the declared rotation; a 500 or a hang cannot.
+    """
+    from app.clients import ign_rpg
+
+    def blackhole(*_a, **_k):
+        raise TimeoutError("upstream unreachable")
+
+    monkeypatch.setattr(ign_rpg, "_fetch_year", blackhole)
+    monkeypatch.setattr(ign_rpg, "OFFLINE", False)
+    # Use a point with no cache entry so every campaign must go to the network.
+    r = ign_rpg.parcel_history(2.9999, 47.0001)
+    assert r["found"] is False
+    assert r["history"] == []
+    assert r["mode"] == "assumption"

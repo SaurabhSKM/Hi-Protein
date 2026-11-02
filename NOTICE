@@ -1,0 +1,47 @@
+Hi-Protein — Food Protein Decision & Offtake Engine
+Copyright 2026 The Hi-Protein authors
+
+This product includes software developed for Hack the Fork Paris 2026, Track 3.
+Licensed under the Apache License, Version 2.0. See LICENSE.
+
+------------------------------------------------------------------------------
+Open data attribution
+------------------------------------------------------------------------------
+
+This software fetches, parses and redistributes derived figures from French and
+European public data. The source data remains under its own licence and the
+attribution below is required wherever those figures are shown. The application
+footer, the README and docs/DATA_SOURCES.md all carry it.
+
+  * Agreste — Statistique Agricole Annuelle, long series 2010-2024.
+    Ministère de l'Agriculture et de la Souveraineté alimentaire (France).
+    Licence Ouverte / Open Licence (Etalab).
+
+  * Météo-France — Données climatologiques de base, mensuelles, par station.
+    Licence Ouverte / Open Licence (Etalab).
+
+  * IGN — API Carto, Registre Parcellaire Graphique (RPG) v2, and
+    ADMIN EXPRESS commune geometry.
+    Licence Ouverte / Open Licence (Etalab).
+
+  * ADEME — Agribalyse, agricultural life-cycle impact data.
+    Licence Ouverte / Open Licence (Etalab).
+
+  * Eurostat — agricultural price indices (apri_ap_crpouta). Used only for a
+    documented validation check; the series was found NOT USABLE for this
+    purpose and is not relied on. See data/processed/price_validation.json.
+
+------------------------------------------------------------------------------
+Data that is NOT open data, and is NOT real
+------------------------------------------------------------------------------
+
+  * Buyer contract terms (backend/app/refdata/buyers.json) — prices, volumes
+    and premiums are illustrative demo data. They are not commercial offers and
+    no named counterparty has agreed to them.
+
+  * The livestock holding directory (backend/app/refdata/breeders.json) — the
+    commune centroids are real IGN geography and the count per department is
+    scaled by a measured land-use ratio, but holding names, herd types and herd
+    sizes are generated with a fixed seed. No real farm is described.
+
+Both are labelled as demo data everywhere they surface in the API and the UI.

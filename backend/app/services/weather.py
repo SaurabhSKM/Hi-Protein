@@ -69,7 +69,12 @@ def _weights(years: np.ndarray) -> np.ndarray:
 
 
 def sample_seasons(
-    dept_code: str, n: int, rng: np.random.Generator, *, jitter: float = 0.12
+    dept_code: str,
+    n: int,
+    rng: np.random.Generator,
+    *,
+    jitter: float = 0.12,
+    climate_horizon: str = "observed",
 ) -> pd.DataFrame:
     """Draw n seasons for this department.
 
@@ -77,6 +82,11 @@ def sample_seasons(
     the tails of a 2000-path simulation lumpy. A small multiplicative jitter on each
     continuous feature smooths the support while preserving the joint structure of the
     season that was drawn.
+
+    `climate_horizon` moves the whole sampled set to a future climate by the
+    delta-change method - see services/climate.py. The default leaves every number
+    exactly as it was before the horizon option existed, so the published behaviour of
+    the engine is unchanged unless a caller asks for a projection.
     """
     win = department_window(dept_code)
     if win.empty:
@@ -113,6 +123,14 @@ def sample_seasons(
     for c in ("legume_share_lag1", "legume_share_lag2to4_mean"):
         if c in out.columns:
             out[c] = out[c].clip(0.0, 1.0)
+
+    # Applied last, so the shift lands on a complete, already-consistent season. The
+    # import is local because climate.fit() reads this module's panel and window
+    # constants; keeping the dependency one-directional avoids an import cycle.
+    if climate_horizon and climate_horizon != "observed":
+        from . import climate
+
+        out = climate.apply_shift(out, climate_horizon)
     return out
 
 

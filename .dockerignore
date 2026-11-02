@@ -1,0 +1,27 @@
+.git
+.github
+.venv
+venv
+**/__pycache__
+**/*.pyc
+.pytest_cache
+.ruff_cache
+.mypy_cache
+
+frontend/node_modules
+frontend/dist
+frontend/.vite
+
+# Source downloads: ~60 MB, needed only to REBUILD the derived artifacts, never at
+# runtime. data/processed/ and ml/artifacts/ are copied explicitly in the Dockerfile.
+data/raw
+# The open-data response cache. Un-ignore this line if you want an image that can run
+# with HIPROTEIN_OFFLINE=1 and never touch the network — it adds ~49 MB.
+data/cache
+
+deck
+submission
+*.log
+.env
+.env.local
+.DS_Store

@@ -1,0 +1,10 @@
+# NOTE: GitHub requires absolute URLs here, so replace OWNER/REPO below with this
+# repository's real path once it is pushed. Until then these two links will 404.
+blank_issues_enabled: true
+contact_links:
+  - name: What is already known to be weak
+    url: https://github.com/OWNER/REPO/blob/main/docs/LIMITATIONS.md
+    about: Every limitation the authors already know about, stated plainly. Check here first.
+  - name: Where every number comes from
+    url: https://github.com/OWNER/REPO/blob/main/docs/DATA_SOURCES.md
+    about: The URL and parse recipe for every fetched series, and the confirmed dead ends.

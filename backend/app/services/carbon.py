@@ -69,6 +69,84 @@ def substitution_saving(
     }
 
 
+def imported_food_pulse_saving_per_kg(pulse: str) -> dict:
+    """Transport-only CO2e saving per kg of FOOD-GRADE pulse, vs the same pulse imported.
+
+    The graded fraction and the downgraded fraction have different counterfactuals, and
+    conflating them is how a plant-protein carbon claim gets rejected. A lot that fails
+    retail specification goes to feed and displaces imported soybean meal - that is the
+    `substitution_saving` path above. A lot that passes displaces an imported pulse on a
+    French plate, because France grows under half the dry pulses it eats.
+
+    Only the transport differential is claimed. A Canadian and a French lentil are both
+    rain-fed legumes whose production footprints open data cannot reliably separate, so
+    asserting a production advantage would be inventing one. Transport is the term that
+    genuinely depends on origin.
+    """
+    ref = carbon_ref()
+    spec = ref["imported_food_pulse"]
+    t = ref["transport"]
+    o = spec["origins"].get(pulse)
+    if not o:
+        return {
+            "kg_co2e_saved_per_kg": 0.0,
+            "origin": None,
+            "note": f"No import origin on record for {pulse}; no food-tier transport saving claimed.",
+        }
+
+    inland_factor = float(
+        t["rail_kg_co2e_per_t_km"] if o.get("inland_mode") == "rail"
+        else t["domestic_truck_kg_co2e_per_t_km"]
+    )
+    imported_per_t = (
+        float(o["sea_km"]) * float(t["sea_kg_co2e_per_t_km"])
+        + float(o["inland_km"]) * inland_factor
+    )
+    domestic_per_t = float(t["french_farm_to_processor_km"]) * float(
+        t["domestic_truck_kg_co2e_per_t_km"]
+    )
+    return {
+        "kg_co2e_saved_per_kg": max((imported_per_t - domestic_per_t) / 1000.0, 0.0),
+        "imported_transport_kg_co2e_per_t": round(imported_per_t, 1),
+        "domestic_transport_kg_co2e_per_t": round(domestic_per_t, 1),
+        "origin": o["origin"],
+        "note": spec["caveat"],
+    }
+
+
+def food_tier_impact(
+    pulse: str,
+    food_grade_tonnes: float,
+    *,
+    food_grade_tonnes_q15: float | None = None,
+    food_grade_tonnes_q85: float | None = None,
+) -> dict:
+    """What the human-food fraction of this harvest does to French food imports.
+
+    The headline here is deliberately a TONNAGE, not a carbon figure. How many tonnes
+    of imported pulse this parcel takes off French plates is close to certain once the
+    graded tonnage is known; the carbon attached to it is a transport differential and
+    is small. Reporting the tonnage first, and the carbon second with its method
+    stated, is the order that survives scrutiny.
+    """
+    per_kg = imported_food_pulse_saving_per_kg(pulse)
+    t = max(float(food_grade_tonnes), 0.0)
+    co2e = t * 1000.0 * per_kg["kg_co2e_saved_per_kg"] / 1000.0
+    out = {
+        "imported_pulse_displaced_tonnes": round(t, 2),
+        "transport_co2e_saved_tonnes": round(co2e, 3),
+        "transport_co2e_saved_kg_per_kg": round(per_kg["kg_co2e_saved_per_kg"], 4),
+        "import_origin_displaced": per_kg["origin"],
+        "method": carbon_ref()["imported_food_pulse"]["method"],
+        "caveat": per_kg["note"],
+    }
+    if food_grade_tonnes_q15 is not None:
+        out["imported_pulse_displaced_tonnes_q15"] = round(max(food_grade_tonnes_q15, 0.0), 2)
+    if food_grade_tonnes_q85 is not None:
+        out["imported_pulse_displaced_tonnes_q85"] = round(max(food_grade_tonnes_q85, 0.0), 2)
+    return out
+
+
 def nitrogen_saving_co2e(n_saved_kg_ha: float, area_ha: float) -> float:
     """CO2e avoided by not applying the nitrogen the legume replaced, tonnes.
 

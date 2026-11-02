@@ -1,0 +1,46 @@
+name: Data or method question
+description: A parameter, a source or a modelling choice looks wrong or unsupported.
+labels: [data, method]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This project's credibility rests on provenance, so challenges to a number are
+        welcome and are treated as first-class issues rather than as questions.
+
+        Before filing: `docs/DATA_SOURCES.md` records the URL and parse recipe for every
+        fetched series, `docs/CHANGES_FROM_BLUEPRINT.md` records why each modelling
+        choice differs from the brief, `docs/LITERATURE_AND_CALIBRATION.md` holds the
+        external calibration checks, and `docs/LIMITATIONS.md` lists what is already
+        known to be weak. If your point is on that last list, say so — the useful issue
+        is then "here is the dataset that would fix it".
+
+  - type: input
+    id: figure
+    attributes:
+      label: Which figure or parameter
+      placeholder: e.g. the 1.32 road detour factor, or P_human for green lentil
+    validations:
+      required: true
+
+  - type: textarea
+    id: claim
+    attributes:
+      label: What you think it should be, and on what evidence
+      description: A citation, a dataset, or a measurement. "It feels high" is a fine start.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: consequence
+    attributes:
+      label: Does it change a decision?
+      description: |
+        `scripts/sensitivity_audit.py` perturbs every numeric assumption and reports
+        which ones flip a recommendation. If you have run it, say what it said.
+      options:
+        - It flips a recommendation
+        - It moves a headline number but not a decision
+        - Unknown
+    validations:
+      required: true

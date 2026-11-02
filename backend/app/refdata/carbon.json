@@ -36,6 +36,23 @@
   "transport": {
     "soy_meal_brazil_to_france_kg_co2e_per_t_km": 0.012,
     "soy_meal_brazil_to_france_distance_km": 9800,
-    "domestic_truck_kg_co2e_per_t_km": 0.095
+    "domestic_truck_kg_co2e_per_t_km": 0.095,
+    "rail_kg_co2e_per_t_km": 0.030,
+    "sea_kg_co2e_per_t_km": 0.012,
+    "french_farm_to_processor_km": 250
+  },
+  "imported_food_pulse": {
+    "description": "The counterfactual for the HUMAN-FOOD fraction of the harvest. A graded lot does not displace Brazilian soybean meal - that is what the DOWNGRADED fraction displaces, through animal feed. A lot that passes retail specification displaces an imported pulse on a French plate, because that is what France currently eats: domestic production covers under half of French dry-pulse consumption.",
+    "method": "Transport differential only: (sea leg + overseas inland leg) for the import, minus the French farm-to-processor haul. The production footprints of a Canadian and a French lentil are both those of a rain-fed legume and are not reliably distinguishable in open data, so claiming a production advantage would be inventing one. Transport is the term that is genuinely origin-dependent, so it is the only term claimed.",
+    "cross_check": "Agribalyse's synthesis value for dried lentil puts 0.244 kg CO2e/kg on retail transport. The figures below come out materially BELOW that, because the overseas inland leg is costed as rail rather than road. Conservative by construction.",
+    "caveat": "A transport-only saving is small next to the feed-substitution figure, and deliberately so. The food-tier claim worth making is in TONNES of imports displaced from French plates, not in carbon. The engine reports both and does not blend them.",
+    "origins": {
+      "green_lentil": {"origin": "Canada (Saskatchewan)", "sea_km": 5500, "inland_km": 2000, "inland_mode": "rail"},
+      "chickpea": {"origin": "India / Canada", "sea_km": 9500, "inland_km": 1200, "inland_mode": "rail"},
+      "field_pea": {"origin": "Canada", "sea_km": 5500, "inland_km": 2000, "inland_mode": "rail"},
+      "winter_pea": {"origin": "Canada", "sea_km": 5500, "inland_km": 2000, "inland_mode": "rail"},
+      "fava_bean": {"origin": "United Kingdom / Australia", "sea_km": 1200, "inland_km": 400, "inland_mode": "rail"},
+      "soybean": {"origin": "Canada / Brazil, food-grade non-GMO", "sea_km": 8500, "inland_km": 1500, "inland_mode": "rail"}
+    }
   }
 }

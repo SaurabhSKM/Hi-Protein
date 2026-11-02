@@ -16,6 +16,9 @@ export default function BreakdownBars({ b }) {
     { name: 'Year 3 yield boost', v: b.wheat_yield_boost_year3_eur },
     { name: 'On-farm feed value', v: b.on_farm_feed_substitution_eur },
     { name: 'Pulse costs', v: -b.pulse_operational_cost_eur },
+    // Zero whenever a sorter is inside the ordinary collection radius, so it drops out
+    // of the chart entirely for a well-served parcel and appears only where it bites.
+    { name: 'Haulage to sorter', v: -(b.sorter_haulage_cost_eur ?? 0) },
     { name: 'Forgone year-2 margin', v: -b.forgone_baseline_year2_margin_eur },
   ].filter((d) => Math.abs(d.v) > 0.5)
 

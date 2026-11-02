@@ -3,8 +3,11 @@
 PY := .venv/bin/python
 PIP := .venv/bin/pip
 PORT ?= 5173
+GUIDE_API ?= http://127.0.0.1:8099
 
-.PHONY: help venv install data train test app serve api web build smoke offline clean reset
+DOCKER_IMAGE ?= hi-protein
+
+.PHONY: help venv install data train regions rotations profiles profiles-fast guide audit test app serve api web build smoke offline lint check docker docker-run clean reset
 
 help: ## Show the available targets
 	@grep -hE '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) \
@@ -23,8 +26,41 @@ data: ## Download the open data and build the training panel (needs network, a f
 train: ## Train and conformalise the quantile yield models
 	$(PY) ml/train.py
 
+regions: ## Build the regional layer: communes, departments, rotations, breeders, baked profiles
+	$(PY) scripts/build_communes.py
+	$(PY) scripts/build_departments.py
+	$(PY) scripts/build_dept_rotations.py
+	$(PY) scripts/build_breeders.py
+	$(PY) scripts/build_region_profiles.py 800
+
+rotations: ## Re-derive each department's baseline rotation from Agreste areas
+	$(PY) scripts/build_dept_rotations.py
+
+profiles: ## Re-bake the department economics cache, all climate horizons (~6 min)
+	$(PY) scripts/build_region_profiles.py 800
+
+profiles-fast: ## Re-bake the observed horizon only, for a quick check (~70 s)
+	$(PY) scripts/build_region_profiles.py 800 observed
+
 test: ## Run the whole test suite
 	$(PY) -m pytest tests/ -q
+
+guide: ## Regenerate the product guide PDF (needs the API running, see GUIDE_API)
+	$(PY) scripts/build_guide_pdf.py --api $(GUIDE_API)
+
+audit: ## Perturb every numeric assumption and report which change a decision
+	$(PY) scripts/sensitivity_audit.py
+
+lint: ## Lint the Python
+	.venv/bin/ruff check backend ml scripts tests
+
+check: lint test ## Everything CI runs: lint, then the whole test suite
+
+docker: ## Build the deployable image (API + built frontend + model, one port)
+	docker build -t $(DOCKER_IMAGE) .
+
+docker-run: ## Run that image on http://localhost:8080
+	docker run --rm -p 8080:8080 $(DOCKER_IMAGE)
 
 app: ## Run the app where this workshop container can actually reach it: /app on :8081
 	$(PY) scripts/serve_under_app.py

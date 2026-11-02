@@ -41,7 +41,8 @@ def main() -> int:
     parcel = {
         "department_code": "21", "parcel_id": "RPG-21-00421", "area_ha": 40.0,
         "soil_type": "shallow_limestone",
-        "baseline_rotation": ["soft_wheat", "spring_barley", "rapeseed"],
+        # Cote-d'Or's own rotation, from refdata/dept_rotations.json.
+        "baseline_rotation": ["soft_wheat", "rapeseed", "spring_barley"],
         "candidate_pulse_year2": "winter_pea",
         "crop_history": ["soft_wheat", "rapeseed", "soft_wheat", "winter_barley"],
         "n_simulations": 1500, "random_seed": 7,
@@ -81,6 +82,27 @@ def main() -> int:
            f"delta {risk.get('median_delta_eur_ha')} EUR/ha, "
            f"P(win) {risk.get('prob_pulse_beats_baseline')}")
 
+    sa = d.get("sorter_access") or {}
+    record("  .. sorter access", st, 0,
+           f"{sa.get('road_km')} km, {sa.get('haulage_cost_eur_ha_median')} EUR/ha haul, "
+           f"stranded={sa.get('is_stranded')}")
+
+    bf = d.get("breeder_fallback") or {}
+    record("  .. breeder fallback", st, 0,
+           f"CVaR15 {bf.get('cvar_without_fallback_eur_ha')} -> "
+           f"{bf.get('cvar_with_fallback_eur_ha')} EUR/ha, "
+           f"{len(bf.get('matches') or [])} holdings")
+
+    mvc = ((d.get("financial_3yr_comparison_per_ha") or {})
+           .get("risk_preference") or {}).get("minimum_viable_contract") or {}
+    record("  .. minimum viable contract", st, 0, str(mvc.get("headline"))[:58])
+
+    st, d, ms = call(v, "/simulate-rotation", {**parcel, "lon": 0.664, "lat": 48.984})
+    sa = d.get("sorter_access") or {}
+    record("POST /simulate-rotation (stranded)", st, ms,
+           f"from {sa.get('measured_from')}, {sa.get('road_km')} km, "
+           f"stranded={sa.get('is_stranded')}")
+
     st, d, ms = call(v, "/simulate-rotation", {**parcel, "selected_buyer_id": "BUY-ROQ-01"})
     r2 = d.get("financial_3yr_comparison_per_ha", {}).get("risk", {})
     record("POST /simulate-rotation (contract)", st, ms,
@@ -102,10 +124,55 @@ def main() -> int:
            f"found={d.get('found')} mode={d.get('provenance', {}).get('mode')} "
            f"{d.get('surface_ha')} ha")
 
-    st, d, ms = call(v, "/regional-overview?n_simulations=400")
+    st, d, ms = call(v, "/regional-overview")
+    tot = d.get("surface_totals") or {}
     record("GET  /regional-overview", st, ms,
            f"{len(d.get('departments', []))} departments, "
-           f"{d.get('total_gap_ha')} ha gap")
+           f"{tot.get('stranded_ha')} ha stranded of {tot.get('total_convertible_ha')} "
+           "convertible")
+
+    st, d, ms = call(v, "/stranded-surface")
+    record("GET  /stranded-surface", st, ms,
+           f"{d.get('n_total')} communes, {d.get('n_returned')} returned")
+
+    st, d, ms = call(v, "/optimise-sorters", {"k": 3})
+    imp = d.get("impact") or {}
+    sites = ", ".join(x["commune"] for x in (d.get("sites") or [])[:3])
+    record("POST /optimise-sorters (greedy)", st, ms,
+           f"{imp.get('hectares_unlocked')} ha, {imp.get('co2e_saved_tons')} t CO2e "
+           f"[{sites}]")
+
+    st, d, ms = call(v, "/optimise-sorters",
+                     {"k": 2, "region_code": "FRB0", "verify_milp": True})
+    mv = (d.get("optimisation") or {}).get("milp_verification") or {}
+    record("POST /optimise-sorters (exact)", st, ms,
+           f"greedy at {mv.get('greedy_share_of_optimum')} of the HiGHS optimum "
+           f"(floor {mv.get('theoretical_floor')})")
+
+    st, d, ms = call(v, "/breeders?lon=1.5&lat=48.3&pulse=field_pea&downgraded_lot_t=60")
+    record("GET  /breeders", st, ms,
+           f"{len(d.get('matches') or [])} holdings within "
+           f"{d.get('radius_km')} km, pays "
+           f"{(d.get('pricing') or {}).get('offered_price_eur_t')} EUR/t")
+
+    st, d, ms = call(v, "/food-demand?n_simulations=300")
+    nat = d.get("national", {})
+    record("GET  /food-demand", st, ms,
+           f"{len(d.get('regions', []))} regions, France grows "
+           f"{nat.get('self_sufficiency_current_pct')}% of what it eats")
+
+    st, d, ms = call(v, "/climate-outlook?department_code=28&crop=green_lentil&n_simulations=400")
+    rows = d.get("rows") or []
+    first, last = (rows[0] if rows else {}), (rows[-1] if rows else {})
+    record("GET  /climate-outlook", st, ms,
+           f"{len(rows)} horizons, food t/ha "
+           f"{first.get('food_grade_tonnes_per_ha')} -> {last.get('food_grade_tonnes_per_ha')}")
+
+    st, d, ms = call(v, "/simulate-rotation", {**parcel, "climate_horizon": "tracc_2050"})
+    fo = d.get("food_outcome") or {}
+    record("POST /simulate-rotation (TRACC 2050)", st, ms,
+           f"food {fo.get('food_grade_tonnes_median')} t, feeds "
+           f"{fo.get('people_fed_at_recommended_intake')} people")
 
     st, d, ms = call(v, "/dossier", parcel)
     record("POST /dossier", st, ms, f"{len(d.get('agronomic_checklist', []))} checklist items")

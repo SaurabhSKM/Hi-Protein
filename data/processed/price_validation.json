@@ -1,0 +1,138 @@
+{
+  "verdict": "NOT USABLE for calibrating or correcting crops.json. The French rows of this dataset carry unit errors, omit two of the engine's candidate crops, end in 2016, and price oilseeds at or below feed wheat - a relationship no European market sustains. Recorded so that nobody cites it as validation: a jury that checks the rapeseed row would discredit the whole comparison. The figures below are retained as evidence for that verdict, NOT as corrections to apply.",
+  "source_quality_flags": [
+    "rapeseed: observed at 1.06x wheat over 2012-2016, which no European oilseed market sustains - the source series is not credible here",
+    "soybean: observed at 1.28x wheat over 2012-2016, which no European oilseed market sustains - the source series is not credible here",
+    "unit errors present: field_pea ['2010', '2011'], green_lentil ['2010', '2011']",
+    "no French series at all for: chickpea, fava_bean",
+    "series ends 2016, so the post-2021 price regime is unobserved"
+  ],
+  "source": "Eurostat apri_ap_crpouta, geo=FR, currency=EUR (annual, EUR/100kg)",
+  "reference_checked": "backend/app/refdata/crops.json",
+  "ratio_reference_crop": "soft_wheat",
+  "rows": [
+    {
+      "crop": "durum_wheat",
+      "observed_years": "2000-2016",
+      "n_years": 17,
+      "observed_mean_eur_t": 256.8,
+      "assumed_mean_eur_t": 285.0,
+      "level_ratio_assumed_over_observed": 1.11,
+      "inside_assumed_min_max": true,
+      "observed_price_vs_wheat": 1.774,
+      "assumed_price_vs_wheat": 1.39,
+      "premium_overstatement": -0.216
+    },
+    {
+      "crop": "field_pea",
+      "observed_years": "2012-2016",
+      "n_years": 5,
+      "observed_mean_eur_t": 367.8,
+      "assumed_mean_eur_t": 330.0,
+      "level_ratio_assumed_over_observed": 0.897,
+      "inside_assumed_min_max": true,
+      "observed_price_vs_wheat": 1.476,
+      "assumed_price_vs_wheat": 1.61,
+      "premium_overstatement": 0.091
+    },
+    {
+      "crop": "grain_maize",
+      "observed_years": "2000-2016",
+      "n_years": 17,
+      "observed_mean_eur_t": 159.7,
+      "assumed_mean_eur_t": 210.0,
+      "level_ratio_assumed_over_observed": 1.315,
+      "inside_assumed_min_max": true,
+      "observed_price_vs_wheat": 0.932,
+      "assumed_price_vs_wheat": 1.024,
+      "premium_overstatement": 0.099
+    },
+    {
+      "crop": "green_lentil",
+      "observed_years": "2012-2016",
+      "n_years": 5,
+      "observed_mean_eur_t": 718.8,
+      "assumed_mean_eur_t": 840.0,
+      "level_ratio_assumed_over_observed": 1.169,
+      "inside_assumed_min_max": true,
+      "observed_price_vs_wheat": 2.884,
+      "assumed_price_vs_wheat": 4.098,
+      "premium_overstatement": 0.421
+    },
+    {
+      "crop": "rapeseed",
+      "observed_years": "2000-2016",
+      "n_years": 17,
+      "observed_mean_eur_t": 266.9,
+      "assumed_mean_eur_t": 470.0,
+      "level_ratio_assumed_over_observed": 1.761,
+      "inside_assumed_min_max": false,
+      "observed_price_vs_wheat": 1.059,
+      "assumed_price_vs_wheat": 2.293,
+      "premium_overstatement": 1.164
+    },
+    {
+      "crop": "soft_wheat",
+      "observed_years": "2000-2016",
+      "n_years": 17,
+      "observed_mean_eur_t": 164.9,
+      "assumed_mean_eur_t": 205.0,
+      "level_ratio_assumed_over_observed": 1.243,
+      "inside_assumed_min_max": true,
+      "observed_price_vs_wheat": null,
+      "assumed_price_vs_wheat": null,
+      "premium_overstatement": null
+    },
+    {
+      "crop": "soybean",
+      "observed_years": "2000-2016",
+      "n_years": 17,
+      "observed_mean_eur_t": 283.4,
+      "assumed_mean_eur_t": 540.0,
+      "level_ratio_assumed_over_observed": 1.905,
+      "inside_assumed_min_max": false,
+      "observed_price_vs_wheat": 1.276,
+      "assumed_price_vs_wheat": 2.634,
+      "premium_overstatement": 1.065
+    },
+    {
+      "crop": "spring_barley",
+      "observed_years": "2000-2016",
+      "n_years": 17,
+      "observed_mean_eur_t": 161.6,
+      "assumed_mean_eur_t": 218.0,
+      "level_ratio_assumed_over_observed": 1.349,
+      "inside_assumed_min_max": true,
+      "observed_price_vs_wheat": 1.036,
+      "assumed_price_vs_wheat": 1.063,
+      "premium_overstatement": 0.026
+    },
+    {
+      "crop": "sunflower",
+      "observed_years": "2000-2016",
+      "n_years": 17,
+      "observed_mean_eur_t": 339.3,
+      "assumed_mean_eur_t": 450.0,
+      "level_ratio_assumed_over_observed": 1.326,
+      "inside_assumed_min_max": true,
+      "observed_price_vs_wheat": 1.978,
+      "assumed_price_vs_wheat": 2.195,
+      "premium_overstatement": 0.11
+    }
+  ],
+  "discarded_as_unit_errors": {
+    "field_pea": [
+      "2010",
+      "2011"
+    ],
+    "green_lentil": [
+      "2010",
+      "2011"
+    ]
+  },
+  "no_french_series_at_all": [
+    "chickpea",
+    "fava_bean"
+  ],
+  "how_to_read": "Compare `premium_overstatement`, not the levels. The observed series ends in 2016 and prices re-based upward from 2021, so a level gap is mostly a regime difference. A positive `premium_overstatement` means the engine assumes a larger premium over wheat than France ever observed, which inflates the pulse arm independently of the absolute price level."
+}

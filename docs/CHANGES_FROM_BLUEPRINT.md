@@ -485,3 +485,341 @@ carbon reduction that pays the farmer, not costs them.
 - **Latency.** The blueprint promised 500 paths in under 30 ms. Reality on this
   machine is 2,000 *paired* paths in about 140 ms end to end over HTTP, doing roughly
   four times the work. The model is warmed at startup because unpickling it takes 1.7 s.
+
+---
+
+# Part II: the regional engine
+
+Items 1-20 above concern the farmer's half of the product. What follows was built after
+a gap analysis found the planner's half was a six-department sketch with no optimiser
+behind its headline button. Same rule as above: each item changes a number or a claim.
+
+---
+
+## 21. Infrastructure distance became a cost instead of a flag
+
+**Before.** The only consequence of having no optical sorter within 80 km was a flat
+0.12 multiplicative cut to `P_human` and the loss of an optical-sorted price premium.
+The €0.45/t/km haulage rate the blueprint specified appeared nowhere in `finance.py`.
+
+**Problem.** That makes distance a QUALITY story. It is a COST story, and a continuous
+one. Without it there is no way to compute the central category of the regional
+view — a parcel that is agronomically ideal, passes food specification, and still loses
+money purely because of where it is. "Stranded potential" was a label with no
+arithmetic under it.
+
+**Change.** `logistics.py` charges incremental haulage inside the Monte Carlo. Two rules
+keep it honest:
+
+- **Only the haul beyond 25 km is charged.** A farm already hauls cereals to its local
+  collection silo and that cost sits inside the RICA operating cost BOTH arms carry.
+  Charging farm-to-sorter in full would double-count the first 25 km and would charge
+  the pulse arm for a trip the baseline cereal arm also makes — manufacturing a penalty
+  out of an accounting error.
+- **Only food tonnes are charged.** The downgraded fraction needs no sorting. So a bad
+  grading year hauls LESS and pays less, which partly offsets the grading loss instead
+  of compounding it. The sign is tested.
+
+**Also not charged, deliberately:** the station's €38/t toll cleaning-and-sorting fee.
+Whether it falls on the farmer or inside the buyer's margin depends on the contract, and
+the contract prices this engine uses are quoted delivered to the buyer. It stays in the
+reference data because it is the REVENUE line that pays for a new unit, and that is the
+only place it is used.
+
+**Effect.** A real stranded parcel: Mesnil-en-Ouche (Eure), nearest sorter 132 km by
+road, €48.24/t on food tonnage, €95/ha. The parcel loses €16/ha against cereals — so
+€95/ha of haulage is the entire reason it is negative, and the response says exactly
+that.
+
+**A finding this produced, not an assumption fed into it.** Because haulage is linear
+and the food premium is finite, each crop has a maximum economically viable haul:
+
+        max_km = 25 + (food_price − feed_price) / 0.45
+
+Field pea's food-versus-feed spread is €78/t, so it stops paying for its own haul at
+roughly **198 km**. Green lentil's spread is €565/t and would pay to cross the country
+(~1,280 km). Beyond its own threshold a crop has NO food-grade share that makes sorting
+access worth paying for, and `breakeven_human_fraction` correctly returns "no break-even
+exists". A single national 80 km rule treats pea and lentil identically; it should not.
+
+---
+
+## 22. Six departments became forty-two, on real Agreste areas
+
+**Before.** `departments.json` held six hand-written entries whose `arable_ha` and
+`pulse_ha` were openly labelled "order-of-magnitude planning figures".
+
+**What was already available and unused.** 42 departments have real Météo-France weather
+in `data/processed/weather_panel.csv`, 40 have real Agreste yield labels, and
+`dept_soils.json` already covered all 42. The department table was the only thing
+capping the product at six.
+
+**Change.** `scripts/build_departments.py` generates all 42 from data on disk: areas from
+the Agreste SAA departmental series (mean of 2022-2024), centroids as the
+cadastral-area-weighted mean of IGN ADMINEXPRESS commune centroids.
+
+**A mistake made and corrected while building it.** The first version summed only the
+eight crops this project models. That put Pyrénées-Atlantiques at 28,200 ha of arable
+land and therefore a **37.7% pulse share** — a maize department shown as having already
+smashed the 2030 target, because maize, durum wheat, sunflower and winter barley were
+missing from the denominator. Fixed by using Agreste's own published subtotals: all
+cereals (row 27) + all oilseeds (36) + all grain legumes (46).
+
+**An independent check that the derivation is right.** Across the 42 departments the
+generated figures give 7,965,500 ha of arable land and 258,513 ha of food-tier pulses — a
+**3.25% share**, against the 4.0% national baseline the policy target is written
+against. Nothing was tuned to produce that. The small gap is the right sign: these 42 are
+the cereal core, where pulse share is below the national average.
+
+`pulse_ha` is Agreste row 46, grain legumes only. Soybean is reported separately as
+`soybean_ha` because Agreste classes it as an oilseed, and folding it in would quietly
+inflate the share across the south-west.
+
+---
+
+## 23. The regional view stopped re-running the Monte Carlo per request
+
+**Problem created by item 22.** `/regional-overview` ran a full simulation per department
+per candidate pulse. At six departments that was about four seconds. At forty-two it was
+over two minutes, and `/food-demand` was 62 seconds per call. Neither is a dashboard.
+
+**Change.** `scripts/build_region_profiles.py` bakes, per department, the three-year
+margin advantage of every candidate pulse at ZERO incremental haulage — run twice, with
+and without sorting access, because the grading hazard model steps at the access
+threshold. 800 paths each, about 70 seconds offline, loaded from disk at request time.
+
+**Effect.** `/regional-overview` 316 ms, `/food-demand` 3.2 s, and the whole test suite
+back from 148 s to 38 s with 44 more tests in it. The map, the department table, the food
+view and the siting optimiser now all read the SAME baked numbers, so they cannot
+disagree with each other — which they could before, since each ran its own simulation
+with its own seed.
+
+---
+
+## 23b. The cache grew a climate dimension, and learned to record a negative
+
+**Problem left behind by item 23.** The bake covered the observed horizon only, and
+"absent from the bake" was overloaded to mean two different things. Both leaks put a
+Monte Carlo back inside a request:
+
+1. **Any projected horizon had no cache to read.** The food view offers a horizon
+   selector, and picking anything other than `observed` dropped `/food-demand` onto the
+   live path — 42 departments × 6 pulses, measured at **71 s per request, on every
+   request**. No browser waits that long, so three of that tab's four options looked
+   broken rather than slow.
+2. **A department with no viable pulse was simply missing.** Tarn (81) and
+   Tarn-et-Garonne (82) are boulbène at pH 5.9, which blocks every legume the engine
+   recommends — a correct answer, and a permanent one. But the loop could not tell that
+   from "never baked", so it re-simulated both on **every** request to rediscover their
+   soil is too acid, then discarded the result: ~3 s per call, for nothing.
+
+**Change.** `build_all_horizons` bakes every horizon into `region_profiles.json` under a
+`horizons` key (the observed set stays at the top level, so every existing reader is
+untouched), and records the no-viable-pulse departments per horizon in
+`_meta.no_viable_pulse`. `siting.profiles(horizon)` is memoised per horizon;
+`siting.unviable_departments(horizon)` exposes the negative result so a known "no" costs
+a set lookup. `classify()`, `/regional-overview` and `/food-demand` memoise their
+assembled results, and `lifespan` warms exactly what the bake covers — printing a loud
+warning instead of silently computing for minutes when the bake is absent.
+
+**Effect.** Measured end to end:
+
+| | before | after |
+|---|---|---|
+| `/food-demand` observed | 4.3 s *every call* | 0.00 s |
+| `/food-demand` projected horizons | 71 s *every call* | 0.00 s |
+| `/regional-overview` | 0.23–0.54 s per call | 0.00 s |
+| cold process, bake missing | 128 s **inside the first request** | refuses silently; warns at startup |
+
+The bake costs about six minutes offline for five horizons (`make profiles`), or ~70 s
+for the observed horizon alone (`make profiles-fast`). `/health` reports which horizons
+the bake covers and which caches are warm, because a missing horizon there is the
+difference between a dictionary lookup and a live Monte Carlo.
+
+---
+
+## 24. A real 18,157-point commune demand surface
+
+**Before.** The regional map drew six circles at department centroids. The blueprint
+asked for 10,000+ parcels colour-coded, and `ign_rpg.py` is a point-query client with 36
+cached responses — there was no data path to it at all.
+
+**Change.** `scripts/build_communes.py` fetches every commune in the 42 departments from
+IGN ADMINEXPRESS via WFS: **18,157 real communes** with real boundary-derived centroids,
+real cadastral area, real INSEE department and region codes. 2.8 MB on disk.
+
+**Why communes rather than RPG parcels, stated because it is a real choice.** The siting
+question moves at the scale of tens of kilometres. There are 9.5 million RPG parcels,
+served with full polygon geometry; aggregating them nationally would be a day of
+downloading to produce a surface that is identical at 80 km resolution to this one.
+Communes are the right grain and are honest about being an aggregate.
+
+**What is assumed, and the bound on the error.** A department's real Agreste arable
+hectares are split between its communes in proportion to cadastral area, because Agreste
+publishes nothing at commune level to measure that split against. It is right on average
+and wrong for any individual commune — one that is mostly forest is credited with arable
+land it does not have. The error averages out over the hundreds of communes inside an
+80 km haulage radius, which is the scale the siting DECISION is made at, but it is
+visible at the scale the MAP is drawn at. Both the API provenance and the map caption say
+so.
+
+**The four statuses, and the distinction the whole regional argument rests on.**
+
+| Status | Meaning | Communes |
+|---|---|---|
+| `viable` | A pulse pays at the sorter distance this land actually has | 6,387 |
+| `stranded` | Loses money at the distance it has, WOULD pay with a sorter in range | 4,486 |
+| `uneconomic` | Loses money even with a sorter next door | 6,775 |
+| `unmodelled` | No viable pulse profile for the department | 509 |
+
+Only `stranded` is something a capital grant can fix. Conflating it with `uneconomic` is
+how infrastructure money gets spent where no amount of sorting capacity would help, and a
+test pins that stranded implies `delta_now < 0 ≤ delta_if_served`. Classification uses a
+€1/ha band around break-even, because a category boundary drawn at exactly zero gets
+decided by rounding noise several orders of magnitude below the yield model's own error.
+
+**Total: 81,418 ha stranded, worth €9.6M of three-year margin currently lost to
+haulage.**
+
+---
+
+## 25. The siting optimiser, with its guarantee stated and then measured
+
+**Before.** Nothing. No facility-location code of any kind.
+
+**Change.** `siting.py` solves capacitated facility location over the 18,157 commune
+demand points against ~2,100 candidate sites.
+
+**The decomposition that makes it interactive.** Simulating every (commune, site) pair
+would be ~38 million Monte Carlos. It is also unnecessary, because haulage enters the
+margin linearly:
+
+        delta(km) = delta(0) − food_tonnes_per_ha × 0.45 × max(0, km − 25)
+
+So the simulation runs once per department and every pair is an exact closed-form shift.
+**That equivalence is the load-bearing claim of the regional engine, so it is tested
+directly** against real simulations at 40, 120 and 300 km rather than assumed.
+
+**The algorithm and what it actually guarantees.** The objective is
+`F(S) = Σ_j w_j · max_{i∈S∪E} u_j(i)`, the classical uncapacitated facility location
+objective, which is monotone and submodular — so greedy marginal gain is within
+(1 − 1/e) ≈ 0.632 of the optimum (Nemhauser, Wolsey & Fisher 1978). That is a proof, not
+a hope.
+
+**And then the worst case is checked against the realised one.** The same problem is also
+solved exactly with HiGHS (`scipy.optimize.milp`) over a reduced candidate set **forced
+to contain greedy's own picks** — without that the comparison is not apples to apples,
+and the first version of this duly reported greedy at "103% of optimum", a meaningless
+number. Corrected, greedy comes in at **99.7%** of the exact optimum against the 63.2%
+worst-case floor.
+
+**Why exact verification is off by default.** Greedy is 40 ms; HiGHS is 3.7 s. A planner
+dragging a slider needs the first, a jury asking "how do you know that is optimal" needs
+the second. Both are available and the answer does not change.
+
+**Capacity breaks submodularity**, so it is applied afterwards as an allocation step:
+each unit serves its assigned communes up to 10,000 t/yr and overflow spills to the next
+unit with slack. Reported hectares are post-capacity, and the guarantee above is
+explicitly scoped to the uncapacitated relaxation.
+
+**The Aphanomyces constraint, in its aggregate form.** There is no commune-level rotation
+history to check, so the parcel-level hard block has no direct analogue. What does hold
+regardless of history is the steady-state ceiling: a pulse on a 5-year return interval
+cannot occupy more than a fifth of a rotation. Convertible hectares are capped by the
+binding one of that ceiling and the gap to the 8% target.
+
+**Effect.** 12 units at €5.4M capex: 37,594 ha unlocked, 120,000 t of food-grade pulses,
+142,151 t CO₂e avoided, pulse share 3.24% → 3.72%.
+
+**Where this disagrees with the blueprint.** The blueprint's headline was "+3,850
+hectares unlocked" for ONE €450k unit. The honest figure is **2,300-4,400 ha per unit**,
+and the binding constraint is not geography but the 10,000 t/yr throughput of the
+machine: every sited unit in the national run hits 100% utilisation. So the blueprint's
+per-unit hectare claim is roughly right and its implied path to 8% is not — closing the
+gap needs on the order of a hundred units, not one, and the tool now says so.
+
+---
+
+## 26. The livestock fallback became a counterparty, and then got smaller
+
+**Before.** `has_livestock_ugb_5` was a checkbox meaning *this farmer owns herbivores*,
+which floored the feed price at the on-farm substitution value (€298/t for field pea
+against €252/t spot). Real and well-argued — but it only helps farms that already have
+animals, and the farms with the most cereal land mostly do not. There was no breeder
+directory, no distance matching, and no view of what the breeder gets.
+
+**Change.** `breeders.py` matches a downgraded lot to neighbouring livestock holdings
+within 25 km and prices **both sides** of the trade: what the lot is worth in a ration,
+what the breeder pays, what each side keeps, and how much imported soybean meal stops
+being bought. The surplus split (55% to the farmer) is a stated negotiating assumption,
+not a hidden one. `finance.simulate` takes a `fallback_feed_floor_eur_t` that floors the
+downgraded fraction for a farm with no animals of its own.
+
+**The directory: real geography, illustrative identity.** 1,600 holdings, each on an
+actual IGN commune centroid, so every distance is a real distance between real places.
+The NUMBER per department is scaled by the share of that department's cadastral area not
+in the Agreste COP sheet — a measured proxy for grass and forage area. Names and herd
+sizes are generated from published per-herd-type averages with a fixed seed. No real farm
+is described. Same standard `buyers.json` is held to, and the API says so in three
+fields.
+
+**Three limits enforced in the arithmetic rather than mentioned in a footnote.**
+Inclusion caps (raw pulses carry anti-nutritional factors, so monogastrics take 15-22% of
+concentrate and ruminants 30-35%, and `absorbs_whole_lot` reports when a lot is too big);
+the 25 km radius (holdings beyond it are dropped, not stretched); and a near miss is
+reported as a near miss — "nearest is 26 km against a 25 km radius" is a different fact
+from "none exist", and a user staring at an empty list cannot otherwise tell which.
+
+**Two findings that cut against the blueprint's claim, both found by testing rather than
+asserted around.**
+
+**First: chickpea has no fallback contract worth signing.** Its commodity feed price is
+~€295/t, at or above its ~€294/t value in a livestock ration. No local holding can outbid
+the feed market for it. `fallback_floor_eur_t` returns None rather than quoting a floor
+equal to the spot price and calling it de-risking.
+
+**Second, and more important: this is a revenue floor, not downside insurance.** The
+intuitive pitch is that a bad year downgrades more of the lot, so the contract's value
+should concentrate in the left tail. Measured, it does not. The loss tail is driven mostly
+by LOW YIELD, and a low-yield year has fewer tonnes to downgrade, so poor grading and
+poor yield nearly cancel in downgraded tonnage — **1.49 t/ha in the worst 15% against
+1.54 t/ha overall**. The result is a near-flat uplift of about **€46/ha**, only marginally
+larger in the tail.
+
+**So the blueprint's headline number is not reproducible.** It claimed the fallback flips
+CVaR₁₅ from −€240/ha to +€58/ha, a €298/ha swing. The substitution economics support
+about €25/t of uplift on the downgraded fraction, which is €35-50/ha. The mechanism is
+real, it is now priced on both sides, and it is roughly six times smaller than claimed.
+The UI states this where a reader will see it rather than in a footnote.
+
+---
+
+## 27. Risk machinery that was computed, returned, and never rendered
+
+**Problem.** `serf_curve`, `risk_sharing`, `tolerance_threshold` and
+`minimum_viable_contract` have been computed in `risk.py` and shipped in the API response
+since the first build. No component rendered any of them, so the most decision-useful
+number in the whole response was invisible.
+
+**Change.** `RiskPreferencePanel` renders the minimum viable contract as a price-by-volume
+table, the SERF curve as certainty-equivalent advantage against risk aversion, and the
+risk-sharing diagnostic.
+
+**Why `minimum_viable_contract` is the one that matters.** It answers the question an
+advisor is actually asked across a kitchen table — not "what is the distribution of my
+margin" but "what price would make this worth my while". On the stranded Eure parcel:
+*becomes preferred at €342/t on 100% of expected volume*. And contracting more volume
+lowers the required price, because what the premium buys is certainty rather than
+revenue — which is the argument a cooperative needs to hear.
+
+---
+
+## 28. The downside is now drawn twice, on one scale
+
+**Problem.** The fallback was a checkbox third in a list of three. Ticking it replaced the
+figure and the old one vanished, so a user had to remember a number to see a change.
+
+**Change.** `FallbackPanel` draws both bars on a shared scale that always includes zero.
+The before bar stays put and the after bar grows out of it. That is the whole argument of
+the product in one picture — and, given item 26, a picture that shows a €46/ha
+improvement rather than a €298/ha one.

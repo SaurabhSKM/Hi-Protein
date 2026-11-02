@@ -1,3 +1,6 @@
 -r requirements.txt
 pytest==9.2.0
 httpx==0.28.1
+# The Makefile's `lint` target and the CI workflow both call .venv/bin/ruff, so it
+# has to be installed by `make install` rather than assumed to be on the machine.
+ruff==0.17.3

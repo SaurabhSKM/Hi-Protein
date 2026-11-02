@@ -1,24 +1,49 @@
-# Python
+# --- Python ------------------------------------------------------------------
 __pycache__/
 *.py[cod]
 .venv/
 venv/
 *.egg-info/
 .pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
 
-# Node
+# --- Node --------------------------------------------------------------------
 node_modules/
 frontend/dist/
 frontend/.vite/
+.vercel/
+npm-debug.log*
 
-# Downloaded open data and derived artifacts. Reproduced by `make data`.
+# --- Downloaded open data ----------------------------------------------------
+# Large (~110 MB) and fully reproducible with `make data`. Not committed.
 data/raw/
 data/cache/
-data/processed/
 
-# Trained model. Reproduced by `make train`.
-ml/artifacts/*.joblib
+# BUT the derived artifacts below ARE committed, deliberately.
+#
+# Together they are about 10 MB, and they are the difference between a repo that
+# runs on `git clone && make install && make serve` and one that first needs
+# network access to four open-data APIs and ~6 minutes of rebuild. A reviewer, a
+# judge, a CI runner and a container build all want the former. `make data`,
+# `make train` and `make regions` regenerate every one of them from source.
+!data/processed/
+!ml/artifacts/
 
-# Local environment
+# --- Local environment -------------------------------------------------------
 .env
 .env.local
+.env.*.local
+
+# --- Editors and OS ----------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# --- Logs and scratch --------------------------------------------------------
+*.log

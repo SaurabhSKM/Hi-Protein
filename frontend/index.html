@@ -2,9 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hi-Protein - Protein Sovereignty Engine</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- viewport-fit=cover so the layout reaches under a notch rather than letterboxing. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#15803d" />
+    <!-- Logo assets are generated from the deck artwork by
+         scripts/make_logo_assets.py. Vite rewrites these root-absolute public paths
+         to match `base`, so they survive being served from a proxy subpath. -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="color-scheme" content="light" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta
+      name="description"
+      content="Which French fields can grow the plant proteins people will eat, and whether the farmer earns a living doing it."
+    />
+    <title>Hi-Protein - Food Protein Decision Engine</title>
+
+    <!-- Share card, so a link pasted into a ministry or investor thread carries the
+         logo rather than a bare URL. The image path is relative, like every other
+         asset here, because the deploy host is not fixed; if the site lands on a
+         permanent domain, make og:image an absolute URL - some crawlers refuse to
+         resolve a relative one. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Hi! Protein - Food Protein Decision Engine" />
+    <meta
+      property="og:description"
+      content="France needs 534,000 hectares of pulses to reach its 2030 target. 368,000 are already sitting idle. We measured where."
+    />
+    <meta property="og:image" content="/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/og-image.png" />
   </head>
   <body>
     <div id="root"></div>

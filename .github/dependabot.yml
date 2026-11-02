@@ -1,0 +1,28 @@
+version: 2
+updates:
+  # Both ecosystems are pinned exactly (requirements*.txt, package-lock.json), which
+  # is deliberate — the figures this project reports are reproducible only against the
+  # versions it was calibrated on. Dependabot is therefore set to a monthly cadence
+  # and grouped, so a bump arrives as one reviewable PR rather than a stream of them.
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+    groups:
+      python-dependencies:
+        patterns: ['*']
+
+  - package-ecosystem: npm
+    directory: /frontend
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+    groups:
+      frontend-dependencies:
+        patterns: ['*']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

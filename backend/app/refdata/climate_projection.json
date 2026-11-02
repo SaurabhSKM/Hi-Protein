@@ -1,0 +1,87 @@
+{
+  "_meta": {
+    "description": "Forward climate horizons for the 'tomorrow' question. Holds only the WARMING INCREMENT per horizon; the response of each phenological variable to that warming is MEASURED from the project's own Meteo-France panel at runtime (services/climate.py), not written down here. That keeps the projection anchored to the same data the yield model trains on, and makes it update itself when the panel is refreshed.",
+    "warming_source": "TRACC - Trajectoire de rechauffement de reference pour l'adaptation au changement climatique, adopted in the 3rd Plan national d'adaptation au changement climatique. Reference levels for metropolitan France, relative to the pre-industrial period.",
+    "realised_source": "Meteo-France: metropolitan France has already warmed by roughly 1.7 C relative to the pre-industrial period.",
+    "method": "delta-change (space-for-time). Observed department-seasons are resampled exactly as today, then every climate variable is shifted by (its measured sensitivity per +1 C) x (the horizon's additional warming). The joint structure of a real observed season is preserved; only its level moves.",
+    "caveat": "A sensitivity fitted on INTERANNUAL temperature variation is not the same thing as a forced climate-change response. It is well suited to thermal variables (heat days, frost days, evapotranspiration), where the mechanism is direct, and much weaker for rainfall, where circulation change matters and the measured interannual correlation is near zero. The response reports the fitted correlation per variable so a reader can discount accordingly. This is a screening projection, not a downscaled climate model run: for that, use DRIAS-2020 directly.",
+    "last_reviewed": "2026-10-31"
+  },
+
+  "france_realised_warming_c": 1.7,
+
+  "horizons": {
+    "observed": {
+      "label_fr": "Climat observe (bootstrap brut)",
+      "label_en": "Observed climate, raw bootstrap",
+      "warming_level_c": null,
+      "additional_warming_vs_present_c": 0.0,
+      "correct_window_to_present": false,
+      "notes": "Current default. Resamples the 30-year window with recency weighting and applies no shift at all, so every number matches the engine's published behaviour. Note that this window is measurably COOLER than the last decade - see the 'present' horizon."
+    },
+    "present": {
+      "label_fr": "Climat actuel (fenetre recalee)",
+      "label_en": "Present-day climate, window re-centred",
+      "warming_level_c": 1.7,
+      "additional_warming_vs_present_c": 0.0,
+      "correct_window_to_present": true,
+      "notes": "No future warming, but the bootstrap window is re-centred on the last ten observed years. The correction is measured, not assumed: even after the 12-year recency half-life, the sampled window sits about 0.23 C below the recent decade, so the raw bootstrap quietly describes a climate that has already passed."
+    },
+    "tracc_2030": {
+      "label_fr": "TRACC +2 C (horizon 2030)",
+      "label_en": "TRACC +2 C (around 2030)",
+      "warming_level_c": 2.0,
+      "additional_warming_vs_present_c": 0.3,
+      "correct_window_to_present": true,
+      "notes": "The TRACC reference level for the near term. Within the planning horizon of a farmer deciding on machinery or a cooperative deciding on a sorting line."
+    },
+    "tracc_2050": {
+      "label_fr": "TRACC +2,7 C (horizon 2050)",
+      "label_en": "TRACC +2.7 C (around 2050)",
+      "warming_level_c": 2.7,
+      "additional_warming_vs_present_c": 1.0,
+      "correct_window_to_present": true,
+      "notes": "The level France is asked to plan adaptation against by mid-century. This is the horizon a 2030 protein-sovereignty target has to survive."
+    },
+    "tracc_2100": {
+      "label_fr": "TRACC +4 C (horizon 2100)",
+      "label_en": "TRACC +4 C (around 2100)",
+      "warming_level_c": 4.0,
+      "additional_warming_vs_present_c": 2.3,
+      "correct_window_to_present": true,
+      "notes": "End-of-century reference level. Far outside the range over which any of the engine's fitted relationships were calibrated; shown to bound the question, not to be acted on."
+    }
+  },
+
+  "projected_variables": {
+    "description": "Variables the shift is applied to. Everything else in a sampled season is left untouched, including the lagged legume-share features, which are an agricultural choice and not a climate variable.",
+    "include": [
+      "spring_tmean_c",
+      "flowering_tmax_c",
+      "apr_jun_tmin_c",
+      "may_days_above_20c",
+      "may_cool_days_below_20c",
+      "may_jun_heat_days_25c",
+      "jun_heat_days_30c",
+      "jul_heat_days_30c",
+      "apr_frost_days",
+      "mar_frost_days",
+      "flowering_etp_mm",
+      "flowering_rain_mm",
+      "establishment_rain_mm",
+      "harvest_rain_mm",
+      "late_harvest_rain_mm",
+      "summer_rain_mm",
+      "recharge_rain_mm"
+    ],
+    "derived_after_shift": [
+      "flowering_water_balance_mm",
+      "drought_stress_index",
+      "heat_x_shallow_soil"
+    ],
+    "note": "flowering_water_balance_mm and drought_stress_index are NOT shifted directly. They are re-derived from the shifted rain and ETP so the season stays internally consistent - shifting a balance and its two components independently would double-count the warming."
+  },
+
+  "min_abs_correlation_to_project": 0.15,
+  "min_abs_correlation_note": "A variable whose response to temperature is this weak in the observed record is left unshifted rather than extrapolated on noise. In practice this is what stops the engine inventing a harvest-rain trend: harvest_rain_mm correlates with spring temperature at r of about 0.01 in the panel, so it stays put. That is a real and useful result - the projected threat to pulse grading is insect pressure, not more rain at harvest."
+}

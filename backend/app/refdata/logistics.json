@@ -1,0 +1,53 @@
+{
+ "_meta": {
+  "description": "Haulage economics between the farm gate and an industrial cleaner plus optical sorter (trieur optique). This is the layer that turns 'no sorter within 80 km' from a flag into a cost, and therefore the layer that makes a 'stranded' parcel a financial category rather than a label.",
+  "why_it_matters": "To be sold for human consumption a pulse lot must pass an industrial cleaner and an optical sorter. The nearest unit sets a haulage bill that is paid per tonne of FOOD-grade harvest. Far enough away and it consumes the entire food premium, which is the precise mechanism by which agronomically ideal land stays in cereals.",
+  "attribution_rule": "Only the INCREMENTAL haul is charged. A farm already hauls its cereals to a local silo and that cost is inside the RICA operating cost the finance engine uses, so charging the full farm-to-sorter distance would double-count the first 25 km and would also unfairly penalise the pulse arm relative to the cereal arm it is compared against.",
+  "last_reviewed": "2026-10-31"
+ },
+ "haulage": {
+  "eur_per_tonne_km": 0.45,
+  "eur_per_tonne_km_range": [
+   0.32,
+   0.58
+  ],
+  "source": "Bulk agricultural road haulage, 25-30 t semi-trailer, French domestic rates 2024-2025. The range spans backhaul-loaded contract work at the low end and short-distance spot haulage at the high end.",
+  "road_detour_factor": 1.32,
+  "road_detour_factor_note": "Great-circle distance understates road distance. 1.32 is a conventional detour ratio for the French secondary road network on rural origin-destination pairs. Applied uniformly, so it cannot flatter one site over another, but it IS an approximation: a real deployment should use a routed distance matrix.",
+  "local_collection_radius_km": 25.0,
+  "local_collection_radius_note": "Distance a farm hauls to its ordinary collection silo, already embedded in the RICA operating cost. Only distance BEYOND this is charged as incremental.",
+  "feed_outlet_radius_km": 25.0,
+  "feed_outlet_radius_note": "The downgraded fraction does not need sorting. It goes to a local feed compounder or a neighbouring breeder, so it is treated as inside the ordinary collection radius and carries no incremental haul."
+ },
+ "sorting": {
+  "max_distance_km": 80.0,
+  "max_distance_note": "Beyond roughly 80 km of road distance the haulage bill on a 1.5-4 t/ha pulse crop consumes the food-grade premium. Used as the binary access flag; the cost model above is continuous and is what actually drives the economics.",
+  "cleaning_and_sorting_fee_eur_t": 38.0,
+  "cleaning_and_sorting_fee_note": "Toll processing charged by the station on food-grade tonnage: pre-cleaning, calibration, optical sort, bagging to retail spec. Charged on the food fraction in BOTH the access and no-access cases, so it is not what creates the stranded category.",
+  "removed_note": "A food_grade_loss_in_sorting_pct of 6.5 was removed. It had no source, and it was deliberately not charged anywhere in the margin (to avoid double-counting against P_human), so it was an undefendable number sitting in reference data doing nothing."
+ },
+ "new_unit": {
+  "capex_eur": 450000,
+  "capex_note": "Turnkey industrial line sized for a cooperative silo: pre-cleaner, calibrator, optical sorter, bagging. Consistent with the order of magnitude of Planification Ecologique equipment grants for pulse sorting infrastructure.",
+  "capacity_t_yr": 10000,
+  "annual_opex_eur": 62000,
+  "annual_opex_note": "Energy, consumables, one operator at part load, maintenance contract.",
+  "economic_life_yr": 12,
+  "discount_rate": 0.04,
+  "siting_constraint": "A new unit is only sited at an existing cooperative silo or industrial platform. Greenfield siting is excluded: the capex above does not include land, three-phase power, weighbridge or reception pit, which a silo already has.",
+  "capacity_t_yr_note": "Annual throughput of one cleaning-and-optical-sorting line, and the parameter the regional headline is most sensitive to: it sets hectares-per-unit linearly, so the machine count needed to reach the area target scales inversely with it (5,000 t/yr implies about 221 units, 20,000 t/yr about 56). Basis: a single optical sorter rated at roughly 4-6 t/h on pulses, run on a single shift over the 8-10 week post-harvest campaign when pulses are actually cleaned, is of order 10,000 t. Double-shifting or a longer campaign raises it; running a second crop through the same line lowers it.",
+  "capacity_t_yr_range": [
+   6000,
+   16000
+  ],
+  "capacity_t_yr_range_note": "Single shift over a short campaign at the low end; extended shifts and a longer campaign at the high end. The engine reports machine counts across this band rather than from the point value, because the point value is a plant-configuration choice rather than a measurement.",
+  "economic_life_yr_note": "Conventional depreciation horizon for food-grade grain handling equipment. Only affects the levelised cost per tonne, not hectares unlocked.",
+  "discount_rate_note": "Public-sector style real discount rate, used because the capital in question is a regional grant rather than commercial debt. Only affects levelised cost per tonne."
+ },
+ "regional_fund": {
+  "envelope_eur": 11700000,
+  "envelope_note": "Order of magnitude of a regional Planification Ecologique agricultural envelope. Used only to convert the optimiser's unit count into a budget line; it is not a committed programme.",
+  "max_units_fundable": 26,
+  "max_units_fundable_note": "Derived, not assumed: envelope_eur / new_unit.capex_eur. Shown so the optimiser's k slider has a budget-consistent ceiling."
+ }
+}

@@ -19,6 +19,7 @@ frontend resolves its asset and API URLs relative to the directory it was loaded
 from __future__ import annotations
 
 import sys
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -31,7 +32,23 @@ from fastapi import FastAPI  # noqa: E402
 MOUNT = "/app"
 PORT = 8081
 
-outer = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+
+@asynccontextmanager
+async def lifespan(_outer: FastAPI):
+    """Run the INNER app's lifespan, which a mount does not do by itself.
+
+    Starlette sends lifespan events to the top-level application only; a mounted
+    sub-application never receives them. So every startup task in `app.main.lifespan`
+    - unpickling the yield model, loading the weather panel, warming the baked profile
+    caches - was silently skipped whenever the app was served this way, and the first
+    request to arrive paid for all of it. That is how a cold process came to spend 128
+    seconds inside a single /regional-overview call.
+    """
+    async with inner.router.lifespan_context(inner):
+        yield
+
+
+outer = FastAPI(docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
 # Mount, not include_router: a mount strips MOUNT from the path before handing the
 # request down, which is what lets the inner app keep its root-relative routes.
 outer.mount(MOUNT, inner)

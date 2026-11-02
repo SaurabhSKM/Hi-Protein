@@ -1,0 +1,154 @@
+{
+  "generated": "2026-10-31T17:34:27+00:00",
+  "generator": "scripts/build_adoption_panel.py",
+  "area_source": "Agreste Statistique agricole annuelle, series longues 2010-2025, departmental workbook, sheet COP",
+  "geometry_source": "IGN ADMINEXPRESS-COG.LATEST:departement via data.geopf.fr WFS 2.0.0",
+  "years": [
+    2010,
+    2024
+  ],
+  "n_departments": 93,
+  "n_rows": 16740,
+  "zero_area_rows_kept": 2510,
+  "denominator": "Shares are over the twelve COP crops SAA_CROP_CODES maps, not total arable area. Understates arable by roughly a fifth, identically in every department and year, so trends compare but the share level reads high.",
+  "crop_groups": {
+    "food_pulse": [
+      "green_lentil",
+      "chickpea"
+    ],
+    "feed_pulse": [
+      "field_pea",
+      "fava_bean"
+    ],
+    "soy": [
+      "soybean"
+    ]
+  },
+  "agreste_data_cutoff": "Workbook header, verbatim: 'Donnees arretees au 30/03/2026. Donnees 2025 provisoires.' 2025 is therefore excluded and 2010-2024 are definitive. The header also records that the series were made consistent with the 2020 recensement agricole and back-cast over 2010-2019.",
+  "quality_status_mix_pulse_area_pct": {
+    "1": 86.72,
+    "2": 12.02,
+    "3": 1.25
+  },
+  "quality_status_caveat": "Agreste publishes a per-series STATUT_QUALITE of 1, 2, 3 or NC. The workbook defines the codes only by reference to a methodology page that currently returns an error, so the codes are reported as a mix and NOT interpreted here. Every row carries a value for all 15 years regardless of status, so the flag changes no figure in this panel.",
+  "geometry_simplify_deg": 0.004,
+  "departments_without_geometry": [],
+  "excluded_departments": [
+    "2A",
+    "2B",
+    "971",
+    "972",
+    "973",
+    "974",
+    "975",
+    "976"
+  ],
+  "national_pulse_area_ha": {
+    "2010": {
+      "chickpea": 2781,
+      "fava_bean": 151307,
+      "field_pea": 209967,
+      "green_lentil": 12086,
+      "soybean": 49736
+    },
+    "2011": {
+      "chickpea": 4534,
+      "fava_bean": 91381,
+      "field_pea": 162193,
+      "green_lentil": 13480,
+      "soybean": 42456
+    },
+    "2012": {
+      "chickpea": 6743,
+      "fava_bean": 60366,
+      "field_pea": 120416,
+      "green_lentil": 14932,
+      "soybean": 38152
+    },
+    "2013": {
+      "chickpea": 7761,
+      "fava_bean": 67975,
+      "field_pea": 109346,
+      "green_lentil": 14096,
+      "soybean": 44114
+    },
+    "2014": {
+      "chickpea": 8055,
+      "fava_bean": 74983,
+      "field_pea": 126632,
+      "green_lentil": 16491,
+      "soybean": 76654
+    },
+    "2015": {
+      "chickpea": 8674,
+      "fava_bean": 86542,
+      "field_pea": 155486,
+      "green_lentil": 17578,
+      "soybean": 124198
+    },
+    "2016": {
+      "chickpea": 9827,
+      "fava_bean": 77768,
+      "field_pea": 188017,
+      "green_lentil": 19544,
+      "soybean": 136518
+    },
+    "2017": {
+      "chickpea": 18099,
+      "fava_bean": 77407,
+      "field_pea": 186097,
+      "green_lentil": 33726,
+      "soybean": 141829
+    },
+    "2018": {
+      "chickpea": 27148,
+      "fava_bean": 57226,
+      "field_pea": 145357,
+      "green_lentil": 37660,
+      "soybean": 153853
+    },
+    "2019": {
+      "chickpea": 33203,
+      "fava_bean": 63113,
+      "field_pea": 153774,
+      "green_lentil": 37909,
+      "soybean": 163800
+    },
+    "2020": {
+      "chickpea": 23529,
+      "fava_bean": 76345,
+      "field_pea": 202687,
+      "green_lentil": 35789,
+      "soybean": 187068
+    },
+    "2021": {
+      "chickpea": 19058,
+      "fava_bean": 77991,
+      "field_pea": 194321,
+      "green_lentil": 34656,
+      "soybean": 154382
+    },
+    "2022": {
+      "chickpea": 16753,
+      "fava_bean": 68082,
+      "field_pea": 133480,
+      "green_lentil": 28848,
+      "soybean": 183906
+    },
+    "2023": {
+      "chickpea": 25284,
+      "fava_bean": 80231,
+      "field_pea": 151596,
+      "green_lentil": 27721,
+      "soybean": 157753
+    },
+    "2024": {
+      "chickpea": 29135,
+      "fava_bean": 80439,
+      "field_pea": 123065,
+      "green_lentil": 31398,
+      "soybean": 152680
+    }
+  },
+  "caveat": "Area is a DECLARED, department-aggregated figure, not a parcel record. It shows that land moved; it does not by itself say why."
+}

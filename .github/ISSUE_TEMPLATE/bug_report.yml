@@ -1,0 +1,55 @@
+name: Bug report
+description: Something in the engine, the API or the UI does the wrong thing.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If the problem is a **number you believe is wrong** rather than a crash, say so
+        explicitly and quote the figure. A plausible-looking wrong number is the most
+        expensive kind of bug this project can have, and the hardest to notice.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where
+      options:
+        - Farmer view (per-parcel simulation)
+        - Food view (what France eats vs grows)
+        - Region view (siting, stranded surface, map)
+        - Land view (how the land changed, attribution)
+        - Method view
+        - API only
+        - Data build (make data / make train / make regions)
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: |
+        The exact request if you have it — a curl against /api/v1/..., or the
+        department, crop, soil and area you selected in the UI.
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: health
+    attributes:
+      label: Output of /health
+      description: |
+        `curl -s localhost:5173/health`. It reports the model version, how many
+        department weather panels loaded, whether offline mode is on, and whether
+        the baked profiles are present — which answers most setup questions at once.
+      render: json

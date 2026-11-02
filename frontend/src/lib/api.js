@@ -29,10 +29,41 @@ export const api = {
   simulate: (b) => call('/simulate-rotation', { method: 'POST', body: b }),
   rank: (b) => call('/rank-candidates', { method: 'POST', body: b }),
   parcel: (lon, lat) => call('/parcel', { method: 'POST', body: { lon, lat } }),
-  regional: (n = 600) => call(`/regional-overview?n_simulations=${n}`),
+  // No n_simulations: the regional view reads baked department profiles rather than
+  // running 42 Monte Carlos per request.
+  regional: () => call('/regional-overview'),
+  strandedSurface: ({ department, region, status, limit = 20000 } = {}) => {
+    const q = new URLSearchParams({ limit: String(limit) })
+    if (department) q.set('department_code', department)
+    if (region) q.set('region_code', region)
+    if (status) q.set('status', status)
+    return call(`/stranded-surface?${q}`)
+  },
+  optimiseSorters: (b) => call('/optimise-sorters', { method: 'POST', body: b }),
+  breeders: (lon, lat, pulse, lotT = 50) =>
+    call(
+      `/breeders?lon=${lon}&lat=${lat}&pulse=${encodeURIComponent(pulse)}` +
+        `&downgraded_lot_t=${lotT}`,
+    ),
   dossier: (b) => call('/dossier', { method: 'POST', body: b }),
   modelReport: () => call('/model-report'),
   yieldTrend: () => call('/yield-trend'),
+  // Land change. The department polygons are ~0.7 MB and never change, so they are a
+  // separate call the page makes once rather than part of every crop switch.
+  adoptionOverview: () => call('/adoption/overview'),
+  adoptionDepartments: (crop) =>
+    call(`/adoption/departments?crop=${encodeURIComponent(crop)}`),
+  adoptionGeometry: () => call('/adoption/geometry'),
+  adoptionAttribution: () => call('/adoption/attribution'),
+  rpgChange: () => call('/adoption/rpg-change'),
+  foodDemand: (n = 400, horizon = 'observed') =>
+    call(`/food-demand?n_simulations=${n}&climate_horizon=${horizon}`),
+  climateOutlook: (dept, crop, soil, n = 600) =>
+    call(
+      `/climate-outlook?department_code=${encodeURIComponent(dept)}` +
+        `&crop=${encodeURIComponent(crop)}&soil_type=${encodeURIComponent(soil)}` +
+        `&n_simulations=${n}`,
+    ),
 }
 
 export const eur = (v, digits = 0) =>

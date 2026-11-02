@@ -147,8 +147,38 @@ def baseline_yield(crop_key: str, dept_code: str, soil_type: str) -> tuple[float
     return ref * _FALLBACK_SOIL_FACTOR.get(soil_type, 1.0), "crop_reference_table"
 
 
+def baseline_source_for(crop_key: str, dept_code: str, soil_type: str) -> str:
+    """How this crop's yield baseline here was obtained, without running a simulation.
+
+    `baseline_yield` already resolves and caches this; views that only need to label
+    the provenance of a number should not have to run a Monte Carlo to find out.
+    """
+    return baseline_yield(crop_key, dept_code, soil_type)[1]
+
+
+def baseline_is_local(source: str) -> bool:
+    """Whether a baseline came from this department's OWN Agreste history.
+
+    `agreste_department_history_soil_adjusted` counts as local: the department's own
+    series is still the input, scaled for a soil that differs from the department's
+    dominant archetype. Comparing against the bare string treated those as borrowed,
+    which would have mislabelled a real local baseline as weak.
+    """
+    return source.startswith("agreste_department_history")
+
+
 def baseline_caveat(crop_key: str, source: str) -> str | None:
-    """Plain-language warning when a yield baseline is not this crop's own data."""
+    """Plain-language warning when a yield baseline is not this crop's own data.
+
+    Audited after the fact and found to be covering only half the cases. Of 240
+    (department x pulse) pairs, 140 use the department's own Agreste history and 28 use
+    the documented winter-pea proxy - both handled below. But **57 fell through to
+    `agreste_same_soil_archetype` and 3 to `agreste_national_mean` with no warning at
+    all**, including Seine-et-Marne chickpea, which is the regional food view's
+    headline "best for food" tonnage. A borrowed baseline presented with no flag looks
+    exactly as solid as a measured one, which is the specific failure this function
+    exists to prevent.
+    """
     if source == "crop_reference_table":
         if crop_key in NO_AGRESTE_SERIES:
             return (
@@ -162,6 +192,33 @@ def baseline_caveat(crop_key: str, source: str) -> str | None:
             "its yield comes from a hand-written reference value rather than measured "
             "data. Treat the comparison against data-backed crops with caution."
         )
+
+    # Borrowed-baseline cases. Stated before the proxy branch so a source that is BOTH
+    # borrowed and proxied (12 pairs end in `_same_soil_archetype_via_proxy`) reports
+    # the more serious of the two problems rather than only the milder one.
+    if source.startswith("agreste_same_soil_archetype"):
+        label = crop(crop_key)["label_fr"]
+        note = (
+            f"This department has no Agreste yield history for {label}, so its yield "
+            "baseline is borrowed from other departments sharing the same soil "
+            "archetype. The soil matches; the climate may not. Treat it as the weakest "
+            "number on this screen, and much weaker than a crop with its own local "
+            "series."
+        )
+        if source.endswith("_via_proxy"):
+            proxy = BASELINE_PROXY.get(crop_key)
+            if proxy:
+                note += f" It is also proxy-derived: {proxy[2]}"
+        return note
+
+    if source.startswith("agreste_national_mean"):
+        return (
+            f"Neither this department nor any department with the same soil has an "
+            f"Agreste yield history for {crop(crop_key)['label_fr']}. The baseline is "
+            "the national mean, which is the weakest evidence this engine produces. Do "
+            "not act on it."
+        )
+
     if source.endswith("_via_proxy"):
         proxy = BASELINE_PROXY.get(crop_key)
         if proxy:

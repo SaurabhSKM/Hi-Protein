@@ -237,3 +237,101 @@ def test_rotation_pressure_feature_reaches_the_design_matrix_at_inference():
     assert "legume_share_lag1" in X.columns
     assert "legume_share_lag2to4_mean" in X.columns
     assert X["legume_share_lag1"].between(0.0, 1.0).all()
+
+
+# --------------------------------------------------------------------------- #
+# Borrowed yield baselines must always be flagged to the user
+# --------------------------------------------------------------------------- #
+def test_every_non_local_yield_baseline_warns_the_user():
+    """Audited and found leaking: 60 of 240 pairs borrowed a baseline with no warning.
+
+    `baseline_caveat` covered the hand-written reference table and the documented
+    winter-pea proxy, but not `agreste_same_soil_archetype` (57 pairs) or
+    `agreste_national_mean` (3). Those included Seine-et-Marne chickpea, which is the
+    regional food view's headline "best for food" tonnage — a borrowed number presented
+    as solidly as a measured one. Pinned so it cannot regress.
+    """
+    import numpy as np
+    from app.config import departments, pulse_crops
+    from app.services import ml, weather
+
+    rng = np.random.default_rng(1)
+    unwarned = []
+    for dept, d in departments().items():
+        if dept not in weather.available_departments():
+            continue
+        seasons = weather.sample_seasons(dept, 20, rng)
+        for crop_key in pulse_crops():
+            _, q = ml.sample_yields(rng, crop_key, dept, d["dominant_soil"], seasons)
+            src = q["baseline_source"]
+            if src == "agreste_department_history":
+                continue  # the crop's own local data needs no caveat
+            if ml.baseline_caveat(crop_key, src) is None:
+                unwarned.append((dept, crop_key, src))
+    assert not unwarned, f"baselines borrowed with no user warning: {unwarned[:8]}"
+
+
+def test_borrowed_baseline_warning_names_the_weakness():
+    """The warning has to say WHY it is weak, not merely that it is."""
+    from app.services import ml
+
+    soil = ml.baseline_caveat("chickpea", "agreste_same_soil_archetype")
+    assert soil and "borrowed" in soil and "climate may not" in soil
+
+    nat = ml.baseline_caveat("chickpea", "agreste_national_mean")
+    assert nat and "weakest evidence" in nat
+
+    # Borrowed AND proxied must report both problems, worst first.
+    both = ml.baseline_caveat("winter_pea", "agreste_same_soil_archetype_via_proxy")
+    assert both and "borrowed" in both and "proxy-derived" in both
+
+    # A crop's own local history stays silent.
+    assert ml.baseline_caveat("field_pea", "agreste_department_history") is None
+
+
+def test_crop_dummies_carry_no_level_information_in_training():
+    """Explains why crop_* ranks high in the importance chart, and pins it.
+
+    The target is yield / department-crop historical mean, with the mean taken over the
+    FIT block only. So in training the ratio averages exactly 1.0 for every crop, and a
+    crop dummy cannot be predicting yield level — it is a gate the trees split on to
+    learn crop-specific weather responses and crop-specific interval widths.
+
+    If this ever stops being true, the importance chart's caption becomes wrong and the
+    crop dummies really would be doing level correction, which is the baseline failing.
+    """
+    import pandas as pd
+
+    df = pd.read_csv("data/processed/training_panel.csv", dtype={"dept_code": str})
+    fit = df[df.year < 2017]
+    dept = fit.groupby(["crop", "dept_code"])["yield_t_ha"].mean().rename("b")
+    joined = fit.join(dept, on=["crop", "dept_code"])
+    joined = joined[joined.b.notna() & (joined.b > 0)]
+    ratio = joined.yield_t_ha / joined.b
+
+    means = ratio.groupby(joined.crop).mean()
+    assert means.max() - means.min() < 0.01, (
+        f"crop ratio means have diverged ({means.to_dict()}); the baseline is no longer "
+        "normalising per crop and the chart caption needs rewriting"
+    )
+
+    # And the thing a crop dummy legitimately IS needed for: residual spread differs
+    # by crop by several multiples, so the quantile models need to know the crop.
+    sds = ratio.groupby(joined.crop).std()
+    assert sds.max() / sds.min() > 3, sds.to_dict()
+
+
+def test_the_grading_model_does_not_claim_a_calibration_it_does_not_have():
+    """An earlier _meta said base(crop) was set to match published market balances.
+
+    Checked: no market-balance series exists in this repository and nothing pins those
+    values to one. A false provenance claim is worse than no claim, because it invites
+    trust and then loses it on inspection.
+    """
+    from app.config import load_ref
+
+    meta = load_ref("quality")["_meta"]
+    cal = meta["calibration"]
+    assert "NOT CALIBRATED" in cal
+    assert "expert judgement" in cal
+    assert "treat every number in this file as a prior" in cal.lower()

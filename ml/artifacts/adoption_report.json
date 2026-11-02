@@ -1,0 +1,886 @@
+{
+  "model_version": "adoption-attribution-1.0.0",
+  "question": "Of the year-on-year change in a department's area share for a pulse, how much can be attributed to weather, and how much to a national shock this project cannot observe?",
+  "target": "d_share_pp = change in the crop's share of mapped COP area, percentage points",
+  "coverage": {
+    "adoption_panel_departments": 93,
+    "attribution_departments": 42,
+    "reason": "Meteo-France monthly station data was assembled for 42 departments in this project; the attribution runs on the intersection, the descriptive page uses all 93.",
+    "years": [
+      2011,
+      2024
+    ]
+  },
+  "lag_policy": "All weather features are from season t-1. A farmer sowing in year t cannot know year t's flowering rainfall; using it would be leakage.",
+  "unobserved_drivers": [
+    "Farm-gate pulse prices: Eurostat's French series ends 2016, carries unit errors in 2010-2011 and omits chickpea and fava bean. See data/processed/price_validation.json - verdict NOT USABLE.",
+    "PAC coupled aid per campaign: refdata/pac_2023_2027.json holds one current unit amount (122 EUR/ha grain legumes), not a 2010-2024 history.",
+    "Contracts, processing and optical-sorting capacity: no historical series.",
+    "Irrigation equipment, which plausibly gates the soy expansion."
+  ],
+  "decomposition": [
+    {
+      "crop": "green_lentil",
+      "n": 588,
+      "n_departments": 42,
+      "years": [
+        2011,
+        2024
+      ],
+      "sd_d_share_pp": 0.1217,
+      "variance_explained_increment_pct": {
+        "national_year_effect": 18.7,
+        "department_effect": 2.6,
+        "weather_and_soil": -26.8,
+        "unexplained": 105.5
+      },
+      "weather_contribution": "none measurable",
+      "fixed_effects_explained_pct": 21.3,
+      "left_after_fixed_effects_pct": 78.7,
+      "degrees_of_freedom": {
+        "year_effect": 13,
+        "department_effect": 42
+      },
+      "adjusted_r2_pct": {
+        "national_year_effect": 16.8,
+        "plus_department_effect": 13.2
+      },
+      "weather_stage_overfit_check_pct": {
+        "cross_fitted_by_year": -26.8,
+        "in_sample": 69.6,
+        "note": "The in-sample figure is what a naive fit would report. The gap is the overfit; only the cross-fitted figure is an attribution claim."
+      },
+      "weather_importance_top8": {
+        "share_pp_lag2to3_mean": 0.0997,
+        "flowering_water_balance_mm_lag1": 0.0924,
+        "share_pp_lag1": 0.0906,
+        "flowering_rain_mm_lag1": 0.0848,
+        "jun_heat_days_30c_lag1": 0.083,
+        "harvest_rain_mm_lag1": 0.0657,
+        "may_jun_heat_days_25c_lag1": 0.0639,
+        "summer_rain_mm_lag1": 0.0603
+      },
+      "importance_caveat": "Gain importances come from the in-sample fit and rank which columns the learner USED. With a near-zero cross-fitted increment they say what it latched onto, not what drives adoption."
+    },
+    {
+      "crop": "chickpea",
+      "n": 588,
+      "n_departments": 42,
+      "years": [
+        2011,
+        2024
+      ],
+      "sd_d_share_pp": 0.1989,
+      "variance_explained_increment_pct": {
+        "national_year_effect": 13.7,
+        "department_effect": 5.5,
+        "weather_and_soil": -84.9,
+        "unexplained": 165.6
+      },
+      "weather_contribution": "none measurable",
+      "fixed_effects_explained_pct": 19.2,
+      "left_after_fixed_effects_pct": 80.8,
+      "degrees_of_freedom": {
+        "year_effect": 13,
+        "department_effect": 42
+      },
+      "adjusted_r2_pct": {
+        "national_year_effect": 11.7,
+        "plus_department_effect": 10.9
+      },
+      "weather_stage_overfit_check_pct": {
+        "cross_fitted_by_year": -84.9,
+        "in_sample": 74.2,
+        "note": "The in-sample figure is what a naive fit would report. The gap is the overfit; only the cross-fitted figure is an attribution claim."
+      },
+      "weather_importance_top8": {
+        "share_pp_lag1": 0.1776,
+        "share_pp_lag2to3_mean": 0.108,
+        "flowering_tmax_c_lag1": 0.0763,
+        "may_jun_heat_days_25c_lag1": 0.0618,
+        "summer_rain_mm_lag1": 0.0583,
+        "yield_ratio_lag1": 0.0526,
+        "harvest_rain_mm_lag1": 0.0517,
+        "jun_heat_days_30c_lag1": 0.0486
+      },
+      "importance_caveat": "Gain importances come from the in-sample fit and rank which columns the learner USED. With a near-zero cross-fitted increment they say what it latched onto, not what drives adoption."
+    },
+    {
+      "crop": "field_pea",
+      "n": 588,
+      "n_departments": 42,
+      "years": [
+        2011,
+        2024
+      ],
+      "sd_d_share_pp": 0.5531,
+      "variance_explained_increment_pct": {
+        "national_year_effect": 37.3,
+        "department_effect": 1.8,
+        "weather_and_soil": -1.5,
+        "unexplained": 62.5
+      },
+      "weather_contribution": "none measurable",
+      "fixed_effects_explained_pct": 39.1,
+      "left_after_fixed_effects_pct": 60.9,
+      "degrees_of_freedom": {
+        "year_effect": 13,
+        "department_effect": 42
+      },
+      "adjusted_r2_pct": {
+        "national_year_effect": 35.8,
+        "plus_department_effect": 32.8
+      },
+      "weather_stage_overfit_check_pct": {
+        "cross_fitted_by_year": -1.5,
+        "in_sample": 52.2,
+        "note": "The in-sample figure is what a naive fit would report. The gap is the overfit; only the cross-fitted figure is an attribution claim."
+      },
+      "weather_importance_top8": {
+        "share_pp_lag1": 0.1325,
+        "soil_ph": 0.1265,
+        "share_pp_lag2to3_mean": 0.0881,
+        "summer_rain_mm_lag1": 0.0814,
+        "yield_ratio_lag1": 0.0646,
+        "apr_frost_days_lag1": 0.0541,
+        "establishment_rain_mm_lag1": 0.0533,
+        "jun_heat_days_30c_lag1": 0.05
+      },
+      "importance_caveat": "Gain importances come from the in-sample fit and rank which columns the learner USED. With a near-zero cross-fitted increment they say what it latched onto, not what drives adoption."
+    },
+    {
+      "crop": "fava_bean",
+      "n": 588,
+      "n_departments": 42,
+      "years": [
+        2011,
+        2024
+      ],
+      "sd_d_share_pp": 0.4443,
+      "variance_explained_increment_pct": {
+        "national_year_effect": 17.2,
+        "department_effect": 9.7,
+        "weather_and_soil": 1.3,
+        "unexplained": 71.9
+      },
+      "weather_contribution": "1.3% of variance",
+      "fixed_effects_explained_pct": 26.9,
+      "left_after_fixed_effects_pct": 73.1,
+      "degrees_of_freedom": {
+        "year_effect": 13,
+        "department_effect": 42
+      },
+      "adjusted_r2_pct": {
+        "national_year_effect": 15.3,
+        "plus_department_effect": 19.3
+      },
+      "weather_stage_overfit_check_pct": {
+        "cross_fitted_by_year": 1.3,
+        "in_sample": 64.3,
+        "note": "The in-sample figure is what a naive fit would report. The gap is the overfit; only the cross-fitted figure is an attribution claim."
+      },
+      "weather_importance_top8": {
+        "share_pp_lag1": 0.1296,
+        "drought_stress_index_lag1": 0.0977,
+        "may_jun_heat_days_25c_lag1": 0.0905,
+        "yield_ratio_lag1": 0.07,
+        "share_pp_lag2to3_mean": 0.0696,
+        "jun_heat_days_30c_lag1": 0.0585,
+        "reserve_utile_mm": 0.0521,
+        "flowering_rain_mm_lag1": 0.0511
+      },
+      "importance_caveat": "Gain importances come from the in-sample fit and rank which columns the learner USED. With a near-zero cross-fitted increment they say what it latched onto, not what drives adoption."
+    },
+    {
+      "crop": "soybean",
+      "n": 588,
+      "n_departments": 42,
+      "years": [
+        2011,
+        2024
+      ],
+      "sd_d_share_pp": 1.4777,
+      "variance_explained_increment_pct": {
+        "national_year_effect": 14.8,
+        "department_effect": 11.8,
+        "weather_and_soil": -15.5,
+        "unexplained": 88.9
+      },
+      "weather_contribution": "none measurable",
+      "fixed_effects_explained_pct": 26.6,
+      "left_after_fixed_effects_pct": 73.4,
+      "degrees_of_freedom": {
+        "year_effect": 13,
+        "department_effect": 42
+      },
+      "adjusted_r2_pct": {
+        "national_year_effect": 12.8,
+        "plus_department_effect": 19.0
+      },
+      "weather_stage_overfit_check_pct": {
+        "cross_fitted_by_year": -15.5,
+        "in_sample": 67.6,
+        "note": "The in-sample figure is what a naive fit would report. The gap is the overfit; only the cross-fitted figure is an attribution claim."
+      },
+      "weather_importance_top8": {
+        "share_pp_lag1": 0.0958,
+        "flowering_rain_mm_lag1": 0.0892,
+        "summer_rain_mm_lag1": 0.0882,
+        "recharge_rain_mm_lag1": 0.0753,
+        "reserve_utile_mm": 0.0716,
+        "share_pp_lag2to3_mean": 0.067,
+        "harvest_rain_mm_lag1": 0.0647,
+        "drought_stress_index_lag1": 0.0628
+      },
+      "importance_caveat": "Gain importances come from the in-sample fit and rank which columns the learner USED. With a near-zero cross-fitted increment they say what it latched onto, not what drives adoption."
+    }
+  ],
+  "held_out_prediction": [
+    {
+      "crop": "green_lentil",
+      "n_train": 378,
+      "n_test": 210,
+      "test_years": [
+        2020,
+        2024
+      ],
+      "mae_pp_model": 0.1308,
+      "mae_pp_no_change_baseline": 0.077,
+      "mae_pp_train_mean_baseline": 0.088,
+      "skill_vs_no_change_pct": -69.8,
+      "r2_out_of_sample": -1.5294,
+      "direction_accuracy": 0.486,
+      "direction_base_rate": 0.529
+    },
+    {
+      "crop": "chickpea",
+      "n_train": 378,
+      "n_test": 210,
+      "test_years": [
+        2020,
+        2024
+      ],
+      "mae_pp_model": 0.1478,
+      "mae_pp_no_change_baseline": 0.1102,
+      "mae_pp_train_mean_baseline": 0.1283,
+      "skill_vs_no_change_pct": -34.1,
+      "r2_out_of_sample": -0.5191,
+      "direction_accuracy": 0.538,
+      "direction_base_rate": 0.514
+    },
+    {
+      "crop": "field_pea",
+      "n_train": 378,
+      "n_test": 210,
+      "test_years": [
+        2020,
+        2024
+      ],
+      "mae_pp_model": 0.4449,
+      "mae_pp_no_change_baseline": 0.4618,
+      "mae_pp_train_mean_baseline": 0.46,
+      "skill_vs_no_change_pct": 3.7,
+      "r2_out_of_sample": 0.08,
+      "direction_accuracy": 0.571,
+      "direction_base_rate": 0.567
+    },
+    {
+      "crop": "fava_bean",
+      "n_train": 378,
+      "n_test": 210,
+      "test_years": [
+        2020,
+        2024
+      ],
+      "mae_pp_model": 0.2576,
+      "mae_pp_no_change_baseline": 0.2493,
+      "mae_pp_train_mean_baseline": 0.2692,
+      "skill_vs_no_change_pct": -3.3,
+      "r2_out_of_sample": -0.069,
+      "direction_accuracy": 0.562,
+      "direction_base_rate": 0.619
+    },
+    {
+      "crop": "soybean",
+      "n_train": 378,
+      "n_test": 210,
+      "test_years": [
+        2020,
+        2024
+      ],
+      "mae_pp_model": 0.7268,
+      "mae_pp_no_change_baseline": 0.7721,
+      "mae_pp_train_mean_baseline": 0.9068,
+      "skill_vs_no_change_pct": 5.9,
+      "r2_out_of_sample": 0.2564,
+      "direction_accuracy": 0.671,
+      "direction_base_rate": 0.581
+    }
+  ],
+  "weather_envelope": [
+    {
+      "crop": "green_lentil",
+      "contrasts": [
+        {
+          "variable": "establishment_rain_mm_lag1",
+          "mean_where_expanded": 121.3,
+          "mean_where_contracted": 107.64,
+          "standardised_difference": 0.266,
+          "n_expanded": 355,
+          "n_contracted": 201
+        },
+        {
+          "variable": "recharge_rain_mm_lag1",
+          "mean_where_expanded": 428.57,
+          "mean_where_contracted": 459.19,
+          "standardised_difference": -0.227,
+          "n_expanded": 355,
+          "n_contracted": 201
+        },
+        {
+          "variable": "spring_tmean_c_lag1",
+          "mean_where_expanded": 14.77,
+          "mean_where_contracted": 15.04,
+          "standardised_difference": -0.193,
+          "n_expanded": 355,
+          "n_contracted": 201
+        },
+        {
+          "variable": "soil_ph",
+          "mean_where_expanded": 7.37,
+          "mean_where_contracted": 7.26,
+          "standardised_difference": 0.183,
+          "n_expanded": 355,
+          "n_contracted": 201
+        },
+        {
+          "variable": "apr_frost_days_lag1",
+          "mean_where_expanded": 2.53,
+          "mean_where_contracted": 2.98,
+          "standardised_difference": -0.174,
+          "n_expanded": 355,
+          "n_contracted": 201
+        },
+        {
+          "variable": "flowering_tmax_c_lag1",
+          "mean_where_expanded": 22.33,
+          "mean_where_contracted": 22.66,
+          "standardised_difference": -0.172,
+          "n_expanded": 355,
+          "n_contracted": 201
+        },
+        {
+          "variable": "jun_heat_days_30c_lag1",
+          "mean_where_expanded": 3.89,
+          "mean_where_contracted": 4.36,
+          "standardised_difference": -0.16,
+          "n_expanded": 355,
+          "n_contracted": 201
+        },
+        {
+          "variable": "may_jun_heat_days_25c_lag1",
+          "mean_where_expanded": 18.69,
+          "mean_where_contracted": 20.0,
+          "standardised_difference": -0.153,
+          "n_expanded": 355,
+          "n_contracted": 201
+        }
+      ]
+    },
+    {
+      "crop": "chickpea",
+      "contrasts": [
+        {
+          "variable": "recharge_rain_mm_lag1",
+          "mean_where_expanded": 397.14,
+          "mean_where_contracted": 493.52,
+          "standardised_difference": -0.715,
+          "n_expanded": 309,
+          "n_contracted": 129
+        },
+        {
+          "variable": "flowering_rain_mm_lag1",
+          "mean_where_expanded": 137.33,
+          "mean_where_contracted": 164.43,
+          "standardised_difference": -0.464,
+          "n_expanded": 309,
+          "n_contracted": 129
+        },
+        {
+          "variable": "flowering_water_balance_mm_lag1",
+          "mean_where_expanded": -106.67,
+          "mean_where_contracted": -77.98,
+          "standardised_difference": -0.371,
+          "n_expanded": 309,
+          "n_contracted": 129
+        },
+        {
+          "variable": "drought_stress_index_lag1",
+          "mean_where_expanded": 0.98,
+          "mean_where_contracted": 0.75,
+          "standardised_difference": 0.284,
+          "n_expanded": 309,
+          "n_contracted": 129
+        },
+        {
+          "variable": "apr_frost_days_lag1",
+          "mean_where_expanded": 2.35,
+          "mean_where_contracted": 3.03,
+          "standardised_difference": -0.269,
+          "n_expanded": 309,
+          "n_contracted": 129
+        },
+        {
+          "variable": "flowering_tmax_c_lag1",
+          "mean_where_expanded": 22.77,
+          "mean_where_contracted": 22.38,
+          "standardised_difference": 0.202,
+          "n_expanded": 309,
+          "n_contracted": 129
+        },
+        {
+          "variable": "summer_rain_mm_lag1",
+          "mean_where_expanded": 169.06,
+          "mean_where_contracted": 181.3,
+          "standardised_difference": -0.194,
+          "n_expanded": 309,
+          "n_contracted": 129
+        },
+        {
+          "variable": "reserve_utile_mm",
+          "mean_where_expanded": 125.08,
+          "mean_where_contracted": 118.6,
+          "standardised_difference": 0.179,
+          "n_expanded": 309,
+          "n_contracted": 129
+        }
+      ]
+    },
+    {
+      "crop": "field_pea",
+      "contrasts": [
+        {
+          "variable": "summer_rain_mm_lag1",
+          "mean_where_expanded": 174.27,
+          "mean_where_contracted": 194.24,
+          "standardised_difference": -0.317,
+          "n_expanded": 285,
+          "n_contracted": 302
+        },
+        {
+          "variable": "may_jun_heat_days_25c_lag1",
+          "mean_where_expanded": 17.64,
+          "mean_where_contracted": 20.24,
+          "standardised_difference": -0.305,
+          "n_expanded": 285,
+          "n_contracted": 302
+        },
+        {
+          "variable": "apr_frost_days_lag1",
+          "mean_where_expanded": 2.28,
+          "mean_where_contracted": 3.04,
+          "standardised_difference": -0.301,
+          "n_expanded": 285,
+          "n_contracted": 302
+        },
+        {
+          "variable": "recharge_rain_mm_lag1",
+          "mean_where_expanded": 466.24,
+          "mean_where_contracted": 426.52,
+          "standardised_difference": 0.295,
+          "n_expanded": 285,
+          "n_contracted": 302
+        },
+        {
+          "variable": "establishment_rain_mm_lag1",
+          "mean_where_expanded": 123.87,
+          "mean_where_contracted": 111.54,
+          "standardised_difference": 0.24,
+          "n_expanded": 285,
+          "n_contracted": 302
+        },
+        {
+          "variable": "harvest_rain_mm_lag1",
+          "mean_where_expanded": 48.6,
+          "mean_where_contracted": 57.8,
+          "standardised_difference": -0.236,
+          "n_expanded": 285,
+          "n_contracted": 302
+        },
+        {
+          "variable": "flowering_tmax_c_lag1",
+          "mean_where_expanded": 22.23,
+          "mean_where_contracted": 22.51,
+          "standardised_difference": -0.149,
+          "n_expanded": 285,
+          "n_contracted": 302
+        },
+        {
+          "variable": "flowering_rain_mm_lag1",
+          "mean_where_expanded": 148.23,
+          "mean_where_contracted": 153.67,
+          "standardised_difference": -0.093,
+          "n_expanded": 285,
+          "n_contracted": 302
+        }
+      ]
+    },
+    {
+      "crop": "fava_bean",
+      "contrasts": [
+        {
+          "variable": "establishment_rain_mm_lag1",
+          "mean_where_expanded": 132.46,
+          "mean_where_contracted": 98.03,
+          "standardised_difference": 0.67,
+          "n_expanded": 332,
+          "n_contracted": 256
+        },
+        {
+          "variable": "flowering_rain_mm_lag1",
+          "mean_where_expanded": 160.95,
+          "mean_where_contracted": 138.14,
+          "standardised_difference": 0.391,
+          "n_expanded": 332,
+          "n_contracted": 256
+        },
+        {
+          "variable": "flowering_water_balance_mm_lag1",
+          "mean_where_expanded": -76.5,
+          "mean_where_contracted": -104.93,
+          "standardised_difference": 0.368,
+          "n_expanded": 332,
+          "n_contracted": 256
+        },
+        {
+          "variable": "harvest_rain_mm_lag1",
+          "mean_where_expanded": 48.32,
+          "mean_where_contracted": 59.92,
+          "standardised_difference": -0.298,
+          "n_expanded": 332,
+          "n_contracted": 256
+        },
+        {
+          "variable": "drought_stress_index_lag1",
+          "mean_where_expanded": 0.73,
+          "mean_where_contracted": 0.97,
+          "standardised_difference": -0.293,
+          "n_expanded": 332,
+          "n_contracted": 256
+        },
+        {
+          "variable": "summer_rain_mm_lag1",
+          "mean_where_expanded": 177.42,
+          "mean_where_contracted": 193.8,
+          "standardised_difference": -0.26,
+          "n_expanded": 332,
+          "n_contracted": 256
+        },
+        {
+          "variable": "recharge_rain_mm_lag1",
+          "mean_where_expanded": 453.83,
+          "mean_where_contracted": 435.83,
+          "standardised_difference": 0.134,
+          "n_expanded": 332,
+          "n_contracted": 256
+        },
+        {
+          "variable": "jun_heat_days_30c_lag1",
+          "mean_where_expanded": 4.09,
+          "mean_where_contracted": 3.84,
+          "standardised_difference": 0.086,
+          "n_expanded": 332,
+          "n_contracted": 256
+        }
+      ]
+    },
+    {
+      "crop": "soybean",
+      "contrasts": [
+        {
+          "variable": "harvest_rain_mm_lag1",
+          "mean_where_expanded": 59.89,
+          "mean_where_contracted": 40.07,
+          "standardised_difference": 0.508,
+          "n_expanded": 358,
+          "n_contracted": 201
+        },
+        {
+          "variable": "summer_rain_mm_lag1",
+          "mean_where_expanded": 192.71,
+          "mean_where_contracted": 166.24,
+          "standardised_difference": 0.42,
+          "n_expanded": 358,
+          "n_contracted": 201
+        },
+        {
+          "variable": "spring_tmean_c_lag1",
+          "mean_where_expanded": 14.74,
+          "mean_where_contracted": 15.22,
+          "standardised_difference": -0.348,
+          "n_expanded": 358,
+          "n_contracted": 201
+        },
+        {
+          "variable": "flowering_water_balance_mm_lag1",
+          "mean_where_expanded": -82.64,
+          "mean_where_contracted": -101.74,
+          "standardised_difference": 0.247,
+          "n_expanded": 358,
+          "n_contracted": 201
+        },
+        {
+          "variable": "flowering_tmax_c_lag1",
+          "mean_where_expanded": 22.36,
+          "mean_where_contracted": 22.81,
+          "standardised_difference": -0.237,
+          "n_expanded": 358,
+          "n_contracted": 201
+        },
+        {
+          "variable": "establishment_rain_mm_lag1",
+          "mean_where_expanded": 123.42,
+          "mean_where_contracted": 111.43,
+          "standardised_difference": 0.233,
+          "n_expanded": 358,
+          "n_contracted": 201
+        },
+        {
+          "variable": "flowering_rain_mm_lag1",
+          "mean_where_expanded": 156.89,
+          "mean_where_contracted": 143.32,
+          "standardised_difference": 0.232,
+          "n_expanded": 358,
+          "n_contracted": 201
+        },
+        {
+          "variable": "soil_ph",
+          "mean_where_expanded": 7.38,
+          "mean_where_contracted": 7.26,
+          "standardised_difference": 0.196,
+          "n_expanded": 358,
+          "n_contracted": 201
+        }
+      ]
+    }
+  ],
+  "yield_response_to_water": [
+    {
+      "crop": "green_lentil",
+      "crop_mean_yield_t_ha": 1.37,
+      "n_observations": 353,
+      "bins": [
+        {
+          "water_balance_mm_from": -258.5,
+          "water_balance_mm_to": -154.0,
+          "mean_yield_t_ha": 1.426,
+          "relative_to_crop_mean": 1.041,
+          "n": 71
+        },
+        {
+          "water_balance_mm_from": -154.0,
+          "water_balance_mm_to": -126.6,
+          "mean_yield_t_ha": 1.36,
+          "relative_to_crop_mean": 0.993,
+          "n": 70
+        },
+        {
+          "water_balance_mm_from": -126.6,
+          "water_balance_mm_to": -94.4,
+          "mean_yield_t_ha": 1.241,
+          "relative_to_crop_mean": 0.906,
+          "n": 71
+        },
+        {
+          "water_balance_mm_from": -94.4,
+          "water_balance_mm_to": -33.1,
+          "mean_yield_t_ha": 1.434,
+          "relative_to_crop_mean": 1.046,
+          "n": 70
+        },
+        {
+          "water_balance_mm_from": -33.1,
+          "water_balance_mm_to": 117.4,
+          "mean_yield_t_ha": 1.391,
+          "relative_to_crop_mean": 1.015,
+          "n": 71
+        }
+      ]
+    },
+    {
+      "crop": "chickpea",
+      "crop_mean_yield_t_ha": 1.694,
+      "n_observations": 188,
+      "bins": [
+        {
+          "water_balance_mm_from": -258.5,
+          "water_balance_mm_to": -152.8,
+          "mean_yield_t_ha": 1.666,
+          "relative_to_crop_mean": 0.984,
+          "n": 38
+        },
+        {
+          "water_balance_mm_from": -152.8,
+          "water_balance_mm_to": -124.6,
+          "mean_yield_t_ha": 1.695,
+          "relative_to_crop_mean": 1.001,
+          "n": 37
+        },
+        {
+          "water_balance_mm_from": -124.6,
+          "water_balance_mm_to": -92.4,
+          "mean_yield_t_ha": 1.609,
+          "relative_to_crop_mean": 0.95,
+          "n": 38
+        },
+        {
+          "water_balance_mm_from": -92.4,
+          "water_balance_mm_to": -34.9,
+          "mean_yield_t_ha": 1.752,
+          "relative_to_crop_mean": 1.034,
+          "n": 37
+        },
+        {
+          "water_balance_mm_from": -34.9,
+          "water_balance_mm_to": 65.5,
+          "mean_yield_t_ha": 1.749,
+          "relative_to_crop_mean": 1.032,
+          "n": 38
+        }
+      ]
+    },
+    {
+      "crop": "field_pea",
+      "crop_mean_yield_t_ha": 3.233,
+      "n_observations": 425,
+      "bins": [
+        {
+          "water_balance_mm_from": -258.5,
+          "water_balance_mm_to": -154.2,
+          "mean_yield_t_ha": 3.123,
+          "relative_to_crop_mean": 0.966,
+          "n": 85
+        },
+        {
+          "water_balance_mm_from": -154.2,
+          "water_balance_mm_to": -127.5,
+          "mean_yield_t_ha": 3.458,
+          "relative_to_crop_mean": 1.069,
+          "n": 85
+        },
+        {
+          "water_balance_mm_from": -127.5,
+          "water_balance_mm_to": -90.5,
+          "mean_yield_t_ha": 3.299,
+          "relative_to_crop_mean": 1.02,
+          "n": 85
+        },
+        {
+          "water_balance_mm_from": -90.5,
+          "water_balance_mm_to": -32.1,
+          "mean_yield_t_ha": 3.422,
+          "relative_to_crop_mean": 1.058,
+          "n": 85
+        },
+        {
+          "water_balance_mm_from": -32.1,
+          "water_balance_mm_to": 117.4,
+          "mean_yield_t_ha": 2.865,
+          "relative_to_crop_mean": 0.886,
+          "n": 85
+        }
+      ]
+    },
+    {
+      "crop": "fava_bean",
+      "crop_mean_yield_t_ha": 2.567,
+      "n_observations": 465,
+      "bins": [
+        {
+          "water_balance_mm_from": -258.5,
+          "water_balance_mm_to": -153.7,
+          "mean_yield_t_ha": 2.543,
+          "relative_to_crop_mean": 0.99,
+          "n": 93
+        },
+        {
+          "water_balance_mm_from": -153.7,
+          "water_balance_mm_to": -126.6,
+          "mean_yield_t_ha": 2.693,
+          "relative_to_crop_mean": 1.049,
+          "n": 93
+        },
+        {
+          "water_balance_mm_from": -126.6,
+          "water_balance_mm_to": -86.3,
+          "mean_yield_t_ha": 2.347,
+          "relative_to_crop_mean": 0.914,
+          "n": 93
+        },
+        {
+          "water_balance_mm_from": -86.3,
+          "water_balance_mm_to": -32.1,
+          "mean_yield_t_ha": 2.799,
+          "relative_to_crop_mean": 1.09,
+          "n": 93
+        },
+        {
+          "water_balance_mm_from": -32.1,
+          "water_balance_mm_to": 127.3,
+          "mean_yield_t_ha": 2.455,
+          "relative_to_crop_mean": 0.956,
+          "n": 93
+        }
+      ]
+    },
+    {
+      "crop": "soybean",
+      "crop_mean_yield_t_ha": 2.53,
+      "n_observations": 402,
+      "bins": [
+        {
+          "water_balance_mm_from": -258.5,
+          "water_balance_mm_to": -142.7,
+          "mean_yield_t_ha": 2.523,
+          "relative_to_crop_mean": 0.997,
+          "n": 81
+        },
+        {
+          "water_balance_mm_from": -142.7,
+          "water_balance_mm_to": -109.2,
+          "mean_yield_t_ha": 2.389,
+          "relative_to_crop_mean": 0.944,
+          "n": 80
+        },
+        {
+          "water_balance_mm_from": -109.2,
+          "water_balance_mm_to": -68.5,
+          "mean_yield_t_ha": 2.499,
+          "relative_to_crop_mean": 0.988,
+          "n": 80
+        },
+        {
+          "water_balance_mm_from": -68.5,
+          "water_balance_mm_to": -6.0,
+          "mean_yield_t_ha": 2.593,
+          "relative_to_crop_mean": 1.025,
+          "n": 80
+        },
+        {
+          "water_balance_mm_from": -6.0,
+          "water_balance_mm_to": 249.2,
+          "mean_yield_t_ha": 2.646,
+          "relative_to_crop_mean": 1.046,
+          "n": 81
+        }
+      ]
+    }
+  ],
+  "verdict": {
+    "national_year_effect_pct_median": 17.2,
+    "weather_increment_pct_median": -15.5,
+    "crops_where_weather_adds_nothing": "4 of 5",
+    "held_out_skill_vs_no_change_pct_median": -3.3,
+    "plain_language": "A national shock common to every department in the same year is the largest single identified factor in year-on-year pulse area change. Last season's weather and the department's soil add nothing measurable once that and a persistent department effect are accounted for, and a model given only pre-decision information does not beat assuming no change. On this evidence the shift to pulses is NOT weather-driven. The most likely drivers - price, PAC coupled aid and contract availability - are exactly the series this repo has no usable history for, so this cannot be pushed further without new data."
+  }
+}

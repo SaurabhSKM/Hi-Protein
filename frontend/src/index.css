@@ -1,5 +1,86 @@
 @import "tailwindcss";
 
-:root { color-scheme: light; }
-body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
-.leaflet-container { height: 100%; width: 100%; background: #eef2f5; }
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* iOS inflates text in landscape without this. */
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Nothing in this app is meant to scroll sideways. A single wide table or chart that
+   overflows turns the whole page into a horizontally draggable mess on a phone, and the
+   symptom (everything slightly off-centre) is hard to trace back to one component. */
+html,
+body {
+  overflow-x: hidden;
+}
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  background: #eef2f5;
+}
+
+/* Keep a pinch-zoom gesture on the map from scrolling the page behind it, and stop the
+   browser from hijacking a two-finger drag over the map. */
+.leaflet-container {
+  overscroll-behavior: contain;
+  touch-action: pan-x pan-y;
+}
+
+/* Leaflet tooltips default to a width that spills off a narrow screen. */
+.leaflet-tooltip {
+  max-width: min(78vw, 320px);
+  white-space: normal;
+}
+
+@media (max-width: 640px) {
+  /* iOS Safari zooms the whole viewport when a focused input is under 16px, and it
+     does not zoom back out. Applies to the farmer form, which is the one place on the
+     app a user types. */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Comfortable thumb targets on the controls that are actually tapped. */
+  button,
+  select,
+  [role="button"] {
+    min-height: 40px;
+  }
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Recharts sets an explicit width on its SVG wrapper, which can exceed the flex parent
+   on a narrow screen and then nothing can shrink it back. */
+.recharts-wrapper,
+.recharts-surface {
+  max-width: 100%;
+}
+
+/* The printable advisor dossier: drop the app chrome and print the page only. */
+@media print {
+  header,
+  footer,
+  nav {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+}

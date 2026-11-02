@@ -1,0 +1,1722 @@
+{
+ "01": {
+  "rotation": [
+   "soft_wheat",
+   "rapeseed",
+   "soft_wheat"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "rapeseed",
+  "area_share_pct": {
+   "soft_wheat": 56.9,
+   "rapeseed": 14.4
+  },
+  "rotation_coverage_pct": 71.2,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 56.9,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 16.6,
+    "priceable": false
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 14.4,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "winter_barley",
+   "area_share_pct": 16.6,
+   "why": "winter_barley is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; rapeseed is used instead."
+  }
+ },
+ "02": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 63.9,
+   "spring_barley": 8.9,
+   "rapeseed": 16.4
+  },
+  "rotation_coverage_pct": 89.2,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 63.9,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 16.4,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 9.8,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "10": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 44.0,
+   "spring_barley": 19.0,
+   "rapeseed": 11.7
+  },
+  "rotation_coverage_pct": 74.6,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 44.0,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 19.0,
+    "priceable": false
+   },
+   {
+    "crop": "spring_barley",
+    "area_share_pct": 19.0,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "winter_barley",
+   "area_share_pct": 19.0,
+   "why": "winter_barley is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "11": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 14.6,
+   "spring_barley": 1.5,
+   "rapeseed": 4.8
+  },
+  "rotation_coverage_pct": 20.8,
+  "top3_actual": [
+   {
+    "crop": "durum_wheat",
+    "area_share_pct": 34.3,
+    "priceable": false
+   },
+   {
+    "crop": "sunflower",
+    "area_share_pct": 31.9,
+    "priceable": false
+   },
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 14.6,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "durum_wheat",
+   "sunflower",
+   "soft_wheat"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "durum_wheat",
+   "area_share_pct": 34.3,
+   "why": "durum_wheat is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "14": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 60.7,
+   "spring_barley": 3.3,
+   "rapeseed": 19.4
+  },
+  "rotation_coverage_pct": 83.4,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 60.7,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 19.4,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 15.1,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "16": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 42.9,
+   "spring_barley": 5.3,
+   "rapeseed": 10.0
+  },
+  "rotation_coverage_pct": 58.1,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 42.9,
+    "priceable": true
+   },
+   {
+    "crop": "sunflower",
+    "area_share_pct": 27.2,
+    "priceable": false
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 12.1,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "durum_wheat",
+   "sunflower",
+   "soft_wheat"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "sunflower",
+   "area_share_pct": 27.2,
+   "why": "sunflower is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "17": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 40.1,
+   "spring_barley": 8.9,
+   "rapeseed": 10.2
+  },
+  "rotation_coverage_pct": 59.2,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 40.1,
+    "priceable": true
+   },
+   {
+    "crop": "sunflower",
+    "area_share_pct": 22.3,
+    "priceable": false
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 10.2,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "durum_wheat",
+   "sunflower",
+   "soft_wheat"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "sunflower",
+   "area_share_pct": 22.3,
+   "why": "sunflower is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "18": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 41.9,
+   "spring_barley": 6.0,
+   "rapeseed": 18.4
+  },
+  "rotation_coverage_pct": 66.3,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 41.9,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 19.4,
+    "priceable": false
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 18.4,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "winter_barley",
+   "area_share_pct": 19.4,
+   "why": "winter_barley is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "21": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 45.8,
+   "spring_barley": 11.9,
+   "rapeseed": 12.5
+  },
+  "rotation_coverage_pct": 70.2,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 45.8,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 19.9,
+    "priceable": false
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 12.5,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "winter_barley",
+   "area_share_pct": 19.9,
+   "why": "winter_barley is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "27": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 59.5,
+   "spring_barley": 2.8,
+   "rapeseed": 22.4
+  },
+  "rotation_coverage_pct": 84.6,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 59.5,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 22.4,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 14.4,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "28": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 43.5,
+   "spring_barley": 4.0,
+   "rapeseed": 25.1
+  },
+  "rotation_coverage_pct": 72.6,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 43.5,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 25.1,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 18.3,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "31": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 30.6,
+   "spring_barley": 1.5,
+   "rapeseed": 7.1
+  },
+  "rotation_coverage_pct": 39.1,
+  "top3_actual": [
+   {
+    "crop": "sunflower",
+    "area_share_pct": 32.5,
+    "priceable": false
+   },
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 30.6,
+    "priceable": true
+   },
+   {
+    "crop": "durum_wheat",
+    "area_share_pct": 18.8,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "durum_wheat",
+   "sunflower",
+   "soft_wheat"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "sunflower",
+   "area_share_pct": 32.5,
+   "why": "sunflower is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "32": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 40.6,
+   "spring_barley": 1.6,
+   "rapeseed": 4.4
+  },
+  "rotation_coverage_pct": 46.6,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 40.6,
+    "priceable": true
+   },
+   {
+    "crop": "sunflower",
+    "area_share_pct": 37.0,
+    "priceable": false
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 7.0,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "durum_wheat",
+   "sunflower",
+   "soft_wheat"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "sunflower",
+   "area_share_pct": 37.0,
+   "why": "sunflower is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "36": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 44.4,
+   "spring_barley": 4.1,
+   "rapeseed": 18.9
+  },
+  "rotation_coverage_pct": 67.5,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 44.4,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 18.9,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 18.6,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "37": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 49.1,
+   "spring_barley": 2.1,
+   "rapeseed": 18.9
+  },
+  "rotation_coverage_pct": 70.2,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 49.1,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 18.9,
+    "priceable": true
+   },
+   {
+    "crop": "sunflower",
+    "area_share_pct": 15.3,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "38": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 51.2,
+   "spring_barley": 1.6,
+   "rapeseed": 17.2
+  },
+  "rotation_coverage_pct": 70.0,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 51.2,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 17.2,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 14.2,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "39": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 50.4,
+   "spring_barley": 3.7,
+   "rapeseed": 12.5
+  },
+  "rotation_coverage_pct": 66.7,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 50.4,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 24.5,
+    "priceable": false
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 12.5,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "winter_barley",
+   "area_share_pct": 24.5,
+   "why": "winter_barley is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "40": {
+  "rotation": [
+   "soft_wheat",
+   "rapeseed",
+   "soft_wheat"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "rapeseed",
+  "area_share_pct": {
+   "soft_wheat": 6.4,
+   "rapeseed": 5.5
+  },
+  "rotation_coverage_pct": 11.9,
+  "top3_actual": [
+   {
+    "crop": "grain_maize",
+    "area_share_pct": 61.5,
+    "priceable": false
+   },
+   {
+    "crop": "sunflower",
+    "area_share_pct": 23.9,
+    "priceable": false
+   },
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 6.4,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "durum_wheat",
+   "sunflower",
+   "soft_wheat"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "grain_maize",
+   "area_share_pct": 61.5,
+   "why": "grain_maize is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; rapeseed is used instead."
+  }
+ },
+ "41": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 43.9,
+   "spring_barley": 2.6,
+   "rapeseed": 25.7
+  },
+  "rotation_coverage_pct": 72.2,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 43.9,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 25.7,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 14.9,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "45": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 38.5,
+   "spring_barley": 17.5,
+   "rapeseed": 14.9
+  },
+  "rotation_coverage_pct": 70.9,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 38.5,
+    "priceable": true
+   },
+   {
+    "crop": "spring_barley",
+    "area_share_pct": 17.5,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 14.9,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "47": {
+  "rotation": [
+   "soft_wheat",
+   "rapeseed",
+   "soft_wheat"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "rapeseed",
+  "area_share_pct": {
+   "soft_wheat": 48.8,
+   "rapeseed": 5.5
+  },
+  "rotation_coverage_pct": 54.4,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 48.8,
+    "priceable": true
+   },
+   {
+    "crop": "sunflower",
+    "area_share_pct": 33.2,
+    "priceable": false
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 8.0,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "durum_wheat",
+   "sunflower",
+   "soft_wheat"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "sunflower",
+   "area_share_pct": 33.2,
+   "why": "sunflower is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; rapeseed is used instead."
+  }
+ },
+ "51": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 49.1,
+   "spring_barley": 16.1,
+   "rapeseed": 16.5
+  },
+  "rotation_coverage_pct": 81.8,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 49.1,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 16.5,
+    "priceable": true
+   },
+   {
+    "crop": "spring_barley",
+    "area_share_pct": 16.1,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "52": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 43.8,
+   "spring_barley": 15.3,
+   "rapeseed": 13.4
+  },
+  "rotation_coverage_pct": 72.5,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 43.8,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 18.8,
+    "priceable": false
+   },
+   {
+    "crop": "spring_barley",
+    "area_share_pct": 15.3,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "winter_barley",
+   "area_share_pct": 18.8,
+   "why": "winter_barley is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "54": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 47.1,
+   "spring_barley": 10.7,
+   "rapeseed": 15.8
+  },
+  "rotation_coverage_pct": 73.6,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 47.1,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 16.4,
+    "priceable": false
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 15.8,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "winter_barley",
+   "area_share_pct": 16.4,
+   "why": "winter_barley is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "55": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 43.2,
+   "spring_barley": 17.0,
+   "rapeseed": 17.3
+  },
+  "rotation_coverage_pct": 77.5,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 43.2,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 17.3,
+    "priceable": true
+   },
+   {
+    "crop": "spring_barley",
+    "area_share_pct": 17.0,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "58": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 43.3,
+   "spring_barley": 7.6,
+   "rapeseed": 15.4
+  },
+  "rotation_coverage_pct": 66.3,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 43.3,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 20.5,
+    "priceable": false
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 15.4,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "winter_barley",
+   "area_share_pct": 20.5,
+   "why": "winter_barley is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "60": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 64.9,
+   "spring_barley": 4.8,
+   "rapeseed": 16.1
+  },
+  "rotation_coverage_pct": 85.7,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 64.9,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 16.1,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 11.7,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "64": {
+  "rotation": [
+   "soft_wheat",
+   "rapeseed",
+   "soft_wheat"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "rapeseed",
+  "area_share_pct": {
+   "soft_wheat": 19.1,
+   "rapeseed": 11.0
+  },
+  "rotation_coverage_pct": 30.2,
+  "top3_actual": [
+   {
+    "crop": "sunflower",
+    "area_share_pct": 36.3,
+    "priceable": false
+   },
+   {
+    "crop": "grain_maize",
+    "area_share_pct": 24.9,
+    "priceable": false
+   },
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 19.1,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "durum_wheat",
+   "sunflower",
+   "soft_wheat"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "sunflower",
+   "area_share_pct": 36.3,
+   "why": "sunflower is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; rapeseed is used instead."
+  }
+ },
+ "65": {
+  "rotation": [
+   "soft_wheat",
+   "rapeseed",
+   "soft_wheat"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "rapeseed",
+  "area_share_pct": {
+   "soft_wheat": 37.5,
+   "rapeseed": 7.8
+  },
+  "rotation_coverage_pct": 45.3,
+  "top3_actual": [
+   {
+    "crop": "sunflower",
+    "area_share_pct": 39.9,
+    "priceable": false
+   },
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 37.5,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 11.8,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "durum_wheat",
+   "sunflower",
+   "soft_wheat"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "sunflower",
+   "area_share_pct": 39.9,
+   "why": "sunflower is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; rapeseed is used instead."
+  }
+ },
+ "68": {
+  "rotation": [
+   "soft_wheat",
+   "rapeseed",
+   "soft_wheat"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "rapeseed",
+  "area_share_pct": {
+   "soft_wheat": 74.9,
+   "rapeseed": 14.5
+  },
+  "rotation_coverage_pct": 89.4,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 74.9,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 14.5,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 7.0,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "70": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 48.7,
+   "spring_barley": 2.7,
+   "rapeseed": 22.5
+  },
+  "rotation_coverage_pct": 73.9,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 48.7,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 22.5,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 20.2,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "71": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 55.7,
+   "spring_barley": 1.6,
+   "rapeseed": 14.6
+  },
+  "rotation_coverage_pct": 71.9,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 55.7,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 19.2,
+    "priceable": false
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 14.6,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "winter_barley",
+   "area_share_pct": 19.2,
+   "why": "winter_barley is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "77": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 54.1,
+   "spring_barley": 11.3,
+   "rapeseed": 17.0
+  },
+  "rotation_coverage_pct": 82.3,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 54.1,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 17.0,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 13.8,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "78": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 51.7,
+   "spring_barley": 8.3,
+   "rapeseed": 21.9
+  },
+  "rotation_coverage_pct": 81.8,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 51.7,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 21.9,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 15.0,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "79": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 49.7,
+   "spring_barley": 1.9,
+   "rapeseed": 15.9
+  },
+  "rotation_coverage_pct": 67.5,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 49.7,
+    "priceable": true
+   },
+   {
+    "crop": "sunflower",
+    "area_share_pct": 19.6,
+    "priceable": false
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 15.9,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "durum_wheat",
+   "sunflower",
+   "soft_wheat"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "sunflower",
+   "area_share_pct": 19.6,
+   "why": "sunflower is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "80": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 74.0,
+   "spring_barley": 2.8,
+   "rapeseed": 12.4
+  },
+  "rotation_coverage_pct": 89.3,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 74.0,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 12.4,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 10.3,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "81": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 39.2,
+   "spring_barley": 1.3,
+   "rapeseed": 5.6
+  },
+  "rotation_coverage_pct": 46.1,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 39.2,
+    "priceable": true
+   },
+   {
+    "crop": "sunflower",
+    "area_share_pct": 25.2,
+    "priceable": false
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 19.5,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "durum_wheat",
+   "sunflower",
+   "soft_wheat"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "sunflower",
+   "area_share_pct": 25.2,
+   "why": "sunflower is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "82": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 42.0,
+   "spring_barley": 1.4,
+   "rapeseed": 4.4
+  },
+  "rotation_coverage_pct": 47.7,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 42.0,
+    "priceable": true
+   },
+   {
+    "crop": "sunflower",
+    "area_share_pct": 33.6,
+    "priceable": false
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 10.4,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "durum_wheat",
+   "sunflower",
+   "soft_wheat"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "sunflower",
+   "area_share_pct": 33.6,
+   "why": "sunflower is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "85": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 48.8,
+   "spring_barley": 1.9,
+   "rapeseed": 10.2
+  },
+  "rotation_coverage_pct": 60.9,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 48.8,
+    "priceable": true
+   },
+   {
+    "crop": "sunflower",
+    "area_share_pct": 16.5,
+    "priceable": false
+   },
+   {
+    "crop": "durum_wheat",
+    "area_share_pct": 13.7,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "sunflower",
+   "area_share_pct": 16.5,
+   "why": "sunflower is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "86": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 46.9,
+   "spring_barley": 2.7,
+   "rapeseed": 19.0
+  },
+  "rotation_coverage_pct": 68.7,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 46.9,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 19.0,
+    "priceable": true
+   },
+   {
+    "crop": "sunflower",
+    "area_share_pct": 18.0,
+    "priceable": false
+   }
+  ],
+  "changed_from_legacy": true,
+  "legacy_rotation": [
+   "durum_wheat",
+   "sunflower",
+   "soft_wheat"
+  ]
+ },
+ "89": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 44.5,
+   "spring_barley": 9.1,
+   "rapeseed": 16.9
+  },
+  "rotation_coverage_pct": 70.5,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 44.5,
+    "priceable": true
+   },
+   {
+    "crop": "winter_barley",
+    "area_share_pct": 19.9,
+    "priceable": false
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 16.9,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "dominant_alternative_not_priceable": {
+   "crop": "winter_barley",
+   "area_share_pct": 19.9,
+   "why": "winter_barley is this department's largest alternative to soft_wheat but has no Agreste yield history in this project's training panel, so the engine could only price it from a hand-written national reference value with no departmental signal. It is therefore NOT used as the year-2 comparator; spring_barley is used instead."
+  }
+ },
+ "91": {
+  "rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ],
+  "source": "agreste_department_area_share",
+  "displaced_year2_crop": "spring_barley",
+  "area_share_pct": {
+   "soft_wheat": 47.5,
+   "spring_barley": 18.7,
+   "rapeseed": 17.6
+  },
+  "rotation_coverage_pct": 83.8,
+  "top3_actual": [
+   {
+    "crop": "soft_wheat",
+    "area_share_pct": 47.5,
+    "priceable": true
+   },
+   {
+    "crop": "spring_barley",
+    "area_share_pct": 18.7,
+    "priceable": true
+   },
+   {
+    "crop": "rapeseed",
+    "area_share_pct": 17.6,
+    "priceable": true
+   }
+  ],
+  "changed_from_legacy": false,
+  "legacy_rotation": [
+   "soft_wheat",
+   "spring_barley",
+   "rapeseed"
+  ]
+ },
+ "_meta": {
+  "description": "Per-department baseline cereal rotation, derived from each department's own Agreste area series. Year 2 is the crop a candidate pulse displaces and its margin dominates the reported three-year difference.",
+  "generated": true,
+  "generator": "scripts/build_dept_rotations.py",
+  "generated_at": "2026-11-01T07:38:50+00:00",
+  "area_source": "Agreste Statistique agricole annuelle, series longues, sheet COP, mean of campaigns 2022-2024. Same file as the yield labels.",
+  "rule": "year 1 = largest priceable cereal by area (the pulse's preceding crop); year 2 = largest remaining priceable non-legume (the DISPLACED crop); year 3 = next remaining priceable non-legume (carries the nitrogen credit and break-crop response).",
+  "priceable_definition": "A crop the engine has a real Agreste departmental yield baseline for, i.e. ml.baseline_yield does not fall through to crop_reference_table. In this project that is soft wheat, spring barley, rapeseed, the pulses and soybean. Winter barley, durum wheat, grain maize and sunflower have no yield series here and resolve to a hand-written national constant with no departmental signal, so they are not used as comparators.",
+  "min_slot_share": 0.01,
+  "replaced": "Hard-coded ['soft_wheat','spring_barley','rapeseed'] in siting.py and main.py, with ['durum_wheat','sunflower','soft_wheat'] for FRJ2/FRI1. Neither crop in that second list is priceable, so the south-west rotation was entirely hand-written reference yields before this table existed.",
+  "known_limitation": "In 23 of 42 departments the LARGEST alternative crop is one the engine cannot price - usually winter barley, which is in the top three of most of these departments while spring barley is in the top three of only six. Those records carry `dominant_alternative_not_priceable`. Ingesting the Agreste winter-barley, durum, maize and sunflower yield series would close this properly; until then the derived comparator is the best-evidenced crop rather than the most widely grown one, and the gap is stated per department rather than hidden.",
+  "n_departments": 42,
+  "n_changed_from_legacy": 15,
+  "n_with_unpriceable_dominant_alternative": 23
+ }
+}

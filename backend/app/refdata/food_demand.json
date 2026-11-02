@@ -1,0 +1,171 @@
+{
+ "_meta": {
+  "description": "The demand side: how much pulse protein people in France actually eat, how much they would eat at the public nutrition recommendation, and how much of it French farms supply. This is the layer that makes the engine answer 'the plant proteins people in France will eat' rather than 'the protein meal French livestock import'.",
+  "design": "Every headline figure is DERIVED in services/demand.py from the named parameters below rather than stored as a conclusion. So a reader who disagrees with the 60 g serving or the 2.0 kg intake can change one number and watch every downstream tonnage move, which is the only honest way to publish a demand estimate built on a nutrition recommendation.",
+  "why_this_tier": "French policy set a 2030 target on 'especes riches en proteines' as a single block, 53 percent of whose 2020 baseline was dehydrated alfalfa and artificial meadows - forage, not food. The human-food tier inside it, legumes secs, is the part that actually collapsed: 67,930 ha in 2020 to 52,200 ha in 2022, -23 percent, with production -28 percent. Measuring the food tier separately is the whole point.",
+  "caveat": "Consumption and catering volumes are reference estimates with stated ranges, not a measured market balance. FranceAgriMer publishes pulse market balances; wiring those in would replace the two softest parameters here (current intake and the catering meal count) with measurements. Flagged in the API as mode 'reference_table'.",
+  "last_reviewed": "2026-10-31"
+ },
+ "population": {
+  "france_millions": 68.5,
+  "source": "INSEE population estimate, metropolitan France plus overseas departments, 2025.",
+  "regions": {
+   "FR10": {
+    "name": "Ile-de-France",
+    "population_millions": 12.36,
+    "nuts2_code": "FR10",
+    "nuts2_name": "Ile-de-France",
+    "administrative_region": "Ile-de-France"
+   },
+   "FRB0": {
+    "name": "Centre-Val de Loire",
+    "population_millions": 2.58,
+    "nuts2_code": "FRB0",
+    "nuts2_name": "Centre-Val de Loire",
+    "administrative_region": "Centre-Val de Loire"
+   },
+   "FRC1": {
+    "name": "Bourgogne-Franche-Comte",
+    "population_millions": 2.8,
+    "nuts2_code": "FRC1",
+    "nuts2_name": "Bourgogne",
+    "administrative_region": "Bourgogne-Franche-Comte",
+    "code_name_mismatch": true
+   },
+   "FRD1": {
+    "name": "Normandie",
+    "population_millions": 3.32,
+    "nuts2_code": "FRD1",
+    "nuts2_name": "Basse-Normandie",
+    "administrative_region": "Normandie",
+    "code_name_mismatch": true
+   },
+   "FRE1": {
+    "name": "Hauts-de-France",
+    "population_millions": 6.01,
+    "nuts2_code": "FRE1",
+    "nuts2_name": "Nord-Pas-de-Calais",
+    "administrative_region": "Hauts-de-France",
+    "code_name_mismatch": true
+   },
+   "FRF2": {
+    "name": "Grand Est",
+    "population_millions": 5.56,
+    "nuts2_code": "FRF2",
+    "nuts2_name": "Champagne-Ardenne",
+    "administrative_region": "Grand Est",
+    "code_name_mismatch": true
+   },
+   "FRG0": {
+    "name": "Pays de la Loire",
+    "population_millions": 3.93,
+    "nuts2_code": "FRG0",
+    "nuts2_name": "Pays de la Loire",
+    "administrative_region": "Pays de la Loire"
+   },
+   "FRI1": {
+    "name": "Nouvelle-Aquitaine",
+    "population_millions": 6.17,
+    "nuts2_code": "FRI1",
+    "nuts2_name": "Aquitaine",
+    "administrative_region": "Nouvelle-Aquitaine",
+    "code_name_mismatch": true
+   },
+   "FRJ2": {
+    "name": "Occitanie",
+    "population_millions": 6.15,
+    "nuts2_code": "FRJ2",
+    "nuts2_name": "Midi-Pyrenees",
+    "administrative_region": "Occitanie",
+    "code_name_mismatch": true
+   },
+   "FRK2": {
+    "name": "Auvergne-Rhone-Alpes",
+    "population_millions": 8.24,
+    "nuts2_code": "FRK2",
+    "nuts2_name": "Rhone-Alpes",
+    "administrative_region": "Auvergne-Rhone-Alpes",
+    "code_name_mismatch": true
+   }
+  },
+  "regions_note": "Keys are NUTS2 identifiers; the `name` is the CURRENT 13-region administrative region, and for 7 of 10 rows those are not the same thing - NUTS2 for France is still the pre-2016 22-region split, so FRJ2 is formally Midi-Pyrenees while the region it stands for here is Occitanie. Both are now carried explicitly in `nuts2_name` and `administrative_region`, with `code_name_mismatch` flagging the rows where they diverge. The keys are kept because buyers.json `region_focus` lists are written in them; `name` remains the authority for anything shown to a user. Populations are INSEE estimates for the administrative region."
+ },
+ "intake": {
+  "current_kg_per_capita_year": 2.0,
+  "current_range_kg": [
+   1.7,
+   2.5
+  ],
+  "current_basis": "Terres Univia states French people eat about three times less pulses than the world average; FAO food balance sheets put world pulse consumption near 7 kg per capita per year. Commonly cited French figures sit in a 1.7 to 2.5 kg band, so 2.0 kg is used as the central estimate.",
+  "recommended_servings_per_week": 2.0,
+  "recommended_basis": "Programme National Nutrition Sante / Sante Publique France recommends pulses at least twice a week. Terres Univia reproduces the same recommendation on its legumes secs page.",
+  "serving_dry_weight_g": 60.0,
+  "serving_basis": "A standard adult portion of 150 to 200 g cooked pulses corresponds to roughly 60 to 75 g dry. The lower end is used, so the recommended-intake figure is a conservative floor rather than a flattering one.",
+  "fibre_context": "Fewer than one French person in four reaches the 30 g per day fibre recommendation, which is the public-health reason the pulse recommendation exists at all."
+ },
+ "domestic_supply": {
+  "legumes_secs_production_t_2022": 60500,
+  "legumes_secs_area_ha_2022": 52200,
+  "legumes_secs_area_ha_2020": 67930,
+  "source": "DGPE harvest balance, reproduced in France Strategie, 'Evaluation de France Relance', volume II chapter 10, January 2024, table 2.",
+  "official_cross_check": "The same report states France produced, at the start of 2020, about one third of the protein-rich material destined for HUMAN consumption. The ratio derived from the figures above lands in the same place, which is why they are used as the supply anchor.",
+  "note": "Legumes secs is the dry-pulse-for-food statistical class: lentil, chickpea and dry beans. Protein peas and fava beans are counted separately as proteagineux because most of their volume goes to feed, so they are handled through each crop's own food_market_share below."
+ },
+ "collective_catering": {
+  "meals_per_year_total_billions": 3.7,
+  "meals_per_year_school_billions": 1.0,
+  "meals_basis": "Order-of-magnitude figures for French restauration collective. Treated as a planning parameter, not a measurement.",
+  "vegetarian_main_per_week": 1.0,
+  "weekday_meals_per_week": 5.0,
+  "legume_share_of_vegetarian_mains": 0.7,
+  "policy_basis": "Loi EGalim introduced a weekly vegetarian meal in school catering, which the loi Climat et Resilience extended across state-run catering. A legume is the default protein source in such a main, but not the only one, hence the 0.7 share.",
+  "interpretation": "This lever is deliberately modest in the output and that is the finding: public catering is a reliable, contractable floor for demand, not a substitute for retail growth. A pitch that claims canteens alone close the gap is overstating it."
+ },
+ "crop_food_market": {
+  "_note": "food_market_share is the fraction of this crop's French volume that reaches human food at all, before any lot-level grading. It bounds what P_human can deliver: a perfectly graded fava bean crop still mostly goes to feed, because that is where the demand is. Shares are consistent with the human-grade base probabilities in quality.json, which are themselves calibrated to published market balances.",
+  "green_lentil": {
+   "food_market_share": 0.95,
+   "statistical_class": "legumes_secs",
+   "note": "Essentially a human-food crop. Terres Univia: 'essentiellement utilisee en alimentation humaine'."
+  },
+  "chickpea": {
+   "food_market_share": 0.92,
+   "statistical_class": "legumes_secs",
+   "note": "Human food, with a small downgraded fraction to feed."
+  },
+  "field_pea": {
+   "food_market_share": 0.3,
+   "statistical_class": "proteagineux",
+   "note": "Split market: protein isolate and split-pea food use against a large feed outlet. The isolate route is human food and is growing, which is why the share is well above zero."
+  },
+  "winter_pea": {
+   "food_market_share": 0.22,
+   "statistical_class": "proteagineux",
+   "note": "Same outlets as spring pea but a smaller, more variable grain, so a larger share lands in feed."
+  },
+  "fava_bean": {
+   "food_market_share": 0.18,
+   "statistical_class": "proteagineux",
+   "note": "Mostly feed and export. Human-food fava is a real but minority outlet in France."
+  },
+  "soybean": {
+   "food_market_share": 0.25,
+   "statistical_class": "soja",
+   "note": "Food-grade soy for tofu and drinks is a distinct, premium, non-GMO contract market; the bulk is crushed for meal."
+  }
+ },
+ "self_sufficiency_targets": {
+  "food_tier_target_pct": 100.0,
+  "target_year": 2030,
+  "basis": "Stated here as a clean, legible benchmark - France feeding its own population's pulse consumption - and NOT as an official figure. The Strategie nationale sur les proteines vegetales sets an area target, 2 Mha or 8 percent of SAU by 2030, not a food self-sufficiency rate. Both are reported so neither is mistaken for the other.",
+  "psn_area_target": {
+   "target_mha": 2.0,
+   "target_share_of_sau_pct": 8.0,
+   "baseline_mha_2020": 1.0,
+   "short_term_target": "+40 percent, or +400,000 ha, by 2023",
+   "observed_2020_to_2022_pct": -4.0,
+   "source": "Strategie nationale sur les proteines vegetales, launched 1 December 2020; outcome from DGPE data in the France Strategie evaluation, January 2024.",
+   "denominator_warning": "The 8 percent is of SAU, which includes permanent grassland, and the 1 Mha baseline includes forage legumes. Any dashboard applying 8 percent to ARABLE area in GRAIN pulses is measuring a different and harder target, and must say so."
+  }
+ }
+}

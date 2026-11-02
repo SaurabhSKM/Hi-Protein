@@ -201,12 +201,33 @@ def validate(
         preceding_crop=preceding,
         preceding_crop_suitability=suitability,
         provenance=Provenance(
-            source="Terres Inovia crop return intervals and soil suitability guidance (Cap Proteines+)",
+            # Split deliberately. An earlier version credited Terres Inovia for
+            # "soil suitability guidance" as well, which over-claimed: the
+            # preceding-crop suitability matrix is roughly eighty multipliers of our
+            # own ordering with no published table behind it, and attributing them to
+            # an institute that did not publish them is the kind of claim that loses a
+            # reader's trust in the parts that ARE sourced.
+            source=(
+                "BLOCKING RULES (pathogen, host range, minimum return interval): "
+                "standard French protein-crop agronomy as published by Terres Inovia, "
+                "the national technical institute for the sector, and corroborated by "
+                "the plant-pathology literature on Aphanomyces euteiches, Didymella "
+                "fabae, Ascochyta rabiei and Sclerotinia sclerotiorum. These are "
+                "checkable facts, not our estimates. "
+                "PRECEDING-CROP SUITABILITY MULTIPLIERS and SOWING WINDOWS: our own "
+                "ordered judgement, uncited. Their ordering follows published agronomy "
+                "(a cereal is a better precedent than a legume) but the specific values "
+                "are priors."
+            ),
             mode="reference_table",
             retrieved_at=datetime.now(UTC).isoformat(timespec="seconds"),
             caveat=(
-                "Screening aid only. A soil Aphanomyces test is the only reliable way to clear "
-                "a plot for pea, and no rule table substitutes for a field visit."
+                "Screening aid only, and the blocking rule is the part to trust. A soil "
+                "Aphanomyces test (test en pot / indice de risque) is the only reliable "
+                "way to clear a plot for pea; no rule table substitutes for it or for a "
+                "field visit. No specific Terres Inovia document is cited here, so the "
+                "attribution is at the level of sector guidance rather than a page "
+                "reference."
             ),
         ),
     )

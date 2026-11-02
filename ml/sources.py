@@ -64,8 +64,20 @@ def download_saa(force: bool = False) -> Path:
     return dest
 
 
-def load_saa(level: str = "dep", force: bool = False) -> pd.DataFrame:
-    """Tidy Agreste SAA into (dept_code, year, crop, area_ha, yield_t_ha, prod_t)."""
+def load_saa(
+    level: str = "dep", force: bool = False, require_yield: bool = True
+) -> pd.DataFrame:
+    """Tidy Agreste SAA into (dept_code, year, crop, area_ha, yield_t_ha, prod_t).
+
+    `require_yield=True` (the default, and what the yield model trains on) keeps only
+    rows that carry a published yield, which necessarily means area > 0.
+
+    `require_yield=False` is for the ADOPTION question, where the zero is the signal.
+    A department that grew no lentils in 2010 and 400 ha in 2019 only has the first
+    half of that transition if `area_ha == 0` rows survive; filtering them out leaves
+    the series starting at 400 and makes the arrival invisible. Rows where `area_ha`
+    is blank are still dropped either way - a missing publication is not a zero.
+    """
     zf = zipfile.ZipFile(download_saa(force=force))
     name, geo_col = (
         (SAA_DEP_XLSX, "LIB_DEP") if level == "dep" else (SAA_REG_XLSX, "LIB_REG2")
@@ -79,10 +91,16 @@ def load_saa(level: str = "dep", force: bool = False) -> pd.DataFrame:
     raw["saa_code"] = raw["LIB_SAA"].str.split(" - ").str[0].str.strip()
     raw["crop"] = raw["saa_code"].map(SAA_CROP_CODES)
     raw = raw[raw["crop"].notna()]
+    # Agreste's own per-series quality flag, carried through verbatim rather than
+    # interpreted: the workbook defines the codes only by reference to a methodology
+    # page that currently 404s, so this module does not claim to know what 1, 2, 3 and
+    # NC mean. It is kept so a consumer can report the mix instead of implying every
+    # published figure is equally firm. Values observed: 1, 2, 3, NC, blank.
+    raw["quality_status"] = raw.get("STATUT_QUALITE", pd.Series(index=raw.index)).fillna("")
 
     value_cols = [c for c in raw.columns if re.fullmatch(r"(SURF|REND|PROD)_\d{4}", str(c))]
     long = raw.melt(
-        id_vars=["geo_code", "geo_name", "crop"],
+        id_vars=["geo_code", "geo_name", "crop", "quality_status"],
         value_vars=value_cols,
         var_name="var",
         value_name="value",
@@ -94,7 +112,7 @@ def load_saa(level: str = "dep", force: bool = False) -> pd.DataFrame:
 
     wide = (
         long.pivot_table(
-            index=["geo_code", "geo_name", "crop", "year"],
+            index=["geo_code", "geo_name", "crop", "quality_status", "year"],
             columns="measure",
             values="value",
             aggfunc="first",
@@ -107,7 +125,10 @@ def load_saa(level: str = "dep", force: bool = False) -> pd.DataFrame:
     wide["prod_t"] = wide["prod_q"] / 10.0
     wide = wide.drop(columns=["REND", "prod_q"])
     # area_ha == 0 is exactly equivalent to "not grown, yield blank" in this file.
-    wide = wide[(wide["area_ha"].fillna(0) > 0) & wide["yield_t_ha"].notna()]
+    if require_yield:
+        wide = wide[(wide["area_ha"].fillna(0) > 0) & wide["yield_t_ha"].notna()]
+    else:
+        wide = wide[wide["area_ha"].notna()]
     # 2025 is flagged provisional in the workbook header.
     wide = wide[wide["year"] <= 2024]
     wide["dept_code"] = wide["geo_code"].str.lstrip("0").str.zfill(2)
