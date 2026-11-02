@@ -1,28 +1,23 @@
 version: 2
 updates:
-  # Both ecosystems are pinned exactly (requirements*.txt, package-lock.json), which
-  # is deliberate — the figures this project reports are reproducible only against the
-  # versions it was calibrated on. Dependabot is therefore set to a monthly cadence
-  # and grouped, so a bump arrives as one reviewable PR rather than a stream of them.
-  - package-ecosystem: pip
-    directory: /
-    schedule:
-      interval: monthly
-    open-pull-requests-limit: 3
-    groups:
-      python-dependencies:
-        patterns: ['*']
-
-  - package-ecosystem: npm
-    directory: /frontend
-    schedule:
-      interval: monthly
-    open-pull-requests-limit: 3
-    groups:
-      frontend-dependencies:
-        patterns: ['*']
-
+  # GitHub Actions only, grouped into a single monthly PR.
+  #
+  # Deliberately NOT pip or npm. The figures this project reports are reproducible
+  # only against the versions it was calibrated on: the conformal offsets in
+  # ml/artifacts/model_report.json, the Monte Carlo draws, and the unpickling of
+  # yield_model.joblib are all tied to the pinned numpy / pandas / scipy /
+  # scikit-learn / xgboost releases. An automated bump to any of those is a silent
+  # change to a reported number, which is this repository's most expensive failure
+  # mode — so those upgrades belong in a deliberate PR that re-runs `make train`
+  # and `make audit` and says which figures moved.
+  #
+  # Dependabot SECURITY updates are a separate switch, in Settings > Advanced
+  # Security, and are worth leaving on: they only fire on a published advisory.
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
+    open-pull-requests-limit: 1
+    groups:
+      github-actions:
+        patterns: ['*']
