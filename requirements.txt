@@ -2,11 +2,11 @@
 fastapi==0.162.0
 uvicorn[standard]==0.54.0
 pydantic==2.14.2
-numpy==2.4.6
+numpy==2.5.4
 pandas==3.1.0
 scikit-learn==1.9.1
-xgboost==3.2.0
+xgboost==3.4.1
 joblib==1.6.0
-scipy==1.17.1
+scipy==1.18.1
 requests==2.34.2
 openpyxl==3.1.5
