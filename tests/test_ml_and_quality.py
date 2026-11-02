@@ -301,8 +301,13 @@ def test_crop_dummies_carry_no_level_information_in_training():
     crop dummies really would be doing level correction, which is the baseline failing.
     """
     import pandas as pd
+    from app.config import DATA_DIR
 
-    df = pd.read_csv("data/processed/training_panel.csv", dtype={"dept_code": str})
+    # DATA_DIR is absolute, so this does not depend on the directory pytest was
+    # invoked from.
+    df = pd.read_csv(
+        DATA_DIR / "processed" / "training_panel.csv", dtype={"dept_code": str}
+    )
     fit = df[df.year < 2017]
     dept = fit.groupby(["crop", "dept_code"])["yield_t_ha"].mean().rename("b")
     joined = fit.join(dept, on=["crop", "dept_code"])

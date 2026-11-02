@@ -196,11 +196,13 @@ def test_crossing_the_access_threshold_costs_more_than_the_marginal_kilometre():
     So the step exists for a lentil department and legitimately does not for a pea one,
     and the test has to pick the right crop rather than assume the step is universal.
     """
-    spec = __import__("json").loads(
-        (
-            __import__("pathlib").Path("backend/app/refdata/quality.json")
-        ).read_text(encoding="utf-8")
-    )
+    import json
+
+    from app.config import REFDATA_DIR
+
+    # REFDATA_DIR is absolute, so this does not depend on the directory pytest was
+    # invoked from.
+    spec = json.loads((REFDATA_DIR / "quality.json").read_text(encoding="utf-8"))
     sorted_crops = set(spec["penalties"]["no_optical_sorting_access"]["applies_to"])
     assert sorted_crops, "the access penalty must apply to something"
 

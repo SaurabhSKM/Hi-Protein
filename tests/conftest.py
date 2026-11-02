@@ -1,6 +1,13 @@
 import sys
 from pathlib import Path
 
+# `backend/`, not the repository root. Every test module imports `app.…`, which is how
+# the application imports itself at runtime too, so the test and production module
+# identities are the same object.
+#
+# Putting the repo root here as well would let `backend.app.config` and `app.config` both
+# import successfully — as two distinct modules, with two copies of every @cache'd
+# reference table and two loaded models. Don't.
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "backend"))
 

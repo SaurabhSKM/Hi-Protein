@@ -97,12 +97,15 @@ def test_the_non_gmo_premium_is_shared_with_the_buyer_book_not_reinvented():
     that existed from the first build and that nothing read until now.
     """
     import json
-    import pathlib
+
+    from app.config import REFDATA_DIR
 
     v = B.substitution_value_eur_t("field_pea")
-    buyers = json.loads(
-        pathlib.Path("backend/app/refdata/buyers.json").read_text(encoding="utf-8")
-    )
+    # Read the file itself rather than asking the service for the number, so that a
+    # service that reinvented the premium instead of reading the buyer book would fail.
+    # Via REFDATA_DIR, which is absolute, so this does not depend on the directory
+    # pytest happened to be invoked from.
+    buyers = json.loads((REFDATA_DIR / "buyers.json").read_text(encoding="utf-8"))
     quoted = next(
         (b["premiums"]["non_gmo_eur_t"] for b in buyers["buyers"]
          if (b.get("premiums") or {}).get("non_gmo_eur_t")),

@@ -38,10 +38,13 @@ jobs:
       # yield model, the weather and training panels, the baked department
       # profiles — are committed, so the suite runs without network access to
       # any open-data API. See the note in .gitignore.
+      # `python -m pytest`, matching `make test`. The bare `pytest` console script does
+      # not put the working directory on sys.path, so anything that relies on being
+      # invoked from the repository root passes locally and fails here.
       - name: Tests
         env:
           HIPROTEIN_OFFLINE: '1'
-        run: pytest tests/ -q
+        run: python -m pytest tests/ -q
 
   frontend:
     name: Frontend — build
@@ -81,4 +84,4 @@ jobs:
           pip install -r requirements-dev.txt
 
       - name: Assert on the built bundle
-        run: pytest tests/test_frontend_build.py -q
+        run: python -m pytest tests/test_frontend_build.py -q

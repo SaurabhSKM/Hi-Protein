@@ -12,10 +12,9 @@ from __future__ import annotations
 import json
 
 import pytest
+from app.main import app
+from app.services import adoption
 from fastapi.testclient import TestClient
-
-from backend.app.main import app
-from backend.app.services import adoption
 
 client = TestClient(app)
 
