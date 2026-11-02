@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="../../actions/workflows/ci.yml"><img alt="CI" src="../../actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/SaurabhSKM/Hi-Protein/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/SaurabhSKM/Hi-Protein/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="Python 3.11" src="https://img.shields.io/badge/python-3.11-3776ab">
   <img alt="React 18" src="https://img.shields.io/badge/react-18-61dafb">
   <img alt="Tests" src="https://img.shields.io/badge/tests-299%20passing-success">
