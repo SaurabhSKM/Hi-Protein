@@ -30,6 +30,12 @@ sorter sits within haulage range — decides both whether the farmer earns a liv
 whether the crop feeds anyone. On green lentil the gap it is multiplying is about
 **€630/t**. Nothing else in the system is as close to the brief.
 
+To be precise about where that probability sits: it is a multiplier *inside* the
+simulation, sampled per Monte Carlo draw, not a separate output. The engine's
+headline result is the distribution of the difference between two three-year
+rotations, and the grading probability is the term in it that moves the answer most
+— see [docs/ENGINE.md](docs/ENGINE.md#what-the-engine-actually-computes).
+
 The engine answers the brief's clauses in four places:
 
 | Clause | Where |
@@ -116,7 +122,7 @@ make help           # every target
 
 ```
 backend/   FastAPI, 19 routes, a 20-module domain engine  (Python 3.11)
-frontend/  React 18 + Vite + Tailwind, 6 views            (JSX)
+frontend/  React 18 + Vite + Tailwind, 6 views: landing + 5 tabs  (JSX)
 ml/        quantile XGBoost + conformal calibration, and the adoption null result
 scripts/   the data builders, the sensitivity audit, the smoke test
 tests/     299 tests

@@ -6,7 +6,8 @@ artifacts that are committed so a fresh clone runs without touching the network.
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
 │  Browser — React 18 SPA (frontend/)                                     │
-│  5 views: Farmer · Food · Region · Land · Method                        │
+│  6 views: Landing, then 5 tabs                                          │
+│  Farmer · Food · Region · Land · Method                                 │
 └───────────────────────────────┬─────────────────────────────────────────┘
                                 │  fetch, resolved RELATIVE to the page
                                 │  (survives being mounted under a prefix)
@@ -20,7 +21,7 @@ artifacts that are committed so a fresh clone runs without touching the network.
       ▼                         ▼                         ▼
 ┌───────────────┐   ┌───────────────────────┐   ┌─────────────────────┐
 │ services/     │   │ Committed artifacts   │   │ clients/ → network  │
-│ the 16-module │   │ ml/artifacts/         │   │ IGN API Carto (RPG) │
+│ the 20-module │   │ ml/artifacts/         │   │ IGN API Carto (RPG) │
 │ domain engine │   │ data/processed/       │   │ ADEME Agribalyse    │
 │ orchestrator  │   │ refdata/ (17 JSON)    │   │ → data/cache/       │
 └───────────────┘   └───────────────────────┘   └─────────────────────┘
